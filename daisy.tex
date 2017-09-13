@@ -4,28 +4,14 @@
 \usepackage{url}
 
 
-\title{Representation Market: Towards Model Aggregation on Decentralized Environment}
+%\title{Representation Market: Towards Model Aggregation on Decentralized Environment}
+\title{Neuron as an Agent}
 
-
-\author{Antiquus S.~Hippocampus, Natalia Cerebro \& Amelie P. Amygdale \thanks{ Use footnote for providing further information
-about author (webpage, alternative address)---\emph{not} for acknowledging
-funding agencies.  Funding acknowledgements go at the end of the paper.} \\
-Department of Computer Science\\
-Cranberry-Lemon University\\
-Pittsburgh, PA 15213, USA \\
-\texttt{\{hippo,brain,jen\}@cs.cranberry-lemon.edu} \\
-\And
-Ji Q. Ren \& Yevgeny LeNet \\
-Department of Computational Neuroscience \\
-University of the Witwatersrand \\
-Joburg, South Africa \\
-\texttt{\{robot,net\}@wits.ac.za} \\
-\AND
-Coauthor \\
-Affiliation \\
-Address \\
-\texttt{email}
-}
+\author{Shohei Ohsawa & Yutaka Matsuo} \\
+Department of Engineering\\
+The University of Tokyo\\
+Bunkyo, Tokyo, Japan \\
+\texttt{\{ohsawa,matsuo\}@weblab.t.u-tokyo.ac.jp} \\
 
 % The \author macro works with any number of authors. There are two commands
 % used to separate the names and addresses of multiple authors: \And and \AND.
@@ -46,11 +32,27 @@ Address \\
 \maketitle
 
 \begin{abstract}
-The abstract paragraph should be indented 1/2~inch (3~picas) on both left and
-right-hand margins. Use 10~point type, with a vertical spacing of 11~points.
-The word \textsc{Abstract} must be centered, in small caps, and in point size 12. Two
-line spaces precede the abstract. The abstract must be limited to one
-paragraph.
+%(to be translated)
+本論文は、新たな学習の枠組みである {\em neuron as an agent} (NaaA) を提案する。
+一般に、ニューラルネットワークの backward propagation は連鎖律によって計算されるため、
+すべてのニューロンは、その前後のニューロンのトポロジーを知る必要がない。
+そのため、ニューロンを学習時に微分情報のみをやり取りする独立な細胞として考えることができる。
+%各ニューロンが競合学習を行うことで予測精度の最大化を行う枠組みとなる。
+%これにより、従来のアテンションの仕組みを自然な形で統合することができる。
+
+NaaA はこの洞察に基づき、ニューラルネットワークを neural agent のネットワークであると捉え、backpropagation を拡張した、個の利益最大化による最適化を行う。
+利益は、ニューロン自体が生成した付加価値であり、出力先のニューロンに情報を"売る"ことで得られた報酬から、入力元のニューロンから信号を"買う"ことで渡した報酬を差し引いて計算される。
+自明な解として、他のニューロンの情報をタダで得る解が得られることを防ぐために、
+NaaA はゲーム理論の仕組みを導入し、同じレイヤーに属するニューロン同士を競合学習させることで、neural agent が他のニューロンの価値を正直に申告することを示す。
+%の仕組みを用いることによって競合学習を実現する。
+
+%神経栄養因子(NTF)を最大化するエージェントとみなすことにする。
+%これは、すべてのレイヤーが独立なエージェントであることを示唆している。
+これを実現するための一つの問題として、価値の分配問題がある。
+本論文では出力層に予測市場を想定し、ゲーム理論の枠組みを導入する。
+経済的なインセンティブを中間層と入力層を設計した人間に分配する仕組みを提案する。
+この仕組みを、本論文では表現市場(representation market)と呼ぶ。
+本論文ではいくつかの標準的なデータセットを用いて、NaaA を用いることで、精度を担保した上で全体での消費エネルギーを下げることができることを数値実験により実証する。
 \end{abstract}
 
 \section{Submission of conference papers to ICLR 2017}
