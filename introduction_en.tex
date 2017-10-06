@@ -1,0 +1,27 @@
+\section{Introduction}
+In the most of successful deep reinforcement model, a single agent has an entire process form sense of environment, recognition to action determination \citep{mnih2015human, mnih2016asynchronous}.
+DQN \citep{mnih2015human} and A3C \citep{mnih2016asynchronous} determines the optimal action from a sequence of screen of Atari.
+AlphaGo \citep{silver2016mastering} selects the most closed move for win from the board of Go.
+DDPG \citep{lillicrap2015continuous} learns move of life which determines the optimal move of muscle.
+The aiming solving reinforcement learning problem using a single agent seems valid in the sense of an analogy of embodiment.
+
+On the other hand, most of the problem in real-world is solved by multiple agents.
+That is, sensing, recognition and action determination are performed by different agents.
+The sensor information from the agents are centrally integrated, and the actuators faced to reward system use the sophisticated information, and distributes their earning back to the agents.
+An autonomous car is able to avoid collision by integrating information from cars around.
+A trader of stock infers the information provided by a lot of people and companies to judge what to buy, and pays reward to the providers.
+Besides, there are several cases of multi-gent system such as elevator control \cite{crites1998elevator}, sensor network \citep{fox2000probabilistic} and robot soccer \citep{stone1998towards}.
+
+The reason why multi-agent problem solving works well for real-world issues is interestingly, same as the principle of representation learning: good representation of state contributes the improvement of performance.
+Most of the problem in real-world is not Markov decision process (MDP) which DQN and A3C assumes but {\em partially observed Markov decision process} (POMDP) \citep[p.258]{sutton1998reinforcement}.
+On the POMDP environment, the true state is not completely visible, and hence good observation yields good action.
+In the setting, we need to design attention: what should be observed using finite resource.
+Hence, more agents used for observation, higher reward the actuator can earn.
+Besides, it has an aspect of ensemble method where the combination of multiple models improves the performance.
+
+In this paper, we consider a deep neural network as a multi-agent system as a natural extension from representation learning to multi-agent reinforcement learning for POMDP.
+The framework of sensing and recognition is also known as {\em fog computing} \citep{bonomi2012fog} in internet of things (IoT).
+Fog computing is a model of signal processing assuming distributed environment.
+Instead of the one processing unit processes all of the data, multiple sensors integrates sensor information to an edge server, and edge servers send the precessed data to a central server.
+By looking the human brain, neurons works independently.
+During embryogenesis, a neuron seeks neurotrophin 
