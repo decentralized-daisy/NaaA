@@ -1,42 +1,64 @@
 \section{Related Work}
-%�[�w�����w�K�� emerging topic �ł���ADQN ���؂�ɑ����̌������s���Ă���B
-%DQN �ł́A
-�[�w�����w�K�� POMDP ���ɓK�p����ꍇ�A�ϑ�����Ȋ����炢���ɐ^�̏�Ԃ𐄒肷�邩���d�v�ɂȂ�B
-Deep Recurrent Q-Network (DRQN) \citep{sorokin2015deep} �́A
-�B��}���R�t�A����z�肵�A���J�����g�j���[�����l�b�g���[�N(RNN)��p���Đ^�̏�Ԃ𐄒肵�Ă���B
+現在成功している深層強化学習のモデルの多くは、単一のエージェントが環境の観測から認知、行動決定といった一連のプロセスを担う。
+DQN \citep{mnih2015human,silver2016mastering} は、Atari のスクリーン系列から最適な行動を決定したり、AlphaGo のモジュールとして囲碁の盤面から勝利に最も近い一手を選ぶ。
+DDPG \citep{lillicrap2015continuous} は物理空間において摩擦や重力係数などの条件を考慮した多関節の制御を実現する。
+単一のエージェントを用いて強化学習を解くという試みは、人間の持つ身体性のアナロジーから考えると一見して妥当であるように思えるが、現実世界は open world であり、単一のエージェントが完全に情報が観測することが難しい。
+そのためマルチエージェントによるアプローチが求められている。
+%A3C \citep{mnih2016asynchronous} 
 
-�}���`�G�[�W�F���g�ŋ����w�K�̖�����������ꍇ�ɂ́A�M���x���蓖�Ė��̉������d�v�ɂȂ�B
-�����ŁA�G�[�W�F���g�̐M���x���A���̃G�[�W�F���g�������ꍇ�ƁA
-���Ȃ������Ɖ��肵���ꍇ�̍��Ƃ��Ē�ʉ����錤�����s���Ă���B
-QUICR-learning \citep{agogino2006quicr} �ł́A�G�[�W�F���g $i$ �� reward $R(a_t)$ �̑���ɁA
-���̃G�[�W�F���g������s�� $a_{ti}$ ���Ƃ����ꍇ $a_t$ �Ǝ��Ȃ������ꍇ $a_t-a_{ti}$ �̍��A
-counterfractual reward $R(a_t) - R(a_t - a_{ti})$ �̌����a���ő剻���Ă���B
-COMA \citep{foerster2017counterfactual} �́Aactor-critic �ɂ����� critic �����ʂ��Ă���Aactor ���}���`�G�[�W�F���g�ł���Ƃ��� actor-critic �̎d�g�݂��l���A���ꂼ��� actor �� counterfractual reward ���ő剻����悤�Ȏd�g�݂��l���Ă���B
+マルチエージェントシステムによるアプローチにはいくつかの方法がある。
+一つは、学習の効率を高めるために、同一のモデルに従う複数のエージェントを用いて探索を行う方法であり、Gorilla, A3C \citep{mnih2016asynchronous} などで採用されている。
+二つ目は、サッカーゲームのようにアクチュエーターを増やすことによって行動の量を増やす方法であり、
+三つ目は、センサーを増やすことによって観測の量を増やす方法であり、自動運転やIoT などで行われている。
+本研究が対象にするのは、三つ目のアプローチである。
 
-�����̌����̖��́A��񂪂��ׂċ��L����Ă���Ƃ����O��ɗ����Ă���A
-�M���x�����蓖�Ă�Ƃ������P���Ɋ�Â��Ă���_�ɂ���B
-���̂��߁A���؂邱�Ƃ��l������l��������ƁA�\�z�O�̓��e���w�K����Ă��܂��B
-���Ƃ��΁AIoT �̂悤�Ȏ����ɂ���������l����ƁA�Z���T�[�������Ă����͈̂قȂ�l���ł��邽�߂ɁA
-���͍s�����Ƃ�Ƃ͍l���ɂ����B
+%深層強化学習は emerging topic であり、DQN を皮切りに多くの研究が行われている。
+%DQN では、
+深層強化学習を POMDP 環境に適用する場合、観測困難な環境からいかに真の状態を推定するかが重要になる。
+Deep Recurrent Q-Network (DRQN) \citep{sorokin2015deep} は、
+隠れマルコフ連鎖を想定し、リカレントニューラルネットワーク(RNN)を用いて真の状態を推定している。
+他にも、エレベーター制御\citep{crites1998elevator}、センサーネットワーク\citep{fox2000probabilistic}、ロボットサッカー\citep{stone1998towards}などがマルチエージェントによって解かれている（あとで修正: 専門家に確認中）。
 
-�{�����ł́A���ׂẴj���[�������G�[�W�F���g�Ƃ݂Ȃ����@���Ă��Ă���B
-%�����̃A�C�f�A���A���ׂẴj���[�������G�[�W�F���g�Ƃ݂Ȃ��Ƃ���Ɋg�����Ă���B
+マルチエージェントによる観測および認知の枠組みは、センサー処理の分野ではエッジコンピューティング\citep{bonomi2012fog}としても知られている。
+エッジコンピューティングは分散環境を前提とした信号処理のモデルであり、一つの処理系がすべてのデータを処理するのではなく、複数のセンサーの情報を一つのエッジサーバが集約し、複数のエッジサーバが次元削減したデータをデータセンターに送るという階層的な構造をしている。
 
-%counterfractual reward ��p����Ƃ����A�C�f�A�� \cite{} �Ɋ�Â��Ă���B
-%�{�����̐V�K���́A���J�j�Y���f�U�C����p���ď��̉��l��]������d�g�݂�������_�ł���B
-%�}���`�G�[�W�F���g�ɂ�����ʐM�̉ۑ�ɂ��Č������s���Ă��镶��������B
-%�W�����}���������Ă���B
-%����ŁA���𐄒肷��Ƃ������@������Ă���B
-%�����ɑ΂��Ė{�����ł́A
+
+各神経細胞を独立した生物として捉える見方はニューラルダーウィズム\citep{edelman1987neural}と呼ばれる。
+実際、人間の脳を観察しても、各神経細胞は独立して動作する。
+神経細胞は胚細胞からの発達段階において Nerve Growth Factor、BDNF といった神経栄養因子(NTF)を追求することが知られており、十分な NTF を受け取ることができなかったニューロンはアポトーシスを引き起こして自死することが知られている\citep{almeida2005neuroprotection}。
+
+マルチエージェントで強化学習の問題を解決する場合には、信頼度割り当て問題の解決が重要になる。
+そこで、エージェントの信頼度を、そのエージェントがいた場合と、
+いなかったと仮定した場合の差として定量化する研究が行われている。
+QUICR-learning \citep{agogino2006quicr} では、エージェント $i$ が reward $R(a_t)$ の代わりに、
+そのエージェントがある行動 $a_{ti}$ をとった場合 $a_t$ と取らなかった場合 $a_t-a_{ti}$ の差、
+counterfractual reward $R(a_t) - R(a_t - a_{ti})$ の減衰和を最大化している。
+COMA \citep{foerster2017counterfactual} は、actor-critic において critic が共通しており、actor がマルチエージェントであるという actor-critic の仕組みを考え、それぞれの actor が counterfractual reward を最大化するような仕組みを考えている。
+
+これらの研究の問題は、情報がすべて共有されているという前提に立っており、
+信頼度を割り当てるという性善説に基づいている点にある。
+そのため、裏切ることが考えられる人物がいると、予想外の内容が学習されてしまう。
+たとえば、IoT のような実環境における問題を考えると、センサーを持っている主体は異なる人物であるために、
+協力行動をとるとは考えにくい。
+
+本研究では、すべてのニューロンをエージェントとみなす方法を提案している。
+%これらのアイデアを、すべてのニューロンをエージェントとみなすところに拡張している。
+
+%counterfractual reward を用いるというアイデアは \cite{} に基づいている。
+%本研究の新規性は、メカニズムデザインを用いて情報の価値を評価する仕組みを作った点である。
+%マルチエージェントにおける通信の課題について研究を行っている文献もある。
+%ジレンマ問題を扱っている。
+%一方で、環境を推定するという方法も取られている。
+%これらに対して本研究では、
 
 \if0
-�i�쐬���j�ȉ��̕���ɂ��Č��y
+（作成中）以下の分野について言及
 
-�����w�K(DQN, DRQN, DARQN)
+強化学習(DQN, DRQN, DARQN)
 
-�}���`�G�[�W�F���g�V�X�e��(QUICR, ICLR�T�b�J�[)
+マルチエージェントシステム(QUICR, ICLRサッカー)
 
-�}���`�G�[�W�F���g�����w�K
+マルチエージェント強化学習
 
-�W�����}�����������錤��
+ジレンマ問題を解決する研究
 \fi

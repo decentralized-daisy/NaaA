@@ -1,8 +1,8 @@
 \section{Conclusion and Future Works}
-�{�_���ł́APOMDP �̖��ݒ�ɂ����ėǎ��ȓ����\���𓾂邽�߂ɁA�j���[�����l�b�g���[�N��̊e���j�b�g���G�[�W�F���g�Ƃ��Ĉ����t���[�����[�N�ANaaA �ɂ��ďq�ׂ��B
-NaaA �̃t���[�����[�N�ł́A�W�����}�����������A���ꂼ��̃G�[�W�F���g�̎��t�����l���i�b�V���ύt�Ƃ��ē����A�S�̂Ƃ��ăp���[�g�œK�ɂȂ邱�Ƃ��������B
-���D���i�̌���A���S���Y���̈�Ƃ��āA$Q$-learning �Ɋ�Â��l�b�g���[�N Valuation Net ���������B
-�]�������ł́AAtari �� VizDoom ��p�����������s���A�������ʂ�������@�����悭�Ȃ邱�Ƃ��������B
+本論文では、POMDP の問題設定において良質な特徴表現を得るために、ニューラルネットワーク上の各ユニットをエージェントとして扱うフレームワーク、NaaA について述べた。
+NaaA のフレームワークでは、ジレンマ問題を解決し、それぞれのエージェントの持つ付加価値がナッシュ均衡として得られ、全体としてパレート最適になることを示した。
+入札価格の決定アルゴリズムの一つとして、$Q$-learning に基づくネットワーク Valuation Net を示した。
+評価実験では、Atari と VizDoom を用いた実験を行い、実験結果が既存手法よりもよくなることを示した。
 
-% ����̕������͎v�������珑�������Ă���
-����̕������Ƃ��āA�������AValuation Net �� A3C �Ȃǂ� on-policy �Ȏ�@�Œu��������Ƃ������������̑��A�_�o�Ȋw�I�Ȑ������\�ɂ��Ă����Ƃ��������@�A��`�I�A���S���Y���Ƃ̑g�ݍ��킹����������B
+% 今後の方向性は思いついたら書き足していく
+今後の方向性として、高速化、Valuation Net を A3C などの on-policy な手法で置き換えるといった方向性の他、神経科学的な説明を可能にしていくといった方法、遺伝的アルゴリズムとの組み合わせが挙げられる。

@@ -1,247 +1,208 @@
+% What ã®ã¿ã‚’æ›¸ã - Why ã¯ã‚¤ãƒ³ãƒˆãƒ­ã¸
 \section{Neuron as an Agent}
-–{ƒZƒNƒVƒ‡ƒ“‚Å‚ÍAƒjƒ…[ƒ‰ƒ‹ƒlƒbƒgƒ[ƒN‚Ì\‘¢‚É‚Â‚¢‚Ä•œK(recap)‚µ‚½ŒãA
-•ñV•ª”z‚ÌƒtƒŒ[ƒ€ƒ[ƒN‚Å‚ ‚é profit maximization ‚É‚Â‚¢‚Äq‚×A
-Valuation Net ‚É‚Â‚¢‚Äà–¾‚ðs‚¤B
+ãƒ‹ãƒ¥ãƒ¼ãƒ©ãƒ«ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ã®ãƒ¦ãƒ‹ãƒƒãƒˆé–“ã®ãƒˆãƒãƒ­ã‚¸ãƒ¼ã‚’æœ‰å‘ã‚°ãƒ©ãƒ•$\mathfrak{G} = (V, E)$ã§è¡¨ã™ã€‚
+$V = \{v_1, \dots, v_N\}$ ã¯ãƒ¦ãƒ‹ãƒƒãƒˆã®é›†åˆã§ã‚ã‚Šã€$E \subset V^2$ ã¯ãƒ¦ãƒ‹ãƒƒãƒˆã®æŽ¥ç¶šé–¢ä¿‚ã‚’è¡¨ã™ã‚¨ãƒƒã‚¸ã®é›†åˆã§ã‚ã‚‹ã€‚
+$(v_i, v_j) \in E$ ã§ã‚ã‚‹ã¨ãã€$v_i \rightarrow v_j$ ã¨ã„ã†æŽ¥ç¶šé–¢ä¿‚ãŒæˆç«‹ã—ã€$v_j$ ã¯ $v_i$ ã‹ã‚‰å€¤ã‚’å…¥åŠ›ã™ã‚‹ã€‚
+ãƒ¦ãƒ‹ãƒƒãƒˆã® $v_i$ ã®æ™‚åˆ» $t$ ã«ãŠã‘ã‚‹å‡ºåŠ›ã‚’ $x_{it} \in \Real$ ã§è¡¨ã™ã€‚
+ãƒ¦ãƒ‹ãƒƒãƒˆ $i$ ã®å…¥åŠ›å…ƒã®é›†åˆã‚’ $N^\mathrm{out}_i = \{j | (v_i, v_j) \in E \}$ã€å‡ºåŠ›å…ˆã®é›†åˆã‚’ $N^\mathrm{in}_i = \{j | (v_j, v_i) \in E \}$ ã§è¡¨ç¾ã™ã‚‹ã€‚
 
-_Œo‰ñ˜H‚ÉŠÜ‚Ü‚ê‚éƒjƒ…[ƒƒ“‚Íˆê‚Â‚Ì×–E‚Å‚ ‚é‚½‚ßAƒGƒlƒ‹ƒM[‚ðÁ”ï‚·‚éB
-’Êí‚Ì×–E‚Æ“¯—l‚ÉŽ_‘f‚â ATP ‚ªƒGƒlƒ‹ƒM[Œ¹‚Æ‚È‚èA‚±‚ê‚ç‚Íƒjƒ…[ƒƒ“‚ÆÚ‘±‚µ‚½AƒAƒXƒgƒƒTƒCƒg‚©‚ç‹Ÿ‹‹‚³‚ê‚éB
-ƒAƒXƒgƒƒTƒCƒg‚Í”]‚Ì\‘¢‚ðŽx‚¦‚éƒOƒŠƒA×–E‚ÌˆêŽí‚Å‚ ‚èAŒŒŠÇ‚©‚çƒjƒ…[ƒƒ“‚Ö‚Ì‰h—{‹Ÿ‹‹‚ðs‚¤B
-ƒGƒlƒ‹ƒM[—Ê‚Í—LŒÀ‚Å‚ ‚é‚½‚ßA•s—v‚Èƒjƒ…[ƒƒ“‚ÍƒAƒ|ƒg[ƒVƒX‚É‚æ‚Á‚ÄŽ€–Å‚·‚éB
-ƒAƒ|ƒg[ƒVƒX‚Í NGF, BDNF ‚È‚Ç‚Ì_Œo‰h—{ˆöŽq(NTF)‚É‚æ‚Á‚Ä§Œä‚³‚ê‚é‚½‚ßA‚æ‚è‘½‚­‚Ì NTF ‚ðŠl“¾‚Å‚«‚½ƒjƒ…[ƒƒ“‚ª¶‘¶‚·‚éB
-%‚»‚Ì‚½‚ßANTF ‚ªˆêŽí‚Ì’Ê‰Ý‚Æ‚µ‚Ä‹@”\‚·‚éB
-
-‚±‚¤‚µ‚½ NTF ‚É‚æ‚éŽd‘g‚Ý‚ð‘I‘ðˆ³‚Æ‚µ‚Ä‚Æ‚ç‚¦‚éƒjƒ…[ƒ‰ƒ‹ƒ_[ƒEƒBƒjƒYƒ€‚Æ‚¢‚¤l‚¦•û‚ª‚ ‚éB
-ƒjƒ…[ƒ‰ƒ‹ƒ_[ƒEƒBƒjƒYƒ€‚Å‚ÍAˆê‚Â‚Ìƒjƒ…[ƒƒ“‚ðAƒoƒNƒeƒŠƒA‚Ì‚æ‚¤‚È¶•¨Šw‚É‚¨‚¯‚éŒÂ‘Ì‚Å‚ ‚é‚©‚Ì‚æ‚¤‚Éˆµ‚¤B
-ŠÂ‹«‚É“K‰ž‚µ‚½ƒjƒ…[ƒƒ“‚ª¶‘¶‚µA‚»‚¤‚Å‚È‚¢ƒjƒ…[ƒƒ“‚ªŽ€–Å‚·‚é‚±‚Æ‚ÅA
-—L—p‚Èƒjƒ…[ƒƒ“‚ª¶‚«Žc‚é‚æ‚¤‚É‚·‚éB
-
-NaaA ‚Å‚ÍA‚±‚¤‚µ‚½ƒjƒ…[ƒƒ“‚É‚æ‚é‰h—{’Ç‹y‚Ì˜g‘g‚Ý‚ð‹­‰»ŠwK‚Åƒ‚ƒfƒŠƒ“ƒO‚·‚éB
-‹­‰»ŠwK‚ÍƒG[ƒWƒFƒ“ƒg‚ÆŠÂ‹«‚Ì‘ŠŒÝì—p‚ðˆµ‚¤B
-ƒG[ƒWƒFƒ“ƒg‚ÍŠÂ‹«‚É‘Î‚µ‚Äˆê‚Â‚Ìó‘Ô‚ðŽ‚¿AŠÂ‹«‚É‘Î‚µ‚ÄƒAƒNƒVƒ‡ƒ“‚ðs‚¤‚±‚Æ‚Åó‘Ô‘JˆÚ‚ðs‚¢A•ñV‚ðŽó‚¯Žæ‚éB
-ƒAƒNƒVƒ‡ƒ“‚ÍƒG[ƒWƒFƒ“ƒg‚ÌŽ‚Âó‘Ô‚ÆƒAƒNƒVƒ‡ƒ“‚ÌŠÔ‚ÌŠm—¦•ª•zA•ûô‚ðŽ‚ÂB
-‹­‰»ŠwK‚Ì–Ú“I‚ÍA’·Šú“I‚ÈƒG[ƒWƒFƒ“ƒg‚ÌŽó‚¯Žæ‚é•ñV‚Ì–¢—ˆ‚É‚í‚½‚éŒ¸Š˜a‚ðÅ‘å‰»‚·‚é‚±‚Æ‚Å‚ ‚éB
-NaaA ‚Å‚ÍAƒjƒ…[ƒƒ“‚ðˆê‚Â‚ÌƒG[ƒWƒFƒ“ƒg‚Æ‚Ý‚È‚µAŠÂ‹«‚ðÚ‘±‚µ‚Ä‚¢‚é‘¼‚Ìƒjƒ…[ƒƒ“‚Æ‰¼’è‚·‚éB
-
-ƒG[ƒWƒFƒ“ƒgŠÔ‚Ì’ÊM‚Íˆê‚Â‚Ìƒ}ƒVƒ““à‚Ås‚í‚ê‚Ä‚à‚æ‚¢‚µAƒ}ƒVƒ“ŠÔ‚Ås‚í‚ê‚Ä‚à‚æ‚¢B
-%ˆÈ‰º‚Å‚ÍAƒjƒ…[ƒƒ“Aƒ†ƒjƒbƒgAƒG[ƒWƒFƒ“ƒg‚Í’f‚è‚Ì‚È‚¢ŒÀ‚è‚·‚×‚Ä“¯‚¶ˆÓ–¡‚Å—p‚¢‚é‚±‚Æ‚É‚·‚éB
-
-ƒjƒ…[ƒ‰ƒ‹ƒlƒbƒgƒ[ƒN‚É‚Íƒp[ƒZƒvƒgƒƒ“Aƒ{ƒ‹ƒcƒ}ƒ“ƒ}ƒVƒ“‚È‚Ç—lX‚È‚à‚Ì‚ª‘¶Ý‚·‚é‚ªA
-NaaA ‚ª‘ÎÛ‚Æ‚·‚éƒjƒ…[ƒ‰ƒ‹ƒlƒbƒgƒ[ƒN‚ÌŽí—Þ‚ÍA
-‘½‘wƒp[ƒZƒvƒgƒƒ“ACNNARNNALSTM ‚Ì‚æ‚¤‚ÈA”÷•ª‰Â”\(differentiable)ƒjƒ…[ƒ‰ƒ‹ƒlƒbƒgƒ[ƒN‚Å‚ ‚éB
-‚±‚ê‚ÍAo—Í‚ðƒpƒ‰ƒ[ƒ^‚Å”÷•ª‰Â”\‚ÈŠÖ”ŒQ‚Å\¬‚³‚ê‚éB
-’¼Š´“I‚É‚ÍA2017 ”NŒ»Ý‚Ì TensorFlow ‚ÅƒTƒ|[ƒg‚³‚ê‚é‚à‚Ì‚·‚×‚Ä‚ðŽw‚·B
-ˆê•û‚ÅAƒ{ƒ‹ƒcƒ}ƒ“ƒ}ƒVƒ“‚Ì‚æ‚¤‚ÈŠm—¦ƒx[ƒX‚Ì‚à‚Ì‚Í¡‰ñ‚Í‘ÎÛ‚Æ‚µ‚È‚¢B
-%‚±‚ê‚ç‚Í 2017 ”NŒ»Ý‚Ì TensorFlow, Pylearn, Torch, Caffe ‚È‚Ç‘½‚­‚Ìƒc[ƒ‹‚ÅƒTƒ|[ƒg‚³‚ê‚Ä‚¢‚éB
-%‚±‚ê‚ç‚ÍƒoƒbƒNƒvƒƒpƒQ[ƒVƒ‡ƒ“‚É‚æ‚Á‚Äƒpƒ‰ƒ[ƒ^‚ÌÅ“K‰»A‚·‚È‚í‚¿ŠwK‚ð‚·‚é‚±‚Æ‚ª‚Å‚«‚éB
-
-”÷•ª‰Â”\ƒjƒ…[ƒ‰ƒ‹ƒlƒbƒgƒ[ƒN‚ÍA–{—ˆ‚ÍlŠÔ‚Ì_Œo‰ñ˜H‚ð–Í‚µ‚Ä‘¢‚ç‚ê‚½‚à‚Ì‚Å‚ ‚èA
-_Œo‚ð\¬‚·‚éƒjƒ…[ƒƒ“‚ðƒ†ƒjƒbƒg‚Æ‚¢‚¤Œ`‚Å’ŠÛ‰»‚µ‚Ä‚¢‚éB
-ƒ†ƒjƒbƒg‚ÍŒÝ‚¢‚É‚Â‚È‚ª‚Á‚Ä‚¨‚èA‚±‚ê‚Íƒjƒ…[ƒƒ“‚ÌŽ²õ‚É‘Î‰ž•t‚¯‚ç‚ê‚éB
-ƒ†ƒjƒbƒg‚ÍÚ‘±‚³‚ê‚½ƒ†ƒjƒbƒg‚©‚çŽó‚¯Žæ‚Á‚½M†‚É‘Î‚µ‚Ä”½‰ž‚µAM†‚ðo—Í‚·‚éB
-
-
-% ƒ†ƒjƒbƒg‚ÌŒvŽZ•û–@
-ƒ†ƒjƒbƒg‚ÌŒvŽZ•û–@‚ÍAŠù‘¶‚Ìƒjƒ…[ƒ‰ƒ‹ƒlƒbƒgƒ[ƒN‚Æ‚Ù‚Æ‚ñ‚Ç“¯‚¶‚Å‚ ‚éB
-ƒ†ƒjƒbƒg‚ÍAˆê‚Â‚ÌƒXƒJƒ‰[’l‚ðM†‚Æ‚µ‚Äo—Í‚·‚éB
-‚±‚ÌM†‚ÍA‘¼‚Ìƒ†ƒjƒbƒg‚©‚çŽó‚¯‚½“ü—Í‚ÉŠî‚Ã‚«ŒvŽZ‚³‚ê‚éB
-üŒ`‰‰ŽZA‚·‚È‚í‚¿d‚Ý•t‚«˜a‚ðŒvŽZ‚·‚éƒ†ƒjƒbƒg‚à‚ ‚ê‚ÎA
-ReLU ‚Ì‚æ‚¤‚ÈŠˆ«‚ðŒvŽZ‚·‚éƒ†ƒjƒbƒg‚à‘¶Ý‚·‚éB
-
-ƒ†ƒjƒbƒg‚ðˆê‚Â‚ÌƒG[ƒWƒFƒ“ƒg‚Æ‚Ý‚È‚·‚±‚Æ‚ÅAÅ“K‰»‚·‚é‘ÎÛ‚Ì–â‘è‚Íƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒg‹­‰»ŠwK‚Æ‚Ý‚È‚·‚±‚Æ‚ª‚Å‚«‚éB
-ƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒg‹­‰»ŠwK‚É‚¨‚¯‚é–â‘è‚Æ‚ÍAŠÂ‹«‚ª—^‚¦‚½•ñV $R_0$ ‚ð•¡”‚ÌƒG[ƒWƒFƒ“ƒgŠÔ‚Å‚Ç‚Ì‚æ‚¤‚É•ª”z‚·‚é‚©‚É‚ ‚éB
-%‹­‰»ŠwK‚É‚¨‚¯‚éM—Š“xŠ„‚è“–‚Ä
-
-%NaaA ‚Å‚ÍAƒ†ƒjƒbƒg‚ðŽŸ‚Ì«Ž¿‚ð–ž‚½‚·ƒG[ƒWƒFƒ“ƒg‚Å‚ ‚é‚¢‚¤‘O’ñ‚©‚ço”­‚·‚éB
-NaaA ‚ÍA$N$ ŒÂ‚ÌƒG[ƒWƒFƒ“ƒg‚Å\¬‚³‚ê‚éƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒgƒVƒXƒeƒ€‚Å‚ ‚éBŠeƒ†ƒjƒbƒg‚Í–{—ˆ‚Ì«Ž¿‚É‰Á‚¦‚ÄAˆÈ‰º‚Ì«Ž¿‚ðŽ‚ÂB
+NaaA ã¯ $\mathfrak{G}$ ã‚’ãƒžãƒ«ãƒã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã‚·ã‚¹ãƒ†ãƒ ã§ã‚ã‚‹ã¨ã¨ã‚‰ãˆã€$v_i$ ã«ä»¥ä¸‹ã®å‰æã‚’åŠ ãˆã‚‹ã€‚
 \begin{enumerate}
 \renewcommand{\labelenumi}{N\arabic{enumi}:}
-\item i—˜ŒÈ«jƒG[ƒWƒFƒ“ƒg‚ÍAŒn‘S‘Ì‚ÌŠú‘ÒƒŠƒ^[ƒ“ $G_{0t}$ ‚Å‚Í‚È‚­AŽ©g‚ÌŠú‘ÒƒŠƒ^[ƒ“ $G_{it}$ ‚ÌÅ‘å‰»‚ð–Ú“I‚Æ‚µ‚Äs“®‚·‚éB
-\item i•ñV‚Ì•ª”zjŠeƒG[ƒWƒFƒ“ƒg‚ªŽó‚¯Žæ‚é•ñV $R_i$ ‚Ì‘˜a‚ÍAƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒgƒVƒXƒeƒ€‘S‘Ì‚ªŠO“IŠÂ‹«‚©‚ç“¾‚é•ñV $R_0$ ‚É“™‚µ‚¢B
-\item iNOOPjƒG[ƒWƒFƒ“ƒg‚ÍAŠú‘ÒƒŠƒ^[ƒ“‚ª 0 ‚Ì NOOP (no operation) ‚Æ‚¢‚¤s“®‚ðƒIƒvƒVƒ‡ƒ“‚Æ‚µ‚ÄŽ‚ÂBNOOP ‚Å‚ÍAƒG[ƒWƒFƒ“ƒg‚Í‰½‚à“ü—Í‚¹‚¸A‰½‚ào—Í‚µ‚È‚¢B
-\item iƒRƒXƒgjƒG[ƒWƒFƒ“ƒg‚É‚ÍA¶‘¶ƒRƒXƒg $\alpha_i$ ‚ª‘¶Ý‚µAƒ^ƒCƒ€ƒXƒeƒbƒv‚²‚Æ‚É•‰‚Ì•ñV‚Æ‚µ‚ÄÁ”ï‚³‚ê‚éBNOOP ‚Ìó‘Ô‚Å‚ÍA¶‘¶ƒRƒXƒg‚ÍÁ”ï‚³‚ê‚È‚¢B
-\item iŽæˆøjƒG[ƒWƒFƒ“ƒgŠÔ‚ÌM†‚Ì‘—ŽóM‚ÍŽæˆø‚Å‚ ‚éB‚·‚È‚í‚¿AƒG[ƒWƒFƒ“ƒg‚ÍM†‚ð‘¼‚ÌƒG[ƒWƒFƒ“ƒg‚É“`’B‚·‚éÛ‚ÉAM†‚Æˆø‚«Š·‚¦‚É•ñV‚ðŽó‚¯Žæ‚éB
-\item iEnvy-free«jM†‚ð“¯Žž‚É•¡”‚ÌƒG[ƒWƒFƒ“ƒg‚ªw“ü‚·‚éê‡A‚»‚ê‚Í‚·‚×‚Ä“¯‚¶‰¿Ši‚ÅŽæˆø‚³‚ê‚éB‚·‚È‚í‚¿AƒG[ƒWƒFƒ“ƒg‚Í“¯‚¶ŽžŠÔ(timing)‚Éˆê‚Â‚Ì‰¿Ši(price)‚ðŽ‚ÂB
+\item ï¼ˆåˆ©å·±æ€§ï¼‰$v_i$ ã¯ã€å„æ™‚ç‚¹ $t$ ã«ãŠã„ã¦ã€æ±ŽåŒ–èª¤å·®ã®æœ€å°åŒ–ã§ã¯ãªãã€è‡ªèº«ã®æœŸå¾…ãƒªã‚¿ãƒ¼ãƒ³ $G_{it}$ ã®æœ€å¤§åŒ–ã‚’ç›®çš„ã¨ã—ã¦è¡Œå‹•ã™ã‚‹ã€‚
+\item ï¼ˆä¿å­˜å‰‡ï¼‰$v_i$ ãŒå—ã‘å–ã‚‹å ±é…¬ $R_{it}$ ã®ç·å’Œã¯ã€ãƒžãƒ«ãƒãƒ¦ãƒ‹ãƒƒãƒˆã‚·ã‚¹ãƒ†ãƒ å…¨ä½“ãŒå¤–çš„ç’°å¢ƒã‹ã‚‰å¾—ã‚‹å ±é…¬ $R_0$ ã«ç­‰ã—ã„ã€‚
+\item ï¼ˆå–å¼•ï¼‰$v_i$ ã¯ä¿¡å· $x_i$ ã‚’ $v_j \in V$ ã«ä¼é”ã™ã‚‹éš›ã«ã€ä¿¡å·ã¨å¼•ãæ›ãˆã«å ±é…¬ $\rho_{jit}$ ã‚’å—ã‘å–ã‚‹ã€‚
+\item ï¼ˆNOOPï¼‰$v_i$ ã¯ã€æœŸå¾…ãƒªã‚¿ãƒ¼ãƒ³ãŒ 0 ã® NOOP (no operation) ã¨ã„ã†è¡Œå‹•ã‚’ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã¨ã—ã¦æŒã¤ã€‚NOOP ã§ã¯ã€ãƒ¦ãƒ‹ãƒƒãƒˆã¯ä½•ã‚‚å…¥åŠ›ã›ãšã€ä½•ã‚‚å‡ºåŠ›ã—ãªã„ã€‚
 \end{enumerate}
-3 ‚Â‚ß‚Ì‰¼’è‚ÍAƒjƒ…[ƒƒ“‚ÌƒAƒ|ƒg[ƒVƒX‚É‘Š“–‚·‚éB
-NOOP ‚ª‘I‘ð‚³‚ê‚é‚Ì‚ÍA‚»‚êˆÈŠO‚Ì‚·‚×‚Ä‚Ìs“®‚ÌŠú‘Ò•ñV‚ª•‰‚Å‚ ‚Á‚½ê‡‚Å‚ ‚éB
+N1 ã¯ãƒ¦ãƒ‹ãƒƒãƒˆãŒã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã¨ã—ã¦æŒ¯ã‚‹èˆžã†ã“ã¨ã‚’è¿°ã¹ã¦ã„ã‚‹ã€‚
+N2, N3 ã¯ NTF ã®åˆ†é…ã«ã€N4 ã¯ãƒ‹ãƒ¥ãƒ¼ãƒ­ãƒ³ã®ã‚¢ãƒãƒˆãƒ¼ã‚·ã‚¹ã«ç›¸å½“ã™ã‚‹ã€‚
+NOOP ãŒé¸æŠžã•ã‚Œã‚‹ã®ã¯ã€ãã‚Œä»¥å¤–ã®ã™ã¹ã¦ã®è¡Œå‹•ã®æœŸå¾…å ±é…¬ãŒè² ã§ã‚ã£ãŸå ´åˆã§ã‚ã‚‹ã€‚
+ä»¥ä¸‹ã§ã¯ã“ã‚Œã‚‰ã®å‰æã‹ã‚‰å‡ºç™ºã—ã¦ã€NaaA ã®ä»•çµ„ã¿ã‚’æ§‹ç¯‰ã—ã¦ã„ãã€‚
 
-%‚»‚±‚ÅA‚à‚¤ˆê‚Â‘O’ñ‚ð‘‚â‚·B
+\subsection{Cumulative Profit Maximization Framework}
+%NaaA ã§ã¯ã€ã™ã¹ã¦ã®ãƒ¦ãƒ‹ãƒƒãƒˆãŒã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã¨ã—ã¦ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®æœ€é©åŒ–ã‚’è¡Œã†ã€‚
+%æŽ¥ç¶šã•ã‚Œã¦ã„ã‚‹å…¥åŠ›å…ƒã€å‡ºåŠ›å…ˆã®ãƒ¦ãƒ‹ãƒƒãƒˆã¯ã€ç’°å¢ƒã®ä¸€ã¤ã¨ã—ã¦æ‰±ã‚ã‚Œã‚‹ã€‚
+%ãƒ¦ãƒ‹ãƒƒãƒˆã¯ä»–ã®ãƒ¦ãƒ‹ãƒƒãƒˆã‹ã‚‰å ±é…¬ã‚’å—ã‘å–ã£ãŸã‚Šã€æ”¯æ‰•ã£ãŸã‚Šã™ã‚‹ã€‚
+%
+%%N2, N3 ã‚ˆã‚Šã€å ±é…¬ã¯ãƒžãƒ«ãƒã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã‚·ã‚¹ãƒ†ãƒ ã«å¯¾ã—ã¦æ”¯æ‰•ã‚ã‚Œã‚‹ $R_0$ ã¯ã€ãƒ•ãƒ­ãƒ¼ã¨ã—ã¦ãƒ‹ãƒ¥ãƒ¼ãƒ©ãƒ«ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ä¸Šã‚’æµã‚Œã‚‹ã€‚
+%ãã“ã§ã€é€šè²¨ã®ãƒ¡ã‚¿ãƒ•ã‚¡ãƒ¼ã‚’ç”¨ã„ã¦ã€$R_0$ ã‚’åˆ†è§£ã—ãªãŒã‚‰ä»–ã®ãƒ‹ãƒ¥ãƒ¼ãƒ­ãƒ³ã«å¯¾ã—ã¦ä¼é”ã™ã‚‹ã“ã¨ã‚’è€ƒãˆã‚‹ã€‚
+%ãƒ¦ãƒ‹ãƒƒãƒˆã¯ã€ä»–ã®ãƒ¦ãƒ‹ãƒƒãƒˆã‹ã‚‰å—ã‘å–ã‚‹å ±é…¬ã¨ã€ä»–ã®ãƒ¦ãƒ‹ãƒƒãƒˆã«å¯¾ã—ã¦æ”¯æ‰•ã†å ±é…¬ã®å·®ãŒå ±é…¬ã¨ãªã‚‹ã€‚
+%å‰è€…ã‚’åŽç›Š(reward)ã€å¾Œè€…ã‚’ã‚³ã‚¹ãƒˆ(cost)ã¨å‘¼ã³ã€ãã®å·®ã‚’åˆ©ç›Š(profit)ã¨å‘¼ã¶ã€‚
 
-\subsection{Profit Maximization Framework}
+é€šè²¨ã¯ $\mathfrak{G}$ ä¸Šã‚’æµã‚Œã‚‹ã€‚
+ãƒ¦ãƒ‹ãƒƒãƒˆ $i$ ãŒãƒ¦ãƒ‹ãƒƒãƒˆ $j$ ã«å¯¾ã—ã¦ã€æ™‚åˆ» $t$ ã§æ”¯æ‰•ã†é€šè²¨ã‚’ $\rho_{ijt} \in [0, \infty)$ ã§è¡¨ã™ã€‚
+ãƒ¦ãƒ‹ãƒƒãƒˆ $i$ ãŒæ™‚åˆ» $t$ ã§å¤–éƒ¨ã‹ã‚‰å¾—ã‚‹å ±é…¬ã‚’ $R_i^\mathrm{ex}$ ã¨æ›¸ãã€æ¶ˆè²»ã‚¨ãƒãƒ«ã‚®ãƒ¼ã‚’ $\alpha_{it}$ ã§è¡¨ã™ã€‚
+æ™‚åˆ» $t$ ã« $i$ ãŒç²å¾—ã™ã‚‹å ±é…¬ $R_i$ ã®å ±é…¬ã¯æ¬¡ã®ã‚ˆã†ã«è¡¨ç¾ã•ã‚Œã‚‹ã€‚
+\begin{flalign}
+	R_{it} = 
+	  \left[ R_{it}^\mathrm{ex} + \sum_{j \in N^\mathrm{out}_i} \rho_{jit} \right] 
+	- \left[\sum_{j \in N^\mathrm{in}_i} \rho_{ijt} + \alpha_{it} \right]
+\end{flalign}
+ã“ã®å¼ã¯ã€ç¬¦å·ãŒæ­£ã®é …ã¨è² ã®é …ã®äºŒã¤ã«åˆ†è§£ã•ã‚Œã‚‹ã€‚å‰è€…ã‚’åŽç›Š(revenue)ã€å¾Œè€…ã‚’ã‚³ã‚¹ãƒˆ(cost)ã¨å‘¼ã³ã€ãã‚Œãžã‚Œ $r_{it}, c_{it}$ ã§è¡¨ã™ã€‚
+%ä»Šã€å¤–çš„ç’°å¢ƒã‚’ $v_0$ ã¨æ›¸ãã€$\rho_{0it} = R_{it}^\mathrm{ex}$, $\rho_{i0t} = \alpha_t$ ã¨æ›¸ãã¨ã€ã“ã®å¼ã¯æ¬¡ã®ã‚ˆã†ã«å˜ç´”åŒ–ã•ã‚Œã‚‹ã€‚
+%\begin{flalign}
+%	R_{it} 
+%	&= \sum_{j \in N^\mathrm{out}_i \cup \{0\}} \rho_{jit} - \sum_{j \in N^\mathrm{in}_i \cup \{0\}} \rho_{ijt} 
+%	%&= (\mathbf{J} - \mathbf{J}^\T) \mathbf{R}
+%\end{flalign}
+%%ãŸã ã—ã€$\mathbf{J}$ ã¯ $E$ ã®éš£æŽ¥è¡Œåˆ—ã§ã‚ã‚Šã€$(i,j)$-è¦ç´ ã®å€¤ã¯ $(v_i, v_j) \in E$ ã§ã‚ã‚‹ã¨ãã« 1 ã§ã‚ã‚Šã€ãã‚Œä»¥å¤–ã¯ 0 ã§ã‚ã‚‹ã€‚
+%
+%
+%ä»Šã€$\vect{r}_t= (r_{1t}, \dots, r_{nt}), \vect{R}_t = (\rho_{ijt})_{ij}$ ã¨è¡¨ç¾ã™ã‚‹ã¨ã€æ¬¡ã®ã‚ˆã†ã«æ›¸ãã“ã¨ãŒã§ãã‚‹ã€‚
+%\begin{flalign}
+%	\vect{r}_t = \left( \vect{R}_t - \vect{R}_t^\T \right) \vect{1}
+%\end{flalign}
+%ãŸã ã—ã€$\vect{1}$ã¯è¦ç´ ãŒã™ã¹ã¦ $1$ ã®ãƒ™ã‚¯ãƒˆãƒ«ã§ã‚ã‚‹ã€‚
+%
+%ãƒªã‚¿ãƒ¼ãƒ³ã¯æ¬¡ã®ã‚ˆã†ã«æ›¸ãã“ã¨ãŒã§ãã‚‹ã€‚
+%\begin{flalign}
+%	\vect{y}_t = \sum_{i=0}^T \gamma^i \vect{r}_{t+i}
+%\end{flalign}
+%ãŸã ã—ã€$T$ ã¯çµ‚ç«¯æ™‚é–“ã§ã‚ã‚‹ã€‚
+
+ãƒ¦ãƒ‹ãƒƒãƒˆ $v_i$ ãŒæœ€å¤§åŒ–ã™ã‚‹å¯¾è±¡ã®ãƒªã‚¿ãƒ¼ãƒ³ $G_{it}$ ã¯æ¬¡ã®ã‚ˆã†ã«æ›¸ãã“ã¨ãŒã§ãã‚‹ã€‚
+\begin{flalign}
+	G_{it} = \sum_{k=0}^T \gamma^k R_{i, t+k} = \sum_{k=0}^T \gamma^k (r_{i,t+k} - c_{i,t+k})
+\end{flalign}
+$R_{it} > 0$ã€ã™ãªã‚ã¡ã€$r_{it} > c_{it}$ ã§ã‚ã‚Œã°ã€ãƒ¦ãƒ‹ãƒƒãƒˆã¯å¾—ãŸãƒ‡ãƒ¼ã‚¿ã«å¯¾ã—ã¦ä»˜åŠ ä¾¡å€¤ã‚’ä¸Žãˆã¦ã„ã‚‹ã“ã¨ã«ãªã‚‹ã€‚
+ã‚‚ã—ã€ã™ã¹ã¦ã® $t$ ã«å¯¾ã—ã¦ $R_{it} < 0$ ã§ã‚ã‚Œã°ã€$y_{it} < 0$ ã§ã‚ã‚‹ã‹ã‚‰ã€ãƒ¦ãƒ‹ãƒƒãƒˆã¯ NOOP ã«ãªã‚‹ã€‚
+
+%ãƒ¦ãƒ‹ãƒƒãƒˆã¯ã€å¾—ãŸå ±é…¬ã‚’ä»–ã®ãƒ¦ãƒ‹ãƒƒãƒˆã«å¯¾ã—ã¦ã©ã®ã‚ˆã†ã«åˆ†é…ã™ã‚‹ã®ã‹ã«é–¢ã™ã‚‹æ–¹ç­– $\pi$ ã‚’æŒã¤ã€‚
+%å¼·åŒ–å­¦ç¿’ã¨åŒæ§˜ã«ä»¥ä¸‹ã®ç›®çš„é–¢æ•°ã‚’æŒã¤ã€‚
+%\begin{flalign}
+%\Expect{\pi}{\sum_{i=0}^{T} \gamma^i (r_{t+i} - c_{t+i})}
+%&= \Expect{\pi}{\sum_{i=0}^{T} \gamma^i r_{t+i}} -  \Expect{\pi}{\sum_{i=0}^{T} \gamma^ic_{t+i}} \notag \\
+%&= G_t^{\mathrm{in}} - G_t^{\mathrm{out}}
+%\end{flalign}
+%ãŸã ã—ã€$G_t^{\mathrm{in}} \equiv \Expect{\pi}{\sum_{i=0}^{T} \gamma^i r_{t+i}}$ã€
+%$G_t^{\mathrm{out}} \equiv \Expect{\pi}{\sum_{i=0}^{T} \gamma^ic_{t+i}}$ ã§ã‚ã‚‹ã€‚
+%ã“ã®å¼ã¯ã€ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆãŒçµ‚ç«¯çŠ¶æ…‹ã¾ã§ã«ç”Ÿã¿å‡ºã—ãŸä»˜åŠ ä¾¡å€¤ã«ç­‰ã—ã„ã€‚
+%ã“ã‚Œã‚’è¡Œã†ãŸã‚ã«ã€ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã¯å£²ä¸Šã®æœ€å¤§åŒ–ã¨ã‚³ã‚¹ãƒˆã®æœ€å°åŒ–ã‚’åŒæ™‚ã«è¡Œã†ã“ã¨ãŒã‚ã‹ã‚‹ã€‚
+%
+
+\section{Optimization}
+ã“ã“ã§ã¯ã€NaaA ã®ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¯ãƒ¼ã‚¯ã«ãŠã„ã¦ã€ãƒ‹ãƒ¥ãƒ¼ãƒ©ãƒ«ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ã‚’æœ€é©åŒ–ã™ã‚‹æ‰‹æ³•ã«ã¤ã„ã¦èª¬æ˜Žã™ã‚‹ã€‚
+æœ€é©åŒ–ã®æ–¹æ³•ã¯ã„ãã¤ã‹ã‚ã‚‹ãŒã€practical ãªæ–¹æ³•ã¨ã—ã¦ã€envy-free auction ã¨ valuation net ã®äºŒã¤ã‚’ç´¹ä»‹ã™ã‚‹ã€‚
+
+å®Ÿéš›ã«ã¯ã€ã“ã®ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¯ãƒ¼ã‚¯ã¯æœŸå¾…é€šã‚Šã«å‹•ä½œã—ãªã„ã€‚
+ãªãœãªã‚‰ã€ã“ã®å¼ã‚’æœ€é©åŒ–ã™ã‚‹ã¨ã€ã‚³ã‚¹ãƒˆæœ€å°åŒ–ã«ã‚ˆã£ã¦ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã¯ä»–ã®ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã«å¯¾ã—ã¦é‡‘é¡ã‚’æ”¯æ‰•ã‚ãªã„ã“ã¨ãŒãƒŠãƒƒã‚·ãƒ¥å‡è¡¡è§£ã¨ã—ã¦å¾—ã‚‰ã‚Œã‚‹ãŸã‚ã§ã‚ã‚‹ã€‚
+%ãã®çµæžœã€ã™ã¹ã¦ã®ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã¯åŽç›Šã‚’å—ã‘å–ã‚Œãšã€NOOP ã®ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚’å–ã‚‹ã“ã¨ã«ãªã‚‹ã€‚
+%çµæžœã¨ã—ã¦å…¨ä½“ã¨ã—ã¦å ±é…¬ãŒä¸‹ãŒã‚‹ã¨ã„ã†ã€ãƒ‘ãƒ¬ãƒ¼ãƒˆåŠ£ä½å•é¡ŒãŒç™ºç”Ÿã™ã‚‹ã€‚
+
+\begin{thm}\label{thm:optimal-bidding-simple}
+	The Nash equivalem of the game $(r_{ijt})$ is $0$.
+\end{thm}
+ãŸã ã¡ã«ã€æ¬¡ã®ç³»ãŒæˆç«‹ã™ã‚‹ã€‚
+\begin{coro}\label{coro:optimal-bidding-simple}
+	Cumulative Maximization Framework ã§ã¯ã€å¤–çš„ç’°å¢ƒã‹ã‚‰å ±é…¬ã‚’å—ã‘å–ã‚‰ãªã„ãƒ‹ãƒ¥ãƒ¼ãƒ­ãƒ³ã¯ã™ã¹ã¦ NOOP ã«ãªã‚‹ã€‚
+\end{coro}
+
+ã™ãªã‚ã¡ã€å˜ç´”ãªç´¯ç©åˆ©ç›Šæœ€å¤§åŒ–ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¯ãƒ¼ã‚¯ã§ã¯ã€ã™ã¹ã¦ã®ãƒ‹ãƒ¥ãƒ¼ãƒ­ãƒ³ãŒæ´»å‹•ã›ãšã€
+ãƒžãƒ«ãƒã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã‚·ã‚¹ãƒ†ãƒ ã¯ç„¡æƒ…å ±ã§ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚’é¸æŠžã™ã‚‹å¿…è¦ãŒç”Ÿã˜ã€ã“ã‚Œã¯ãƒ©ãƒ³ãƒ€ãƒ ãªã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚’å–ã£ã¦ã„ã‚‹çŠ¶æ³ã«ç­‰ã—ã„ã€‚
+ã—ãŸãŒã£ã¦ã€æ˜Žã‚‰ã‹ã«å¤–çš„ç’°å¢ƒã‹ã‚‰ã®å ±é…¬ $R_t$ ã®å¤§ãã•ã¯å°ã•ããªã‚‹ã€‚
+ã“ã‚Œã¯ã€ãƒŠãƒƒã‚·ãƒ¥å‡è¡¡ãŒãƒ‘ãƒ¬ãƒ¼ãƒˆæœ€é©ã¨ä¸€è‡´ã—ãªã„ãƒ‘ãƒ¬ãƒ¼ãƒˆåŠ£ä½ãªçŠ¶æ³ãŒç™ºç”Ÿã™ã‚‹ã€‚
+
+\subsection{Digital Goods Auction}
+ãƒ‘ãƒ¬ãƒ¼ãƒˆåŠ¹çŽ‡ãªä»•çµ„ã¿ã‚’ä½œã‚‹ãŸã‚ã«ã€æˆ‘ã€…ã¯ã‚ªãƒ¼ã‚¯ã‚·ãƒ§ãƒ³ç†è«–ã«ãŠã‘ã‚‹ digital goods auction ã‹ã‚‰ã‚¢ã‚¤ãƒ‡ã‚¢ã‚’å€Ÿã‚Šã‚‹ã€‚
+ã‚ªãƒ¼ã‚¯ã‚·ãƒ§ãƒ³ç†è«–ã¯ã€ã‚²ãƒ¼ãƒ ç†è«–ã«ãŠã‘ã‚‹ãƒ¡ã‚«ãƒ‹ã‚ºãƒ ãƒ‡ã‚¶ã‚¤ãƒ³ã¨ã„ã†åˆ†é‡Žã«å±žã—ã¦ãŠã‚Šã€
+è¤‡æ•°ã®ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã®åˆ©å®³ã‚’ä¸€è‡´ã•ã›ã€å…¨ä½“ã¨ã—ã¦ãƒ‘ãƒ¬ãƒ¼ãƒˆæœ€é©ã‚’ç›®æŒ‡ã™ã“ã¨ã‚’ç›®æŒ‡ã—ã¦ã„ã‚‹ã€‚
+digital goods auction ã¯ã€æœ¬ã‚„éŸ³æ¥½ãªã©ã®ã€è¤‡è£½å¯èƒ½ãªè²¡ã‚’å‰²ã‚Šå½“ã¦ã‚‹ä»•çµ„ã¿ã‚’ä½œã£ã¦ã„ã‚‹ã€‚
+
+Digital goods auction ã«ã‚ˆã£ã¦ã‚¸ãƒ¬ãƒ³ãƒžã‚’é˜²ãæ–¹æ³•ã¯ã„ãã¤ã‹ã‚ã‚Šã€ã©ã‚Œã‚‚æœ¬å•é¡Œã¸é©ç”¨å¯èƒ½ã§ã¯ã‚ã‚‹ãŒã€
+æœ¬ç ”ç©¶ã§ã¯å˜ç´”ãªå‰æã®ã¿ã‚’è¨­ã‘ã‚‹ã ã‘ã§ã‚ˆã„ã¨ã„ã†ç†ç”±ã‹ã‚‰ envy-free auction \cite{} ã‚’ç”¨ã„ã‚‹ã€‚
+ã“ã‚Œã¯ã€åŒã˜æ™‚ç‚¹å–å¼•ã«ãŠã„ã¦ã€ä¸€ã¤ã®ãƒ¦ãƒ‹ãƒƒãƒˆã®ä¾¡æ ¼ã‚’åŒã˜ã«ã™ã‚‹ã¨ã„ã†ã‚‚ã®ã§ã‚ã‚‹ã€‚
+NaaA ã«ãŠã„ã¦ã€ã“ã‚Œã¯æ¬¡ã®ã‚·ãƒ³ãƒ—ãƒ«ãªå‰æã«ã‚ˆã£ã¦è¡¨ç¾ã§ãã‚‹ã€‚
+%NaaA ã§ã¯ãƒ‘ãƒ¬ãƒ¼ãƒˆåŠ£ä½å•é¡Œã‚’å›žé¿ã™ã‚‹ãŸã‚ã€æ¬¡ã®ã‚·ãƒ³ãƒ—ãƒ«ãªå‰æã‚’å°Žå…¥ã™ã‚‹ã€‚
+\begin{enumerate}
+\renewcommand{\labelenumi}{N\arabic{enumi}:}
+\setcounter{enumi}{4}
+\item ï¼ˆä¸€ç‰©ä¸€ä¾¡ï¼‰
+	$\rho_{j_1,i,t}, \rho_{j_2,i,t} > 0$ ã§ã‚ã‚Œã° $\rho_{j_1,i,t} = \rho_{j_2,i,t}$ 
+\end{enumerate}
+ã“ã‚Œã¯ã€ãƒ¦ãƒ‹ãƒƒãƒˆ $v_i$ ã¯åŒã˜æ™‚é–“(timing) $t$ ã«å€‹æœ‰ã®ä¾¡æ ¼ã‚’æŒã¤ã“ã¨ã‚’æ„å‘³ã™ã‚‹ã€‚
+ã“ã®ä¾¡æ ¼ã‚’ $q_{it}$ ã§è¡¨ã™ã€‚
+
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\linewidth]{img/double.eps}
 \caption{
-–{Œ¤‹†‚Å‚ÍAdigital goods auction ‚Ì˜g‘g‚Ý‚ð—p‚¢‚ÄA•ñV‚ÌÅ“K”z•ª‚ðŽÀŒ»‚·‚éB
+Left: NaaA ã«ã‚ˆã‚‹å–å¼•ã®æµã‚Œã€‚
+Right: ãƒ¦ãƒ‹ãƒƒãƒˆã®ä¾¡æ ¼æ±ºå®šæ–¹æ³•ã€‚ãƒ¦ãƒ‹ãƒƒãƒˆã®åŽç›Šã¯å˜èª¿æ¸›å°‘ãªéœ€è¦ã¨ä¾¡æ ¼ã®ç©ã¨ãªã‚Šã€ã“ã‚Œã‚’æœ€å¤§åŒ–ã™ã‚‹ä¾¡æ ¼ãŒæœ€é©ä¾¡æ ¼ã¨ãªã‚‹ã€‚
 }
 \label{fig:double}
 \end{figure*}
 
-‚±‚ê‚Ü‚Å‚Ìƒjƒ…[ƒ‰ƒ‹ƒlƒbƒgƒ[ƒN‚Ì–Ú“I‚ÍA—\‘ªŒë· $e$ ‚É‚ ‚Á‚½B
-‚»‚Ì‚½‚ßAŠeƒ†ƒjƒbƒg‚ÍƒoƒbƒNƒvƒƒpƒQ[ƒVƒ‡ƒ“‚É‚æ‚Á‚Ä $\partial e / \partial y$ ‚ðŽó‚¯Žæ‚èA
-$e$ ‚ª¬‚³‚­‚È‚é•ûŒü‚É $y$ ‚Ì‘å‚«‚³‚ð§Œä‚µ‚Ä‚¢‚½B
-NaaA ‚É‚¨‚¢‚ÄAƒG[ƒWƒFƒ“ƒg‚Ì–Ú“I‚Í‘åˆæ“IŒë·‚ÌÅ¬‰»‚Å‚Í‚È‚­AƒG[ƒWƒFƒ“ƒgŽ©g‚Ì—˜‰v‚ÌÅ‘å‰»‚Å‚ ‚éB
-‚±‚±‚ÅA—˜‰v‚Æ‚ÍAƒG[ƒWƒFƒ“ƒg‚ªŽó‚¯Žæ‚é”„ã‚ÆAŽx•¥‚¤ƒRƒXƒg‚Ì·‚Å‚ ‚éB
-‚·‚È‚í‚¿AŠeƒG[ƒWƒFƒ“ƒg‚ÍŽŸ‚ÌŠÖ”‚ðÅ‘å‰»‚·‚éB
-\begin{flalign}
-R_t = r_t - c_t
-\end{flalign}
+Envy-free auction ã®æµã‚Œã‚’ Figure \ref{fig:double} ã®å·¦ã«ç¤ºã™ã€‚
+ã¾ãšã€ä¿¡å·ã‚’é€ä¿¡ã™ã‚‹å´ã‚’å£²ã‚Šæ‰‹ã€å—ä¿¡ã™ã‚‹å´ã‚’è²·ã„æ‰‹ã¨å‘¼ã¶ã€‚
+è²·ã„æ‰‹ã¯ãƒ¦ãƒ‹ãƒƒãƒˆã«å¯¾ã—ã¦å…¥æœ­ $b_{jit}$ ã‚’è¡Œã†(1)ã€‚æ¬¡ã«ã€å…¥æœ­é¡ã‚’ã‚‚ã¨ã«ã€å£²ã‚Šæ‰‹ã¯ä¾¡æ ¼ $\vect{q}_{it}$ ã‚’æ±ºå®šã—ã€å‰²å½“ã‚’è¡Œã†(2)ã€‚
+ã“ã®ã¨ãã€$b_{jit} \ge \vect{q}_{it}$ ã§ã‚ã‚Œã°å‰²å½“ã‚’è¡Œã£ã¦ $g_{jit} = 1$ ã¨ã—ã€ãã†ã§ãªã‘ã‚Œã° $g_{jit} = 0$ ã¨ã™ã‚‹ã€‚
+å‰²å½“ã‚’è¡Œã£ãŸå¾Œã¯ã€$\rho_{jit} = g_{jit} \vect{q}_{it}$ ã¨ã—ã¦ã€é€é‡‘ã‚’è¡Œã„(3)ã€
+å£²ã‚Šæ‰‹ã¯å‰²å½“ã‚’è¡Œã£ãŸãƒŽãƒ¼ãƒ‰ã«å¯¾ã—ã¦ã®ã¿ä¿¡å· $x_i$ ã‚’é€ä»˜ã™ã‚‹(4)ã€‚
+ä¿¡å·ã‚’å—ã‘å–ã‚Œãªã‹ã£ãŸãƒŽãƒ¼ãƒ‰ã¯ã€$x_i$ ã®æœŸå¾…å€¤ $\Expect{\pi}{x_i}$ ã«ã‚ˆã£ã¦ $x_i$ ã‚’è¿‘ä¼¼ã™ã‚‹ã€‚
 
-ƒG[ƒWƒFƒ“ƒg‚Ì–Ú“IŠÖ”‚ÍŽŸ‚Ì‚æ‚¤‚É•\Œ»‚³‚ê‚éB
-\begin{flalign}
-\Expect{\pi}{\sum_{i=0}^{T} \gamma^i (r_{t+i} - c_{t+i})}
-&= \Expect{\pi}{\sum_{i=0}^{T} \gamma^i r_{t+i}} -  \Expect{\pi}{\sum_{i=0}^{T} \gamma^ic_{t+i}} \\
-&= G_t^{\mathrm{in}} - G_t^{\mathrm{out}}
-\end{flalign}
-‚½‚¾‚µA$G_t^{\mathrm{in}} \equiv \Expect{\pi}{\sum_{i=0}^{T} \gamma^i r_{t+i}}$A
-$G_t^{\mathrm{out}} \equiv \Expect{\pi}{\sum_{i=0}^{T} \gamma^ic_{t+i}}$ ‚Å‚ ‚éB
-‚±‚ÌŽ®‚ÍAƒG[ƒWƒFƒ“ƒg‚ªI’[ó‘Ô‚Ü‚Å‚É¶‚Ýo‚µ‚½•t‰Á‰¿’l‚É“™‚µ‚¢B
-‚±‚ê‚ðs‚¤‚½‚ß‚ÉAƒG[ƒWƒFƒ“ƒg‚Í”„ã‚ÌÅ‘å‰»‚ÆƒRƒXƒg‚ÌÅ¬‰»‚ð“¯Žž‚És‚¤‚±‚Æ‚ª‚í‚©‚éB
+%ã“ã®éŽç¨‹ã¯ã€æœ¬ã‚„éŸ³æ¥½ãªã©ã®ã€è¤‡è£½å¯èƒ½è²¡ã€digital goods ã‚’å¯¾è±¡ã«ã—ãŸã‚ªãƒ¼ã‚¯ã‚·ãƒ§ãƒ³ç†è«– digital goods auction ã«ãŠã„ã¦ã€
+%envy-free auction ã¨ã—ã¦çŸ¥ã‚‰ã‚Œã¦ã„ã‚‹ã€‚
+%å¾Œã§ç¤ºã™ã‚ˆã†ã«ã€ã“ã®ã‚·ãƒ³ãƒ—ãƒ«ãªå‰æã®ã¿ã§ã‚¸ãƒ¬ãƒ³ãƒžã®å•é¡ŒãŒè§£æ±ºã™ã‚‹ã€‚
 
-‚±‚ÌŽ®‚ð’Êí‚Ì˜g‘g‚Ý‚É‰ˆ‚Á‚Ä‰ð‚­‚ÆAƒRƒXƒgÅ¬‰»‚É‚æ‚Á‚ÄƒG[ƒWƒFƒ“ƒg‚Í‘¼‚ÌƒG[ƒWƒFƒ“ƒg‚É‘Î‚µ‚Ä‹àŠz‚ðŽx•¥‚í‚È‚¢‚±‚Æ‚ª³‰ð‚Æ‚È‚éB
-‚»‚Ì‚½‚ßA‚·‚×‚Ä‚ÌƒG[ƒWƒFƒ“ƒg‚ªƒtƒŠ[ƒ‰ƒCƒ_[‚Æ‚È‚èA‘S‘Ì‚Æ‚µ‚Ä‚Ì•ñV‚ª‰º‚ª‚é‚Æ‚¢‚¤AƒpƒŒ[ƒg—òˆÊ–â‘è‚ª”­¶‚·‚éB
-NaaA ‚Å‚Í‚±‚ê‚ð‰ñ”ð‚·‚é‚½‚ßAƒI[ƒNƒVƒ‡ƒ“‚ÌŽd‘g‚Ý‚ð—p‚¢‚ÄA“¯‚¶ƒ†ƒjƒbƒg‚Ìo—Íæ‚É‚ ‚éƒ†ƒjƒbƒg‚ð‹£‘ˆ‚³‚¹‚é‚±‚Æ‚É‚æ‚Á‚ÄÅ“K‰¿Ši‚ðŒˆ’è‚·‚éB
 
-à–¾‚ð’Pƒ‰»‚·‚é‚½‚ß‚ÉADQN ‚Ì‚æ‚¤‚È $l$ ‘w‚©‚ç‚È‚éƒtƒB[ƒhƒtƒHƒ[ƒhƒlƒbƒgƒ[ƒN‚ðl‚¦‚éB
-‚È‚¨A”CˆÓ‚ÌDAG \‘¢iŽžŠÔ•ûŒü‚É“WŠJ‚³‚ê‚½ RNN ‚âƒzƒbƒvƒtƒB[ƒ‹ƒhƒlƒbƒgƒ[ƒNj‚Å‚à“¯—l‚Ì‚±‚Æ‚ðl‚¦‚ç‚ê‚é‚½‚ßˆê”Ê«‚ðŽ¸‚í‚È‚¢B
-ŠeƒG[ƒWƒFƒ“ƒg‚ªŽó‚¯Žæ‚é•ñV‚Ì‘˜a‚Í‚ªŠÂ‹«‚ª—^‚¦‚é•ñV‚É‘Î‚µ‚Ä“™‚µ‚¢•K—v‚ª‚ ‚éB‚·‚È‚í‚¿AŽŸ‚ÌŽ®‚ª¬—§‚·‚éB
-\begin{flalign}
-R_{S,t} = \sum_{i \in S} R_{it}
-\end{flalign}
-Å“K‚È•ª”z•û–@‚Æ‚µ‚Ä‚Í‚¢‚­‚Â‚©l‚¦‚ç‚ê‚é‚ªA‚±‚±‚Å‚ÍŒn‘S‘Ì‚©‚çƒG[ƒWƒFƒ“ƒg‚ðŽæ‚èœ‚¢‚½ê‡‚ÌŠú‘Ò‘¹Ž¸ $D_{it}$ ‚É‚ð$R_{it}$ ‚ð‹ß‚Ã‚¯‚é‚Æ‚¢‚¤•û–@‚ðŽæ‚é\cite{needed}B
-‚±‚Ì•û–@‚Å‚ÍA‚·‚×‚Ä‚ÌƒG[ƒWƒFƒ“ƒg‚ª“Æ—§‚É•ñV‚ÉvŒ£‚µ‚Ä‚¢‚éê‡‚ÉA$ \sum_{i \in S} D_{it} = R_{S, t}$ ‚ª¬—§‚·‚é
-
-¡‰ñ‚ÍA§–ñðŒ‚Æ‚µ‚ÄA•ñV‚ÍM†“¯Žm‚ÌŽæˆø‚É‚æ‚Á‚Ä—^‚¦‚ç‚ê‚é‚Æ‚¢‚¤‚à‚Ì‚ð‰Á‚¦‚éB	% “V‰º‚è“IB‚È‚º‰Á‚¦‚é‚©‚Ìà–¾‚ª‚È‚Á‚Ä‚¢‚È‚¢B
-‚µ‚½‚ª‚Á‚ÄAƒjƒ…[ƒƒ“‚ÍA‚»‚±‚ÅAƒAƒNƒ`ƒ…ƒG[ƒ^ 0 ‚ÆÚ‘±‚µ‚Ä‚¢‚é•¡”‚Ìƒ†ƒjƒbƒgW‡ $F_0 \subset S$ ‚ðl‚¦‚éB
-‚±‚ÌŽžAƒAƒNƒ`ƒ…ƒG[ƒ^‚Í“¾‚ç‚ê‚½•ñV‚Ì‚¤‚¿AŽŸ‚Ì‚æ‚¤‚É‚µ‚ÄŠeƒm[ƒh‚Ö‚Ì•ª”z‚ðs‚¤B
-\begin{flalign}
-R_{0t} = \sum_{i \in V_0} r_{it}
-\end{flalign}
-‚½‚¾‚µA$r_{it}$ ‚ÍvŒ£“x‚É‰ž‚¶‚½•ñVŠz‚Å‚ ‚éB
-ŽŸ‚ÉAƒ†ƒjƒbƒg $i$ ‚ÍŒvŽZ‚É•K—v‚Èƒf[ƒ^‚ðuw“üv‚·‚é‚½‚ß‚ÉAÚ‘±‚³‚ê‚Ä‚¢‚éi‚·‚È‚í‚¿ $V_i$ ‚ÉŠÜ‚Ü‚ê‚éj‘¼‚Ìƒ†ƒjƒbƒg‚É‘Î‚µ‚ÄA•ñV‚ðŽŸ‚Ì‚æ‚¤‚É‚µ‚Ä•ª”z‚·‚é‚±‚Æ‚ðl‚¦‚éB
-\begin{flalign}
-c_{it} = \sum_{j \in V_i} r_{jt} + \alpha_{jt}
-\end{flalign}
-‚½‚¾‚µA$\alpha_i$ ‚Í $c_{it}$ ‚ª–{Ž¿“I‚É”õ‚¦‚Ä‚¢‚éƒRƒXƒgiŠÏ‘ªƒRƒXƒgAŒvŽZƒRƒXƒgj‚Å‚ ‚éB
-‚±‚ÌŽd‘g‚Ý‚ðÄ‹A“I‚ÉŒJ‚è•Ô‚µA“ü—Í‘w‚Ü‚ÅŒJ‚è•Ô‚·‚ÆAŽŸ‚ÌŽ®‚ª¬—§‚·‚éB
-\begin{flalign}
-R_{0t} = \sum_{i \in V_0} r_{it} = \sum_{i \in S} (r_{it} - c_{it}) 
-\end{flalign}
-‚µ‚½‚ª‚Á‚ÄA$R_{it} = r_{it} - c_{it}$ ‚ª¬—§‚·‚éB
-%‚±‚ê‚ÍA•ñV‚Í‚·‚×‚Ä‚Ìƒm[ƒh‚ªA‰ºˆÊ‚Ìƒ†ƒjƒbƒg‚©‚çŽó‚¯Žæ‚Á‚½M†‚É‘Î‚µ‚Ä—^‚¦‚½•t‰Á‰¿’l‚Ì‡Œv‚É“™‚µ‚¢B
-‚±‚ÌŽ®‚ÍA$R_{0t}$ ‚ÍAŠeƒ†ƒjƒbƒg‚ª¶‚Ýo‚µ‚½•t‰Á‰¿’l $r_{it} - c_{it}$ ‚Ì‡Œv‚Æ‚µ‚Ä•\Œ»‚³‚ê‚é‚±‚Æ‚ðˆÓ–¡‚µ‚Ä‚¢‚éB
-
-‚±‚Ì•t‰Á‰¿’l‚Ì‚±‚Æ‚ðANaaA ‚Å‚ÍŒoÏŠw‚Ìƒƒ^ƒtƒ@[‚ð—p‚¢‚ÄA—˜‰v(profit)‚ÆŒÄ‚ÔB
-—˜‰v‚Í‹­‰»ŠwK‚É‚¨‚¢‚Ä’Ç‹‚Ì‘ÎÛ‚Æ‚È‚é•ñV(reward)‚É‘Š“–‚·‚éB
-“¯—l‚ÉA$r_t$ ‚ðŽû‰v(revenue)A$c_t$ ‚ðƒRƒXƒg(cost)‚ÆŒÄ‚ÔB
-‚·‚È‚í‚¿ANaaA ‚Ì˜g‘g‚Ý‚Å‚ÍAŠeƒG[ƒWƒFƒ“ƒg‚Í—˜‰v‚ÌÅ‘å‰»‚ð–Ú“I‚Æ‚µ‚ÄAŽû‰vÅ‘å‰»‚ÆƒRƒXƒgÅ¬‰»‚ð“¯Žž‚És‚¤‚±‚Æ‚É‚È‚éB
-
-’Êí‚Ìƒjƒ…[ƒ‰ƒ‹ƒlƒbƒgƒ[ƒN‚Ì˜g‘g‚Ý‚ð—p‚¢‚ÄÅ“K‰»‚ðs‚¤‚ÆA
-‚·‚×‚Ä‚ÌƒG[ƒWƒFƒ“ƒg‚ªŽx•¥‚¤ƒRƒXƒg‚Í 0 ‚ÉŽû‘©‚·‚éB
-‚µ‚½‚ª‚Á‚ÄA‚±‚ÌÅ“K‰»–â‘è‚ÌŽ©–¾‚ÈƒiƒbƒVƒ…‹Ït‰ð‚Æ‚µ‚Ä“¾‚ç‚ê‚é‚Ì‚ÍA
-‚·‚×‚Ä‚Ìƒ†ƒjƒbƒg‚É‘Î‚·‚é•ñV‚ª 0 ‚Å‚ ‚èAƒAƒNƒ`ƒ…ƒG[ƒ^[‚Ì‚Ý‚ª•ñV‚ðŠl“¾‚·‚é‚Æ‚¢‚¤ó‹µ‚Å‚ ‚éB
-‚±‚ê‚Í”F’m‚â“ü—Í‚ðŒyŽ‹‚µ‚½]—ˆ‚Ìó‹µ‚Æ‡’v‚·‚éB
-
-]—ˆ‚Í‚±‚ê‚Å‚à‚æ‚©‚Á‚½‚ªA“ü—Í‚ÉƒRƒXƒg‚ª¶‚¶‚éê‡AƒpƒŒ[ƒg—òˆÊ‚Èó‹µ‚ª¶‚¶‚éB
-‚·‚È‚í‚¿A“ü—Íƒ†ƒjƒbƒg‚É‘Î‚µ‚Ä•ñV‚ª—^‚¦‚ç‚ê‚È‚¢‚ÆA“ü—Í‘¤‚ÌƒCƒ“ƒZƒ“ƒeƒBƒu‚ª‚È‚­‚È‚èA$R_{it} = -\alpha_{it}$ ‚Æ‚È‚éB
-‚±‚Ìê‡A“ü—Íƒ†ƒjƒbƒg‚ÍŠÏ‘ª‚ð‚µ‚È‚¢•û‚ª‚æ‚¢‚Æ‚¢‚¤”»’f‚É‚È‚èAo—Í‚ð’âŽ~‚·‚éB
-‚»‚ÌŒ‹‰ÊAƒAƒNƒ`ƒ…ƒG[ƒ^[‘¤‚Å‚ÍAs“®‚ÌŒˆ’è‚É•K—v‚Èƒf[ƒ^‚ª‚¢‚«‚í‚½‚ç‚È‚­‚È‚èA•ñV‚ª’á‚­‚È‚éB
-‚±‚¤‚µ‚½ó‹µ‚ð”ð‚¯‚é‚½‚ß‚ÉAŠú‘Ò•ñV‚ª•‰‚Å‚ ‚éê‡AƒG[ƒWƒFƒ“ƒg‚Ís“®‚µ‚È‚¢B
-
-‚±‚ê‚ð”ð‚¯‚é‚½‚ß‚ÉANaaA ‚Å‚ÍƒI[ƒNƒVƒ‡ƒ“‚ÌŽd‘g‚Ý‚ð—p‚¢‚ÄŽ‘Œ¹‚ÌÅ“K”z•ª‚ðs‚¤B
-
-%‚µ‚½‚ª‚Á‚ÄAŽŸ‚ÌŽ®‚ª¬—§‚·‚é•K—v‚ª‚ ‚éB
-%‚±‚ê‚ð•ÏŒ`‚·‚é‚ÆAŽŸ‚Ì‚æ‚¤‚É‚È‚éB
-%\begin{flalign}
-%R_{jt} = R_{Nt} - \sum_{i=1, i \ne j}^n R_{it} = R_{Nt} - R_{N-\{j\}, t}
-%\end{flalign}
-%’¼Š´“I‚É‚ÍA$R_{jt}$ ‚Í N ‚©‚ç $j$ ‚ðœ‚¢‚½Œn‚Å“¾‚ç‚ê‚é•ñV‚É“™‚µ‚¢‚½‚ßAƒG[ƒWƒFƒ“ƒg $j$ ‚ª—^‚¦‚é•t‰Á‰¿’l‚Æ‚µ‚Ä‚Æ‚ç‚¦‚é‚±‚Æ‚ª‚Å‚«‚éB
-%\begin{flalign}
-%\sum_{i=1}^n r_{it} = \sum_{i=1}^n c_{it}
-%\end{flalign}
-
-%g% ‰½‚ªˆÙ‚È‚é‚©
-%gNaaA ‚É‚¨‚¯‚éƒ†ƒjƒbƒg‚ª‚±‚ê‚Ü‚Å‚Ìƒ†ƒjƒbƒg‚ÆˆÙ‚È‚é“_‚ÍA
-%gƒ†ƒjƒbƒgŠÔ‚Ì’ÊM‚ªM†‚Ìˆê•û“I‚È—¬‚ê‚Å‚Í‚È‚­AŽæˆøA
-%g‚·‚È‚í‚¿M†‚ÆŽ‘‹à‚ÌŒðŠ·‚Å‚ ‚é“_‚Å‚ ‚éB
-%g%ƒ†ƒjƒbƒg‚ª‘¼‚Ìƒ†ƒjƒbƒg‚©‚çM†‚ðŽó‚¯Žæ‚éÛ‚ÍAŽ‘‹à‚ð•¥‚¤•K—v‚ª‚ ‚éB
-%g
-%gà–¾‚ðŠÈ’P‚É‚·‚é‚½‚ß‚ÉAÅ‰‚É 2 ‚Â‚Ìƒ†ƒjƒbƒg‚Å\¬‚³‚ê‚é”„‚èŽè-”ƒ‚¢Žèƒ‚ƒfƒ‹(seller-buyer model)‚ðl‚¦‚éB
-%g‚±‚Ìƒ‚ƒfƒ‹‚ÍA”„‚èŽè‚Ìƒ†ƒjƒbƒg‚ªM†‚ðŒvŽZ‚µAŒvŽZ‚µ‚½’l‚É‘Î‚µ‚Ä’l’i‚ð•t‚¯‚Ä”ƒ‚¢Žè‚É‘Î‚µ‚Ä’ñŽ¦(ask)‚·‚éB
-%g”ƒ‚¢Žè‚ÍA”ƒŽæ‰¿Ši‚ð“üŽD(bid)‚·‚éB‚à‚µAŠó–]‰¿Ši(ask price)‚ª“üŽD‰¿Ši(bid price)‚ð‰º‰ñ‚ê‚ÎAŠó–]‰¿Ši‚Æ“üŽD‰¿Ši‚ÌŠÔ‚Ì‰¿Ši‚Å‡ˆÓ‚µA”ƒ‚¢Žè‚Í”„‚èŽè‚É‘Î‚µ‚Ä‰¿Ši‚ðl‚¦‚éB
-%gSeller-buyer ƒ‚ƒfƒ‹‚Ì–â‘è‚ÍA”ƒ‚¢Žè‚ª’lØ‚ê‚Ä‚µ‚Ü‚¤‚±‚Æ‚Å‚ ‚éB
-%g‚±‚ê‚Í‘Îí—ª«‚ðŽ‚½‚È‚¢‚ÆŒÄ‚Î‚ê‚éB
-%gŠó–]‰¿Ši‚ðŒˆ’è‚·‚éª‹’‚ðŽ‚½‚È‚¢“_‚É‚ ‚éB
-%g
-%gNaaA ‚Å‚ÍAƒ†ƒjƒbƒg‚Ìo—Í‚ðAƒfƒWƒ^ƒ‹àA‚·‚È‚í‚¿A‹Ÿ‹‹‚ª–³ŒÀ‚É‘¶Ý‚·‚éà‚Æ‚Ý‚È‚µ‚½Ž‘Œ¹‚ÌÅ“K”z•ª‚É‚Â‚¢‚Äl‚¦‚éB
-%gƒƒJƒjƒYƒ€ƒfƒUƒCƒ“‚Å‚ÍAŠÂ‹«‚Í $(N, \Theta, 0)$ ‚Å•\Œ»‚³‚ê‚éB
-%g
-%g‚±‚±‚Åd—v‚È‚Ì‚ÍAÅ“K‚È‰¿Ši‚ÌŒˆ’è•û–@‚Å‚ ‚éB
-%gŽŸ‚ÉAˆê‚Â‚Ìƒ†ƒjƒbƒg‚Æ•¡”‚Ìƒ†ƒjƒbƒg‚©‚ç‚È‚éƒ‚ƒfƒ‹Aseller-buyers ƒ‚ƒfƒ‹‚ðl‚¦‚éB
-%gˆê‚Â‚Ìƒ†ƒjƒbƒg‚ÍA•¡”‚Ìƒ†ƒjƒbƒg‚É‘Î‚µ‚ÄAî•ñ‚ð”„‚éB
-%g
-%gƒ†ƒjƒbƒg‚Í“ü—Íƒ†ƒjƒbƒg‚É‘Î‚µ‚ÄA
-%gŽæˆø‚ÍAƒ†ƒjƒbƒg‚Í‘¼‚Ìƒjƒ…[ƒƒ“‚É‘Î‚µ‚Ä’è‰¿
-%go—Í’l‚ÍA‘¼‚Ìƒ†ƒjƒbƒg‚É‘Î‚µ‚Ä‚»‚Ìƒ†ƒjƒbƒg‚Ì’è‰¿ $a_it$ ‚Å”„‹p‚·‚é
-%g‚µ‚½‚ª‚Á‚ÄA
+%NaaA ã«ã‚ˆã‚‹å–å¼•ã®æµã‚Œã‚’å›³\ref{fig:double}ã«ç¤ºã™ã€‚
 
 %========================================
-% ”„ã
+% å£²ä¸Š
 %========================================
 
-‚±‚±‚ÅA”„ã‚ÆƒRƒXƒg‚Ì‘I’è•û–@‚É‚Â‚¢‚Ä•ª‚¯‚Äà–¾‚ðs‚¤B
-‚Ü‚¸A”„ã‚É‚Â‚¢‚Äl‚¦‚éBƒG[ƒWƒFƒ“ƒg‚Í—˜‰v‚ðÅ‘å‰»‚µ‚½‚¢‚½‚ßA—˜‰v‚ÍŽŸ‚Ì‚æ‚¤‚É‚µ‚Ä—^‚¦‚ç‚ê‚éB
+ã“ã“ã§ã€å£²ä¸Šã¨ã‚³ã‚¹ãƒˆã®é¸å®šæ–¹æ³•ã«ã¤ã„ã¦åˆ†ã‘ã¦èª¬æ˜Žã‚’è¡Œã†ã€‚
+ã¾ãšã€å£²ä¸Šã«ã¤ã„ã¦è€ƒãˆã‚‹ã€‚ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã¯åˆ©ç›Šã‚’æœ€å¤§åŒ–ã—ãŸã„ãŸã‚ã€åˆ©ç›Šã¯æ¬¡ã®ã‚ˆã†ã«ã—ã¦ä¸Žãˆã‚‰ã‚Œã‚‹ã€‚
 \begin{flalign}
-	r_{it} = \max_{ a \ge 0 } a d_t(a) 
+	r_{it}  &= \sum_{j \in N^\mathrm{in}_i} g(b_{jit}, q_i) q_i + R^\mathrm{ex}_i  = q_i \sum_{j \in N^\mathrm{in}_i} g(b_{ji}, q_i)  + R^\mathrm{ex}_i \notag \\
+		&= q_i d_t(q_t) + R^\mathrm{ex}_i
 \end{flalign}
-‚±‚±‚ÅA$a$ ‚Í‰¿ŠiA$d_t(a)$ ‚Íƒ†ƒjƒbƒg $i$ ‚ÌM†‚É‘Î‚·‚é‰¿’l‚ð $a$ ˆÈã‚Æ•]‰¿‚µ‚Ä‚¢‚éƒG[ƒWƒFƒ“ƒg‚Ì”‚Å‚ ‚èAŽù—v(demand)‚ÆŒÄ‚ÔB
-“¯—l‚ÌŽ®‚ÅA‰E•Ó‚ðÅ‘å‰»‚·‚é $a$ ‚ðÅ“K‰¿Ši‚ÆŒÄ‚ÑA$ \hat{a}_{it} $ ‚Å•\‚·B 
+ã“ã“ã§ã€$a$ ã¯ä¾¡æ ¼ã€$d_t(a)$ ã¯ãƒ¦ãƒ‹ãƒƒãƒˆ $i$ ã®ä¿¡å·ã«å¯¾ã™ã‚‹ä¾¡å€¤ã‚’ $a$ ä»¥ä¸Šã¨è©•ä¾¡ã—ã¦ã„ã‚‹ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã®æ•°ã§ã‚ã‚Šã€éœ€è¦(demand)ã¨å‘¼ã¶ã€‚
+åŒæ§˜ã®å¼ã§ã€å³è¾ºã‚’æœ€å¤§åŒ–ã™ã‚‹ $a$ ã‚’æœ€é©ä¾¡æ ¼ã¨å‘¼ã³ã€$ \hat{a}_{it} $ ã§è¡¨ã™ã€‚ 
+ã—ãŸãŒã£ã¦ã€æœ€é©ä¾¡æ ¼ $\hat{q}_{it}$ ã¯æ¬¡ã®ã‚ˆã†ã«ã—ã¦ä¸Žãˆã‚‰ã‚Œã‚‹ã€‚
+\begin{flalign}
+	\hat{q}_{it}  = \mathrm{argmax} q_{it} d_t(q_{it})
+\end{flalign}
+ã“ã®ä»•çµ„ã¿ã‚’ã€Figure \ref{fig:double} ã®å³ã«å›³ç¤ºã™ã‚‹ã€‚$d_t(q_{it})$ ã¯å˜èª¿æ¸›å°‘ãªé–¢æ•°ã§ã‚ã‚Šã€$q_{it}$ ã¨ã®ç©ã«ã‚ˆã£ã¦è¡¨ç¾ã•ã‚Œã‚‹ã€‚
 
 
 %========================================
-% ƒRƒXƒg
+% ã‚³ã‚¹ãƒˆ
 %========================================
 
-ŽŸ‚ÉAƒRƒXƒg‚É‚Â‚¢‚Äl‚¦‚éB
-ƒG[ƒWƒFƒ“ƒg‚ª‘¼‚ÌƒG[ƒWƒFƒ“ƒg‚É‘Î‚µ‚ÄŽx•¥‚¤ƒRƒXƒg‚ÍA
-w“ü‚É¬Œ÷‚µ‚½ê‡‚Í”„‚èŽè‚Ì’ñŽ¦‰¿Ši $\hat{a}_{it}$ ‚ðŽx•¥‚¢A
-‚»‚¤‚Å‚È‚¢ê‡‚ÍŽx•¥‚¤ƒRƒXƒg‚Í 0 ‚É‚È‚éB
-ƒRƒXƒgÅ¬‰»‚Ì˜g‘g‚Ý‚©‚çl‚¦‚é‚ÆAŽx•¥‚¤ƒRƒXƒg‚ª 0 ‚Å‚ ‚é•ûŒü‚ð‘I‚Ô‚±‚Æ‚ª‚ ‚é‚ªA
-ƒG[ƒWƒFƒ“ƒg‚Íí‚Éƒf[ƒ^‚ðw“ü‚µ‚È‚¢‘I‘ð‚ð‚·‚é‰Â”\«‚ª‚ ‚éB
-‚µ‚©‚µA‚±‚ê‚ÍöÝ“I‚É‚Í«—ˆ‚Ì”„‚èã‚°‚ðŠü‘¹‚µ‚Ä‚¢‚é‚±‚Æ‚É‚È‚éB
-ƒf[ƒ^‚ðw“ü‚¹‚¸A—òˆ«‚Èƒf[ƒ^‚ð—¬‚µ‚½ê‡‚Ì”„ã‚Ì’á‰º‚ðl‚¦‚éB
-‚±‚ê‚ÍA³‚µ‚¢ƒf[ƒ^‚ðw“ü‚µ‚½ê‡‚Æ‚»‚¤‚Å‚È‚¢ê‡‚Ì’·Šú $r_{it}$ ‚Ì·‚É“™‚µ‚¢B
-‚·‚È‚í‚¿A
-%FIXME ‘½•ª‚±‚±‚ÍŠú‘Ò’l‚¶‚á‚È‚­‚ÄƒŠƒ^[ƒ“‚»‚Ì‚à‚Ì‚È‚Ì‚Å‚»‚Ì‚æ‚¤‚ÉC³‚·‚éiÅ‰‚ÉƒŠƒ^[ƒ“‚ðŽg‚Á‚½ƒƒWƒbƒN‚Åà–¾‚µ‚Ä‚¢‚é‚½‚ßj
+æ¬¡ã«ã€ã‚³ã‚¹ãƒˆã«ã¤ã„ã¦è€ƒãˆã‚‹ã€‚
+ã“ã‚Œã¯ã€æ­£ã—ã„ãƒ‡ãƒ¼ã‚¿ã‚’è³¼å…¥ã—ãŸå ´åˆã¨ãã†ã§ãªã„å ´åˆã®æœŸå¾…ãƒªã‚¿ãƒ¼ãƒ³ $G_{it}$ ã®å·®ã«ç­‰ã—ã„ã€‚
+ã™ãªã‚ã¡ã€
+%FIXME å¤šåˆ†ã“ã“ã¯æœŸå¾…å€¤ã˜ã‚ƒãªãã¦ãƒªã‚¿ãƒ¼ãƒ³ãã®ã‚‚ã®ãªã®ã§ãã®ã‚ˆã†ã«ä¿®æ­£ã™ã‚‹ï¼ˆæœ€åˆã«ãƒªã‚¿ãƒ¼ãƒ³ã‚’ä½¿ã£ãŸãƒ­ã‚¸ãƒƒã‚¯ã§èª¬æ˜Žã—ã¦ã„ã‚‹ãŸã‚ï¼‰
 \begin{flalign}
 	o_t 
-	&= \Expect{\pi}{ r_{i,t+1} \mid a_t=1 } - \Expect{\pi}{ r_{i,t+1} \mid a_t=0 } \\
-	&= \Expect{\pi}{ R_{i,t+1} \mid a_t=1 } - \Expect{\pi}{ R_{i,t+1} \mid a_t=0 } \\
+	&= \Expect{\pi}{ r_{i,t+1} \mid a_t=1 } - \Expect{\pi}{ r_{i,t+1} \mid a_t=0 } \notag \\
+	&= \Expect{\pi}{ R_{i,t+1} \mid a_t=1 } - \Expect{\pi}{ R_{i,t+1} \mid a_t=0 } \notag \\
 	&= Q(s_t, 1) - Q(s_t, 0) \label{eq:def:oppotunity-cost},
 \end{flalign}
-‚½‚¾‚µA$Q$ ‚Íó‘Ôs“®‰¿’lŠÖ”‚Å‚ ‚èAˆêŽèæ‚ÌƒRƒXƒg‚Í‚Ç‚¿‚ç‚Ìs“®‚ð‘I‚ñ‚Å‚àˆê’è‚Å‚ ‚é‚Æ‰¼’è‚µ‚Ä‚¢‚éB
-$o_{it}$ ‚ð counterfractual state-action value ‚ÆŒÄ‚ÔB‚±‚ê‚Í QUICR \citep{agogino2006quicr} ‚Æ“±o‚ÍˆÙ‚È‚é‚ª“™‰¿‚Å‚ ‚éB
-‚·‚È‚í‚¿AƒG[ƒWƒFƒ“ƒg‚ªŽx•¥‚¤ƒRƒXƒg‚ÍAƒf[ƒ^‚Ìw“ü‚É¬Œ÷‚µ‚½ê‡‚Í $\hat{a}_{it}$ ‚Å‚ ‚èA
-‚»‚êˆÈŠO‚Í $o_{it}$ ‚Æ‚È‚éB
+ãŸã ã—ã€$Q$ ã¯çŠ¶æ…‹è¡Œå‹•ä¾¡å€¤é–¢æ•°ã§ã‚ã‚Šã€ä¸€æ‰‹å…ˆã®ã‚³ã‚¹ãƒˆã¯ã©ã¡ã‚‰ã®è¡Œå‹•ã‚’é¸ã‚“ã§ã‚‚ä¸€å®šã§ã‚ã‚‹ã¨ä»®å®šã—ã¦ã„ã‚‹ã€‚
+$o_{it}$ ã‚’ counterfractual state-action value ã¨å‘¼ã¶ã€‚ã“ã‚Œã¯ QUICR \citep{agogino2006quicr} ã¨å°Žå‡ºã¯ç•°ãªã‚‹ãŒç­‰ä¾¡ã§ã‚ã‚‹ã€‚
+ã™ãªã‚ã¡ã€ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆãŒæ”¯æ‰•ã†ã‚³ã‚¹ãƒˆã¯ã€ãƒ‡ãƒ¼ã‚¿ã®è³¼å…¥ã«æˆåŠŸã—ãŸå ´åˆã¯ $\hat{a}_{it}$ ã§ã‚ã‚Šã€
+ãã‚Œä»¥å¤–ã¯ $o_{it}$ ã¨ãªã‚‹ã€‚
 
-‚Å‚ÍAƒRƒXƒg‚ðÅ¬‰»‚·‚é‚½‚ß‚ÌƒG[ƒWƒFƒ“ƒg‚Ì“üŽDŠz $b_{it}$ ‚Í‰½‚©B
-‚±‚ê‚É‚Â‚¢‚Ä‚ÍŽŸ‚Ì’è—‚ª¬—§‚·‚éB
+ã§ã¯ã€ã‚³ã‚¹ãƒˆã‚’æœ€å°åŒ–ã™ã‚‹ãŸã‚ã®ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã®å…¥æœ­é¡ $b_{it}$ ã¯ä½•ã‹ã€‚
+ã“ã‚Œã«ã¤ã„ã¦ã¯æ¬¡ã®å®šç†ãŒæˆç«‹ã™ã‚‹ã€‚
 
 \begin{thm}\label{thm:optimal-bidding}
-ƒRƒXƒg‚ðÅ¬‰»‚·‚éÅ“K‚È“üŽDŠz‚Í $b_{it} = o_{it}$ ‚Å‚ ‚éB
+ã‚³ã‚¹ãƒˆã‚’æœ€å°åŒ–ã™ã‚‹æœ€é©ãªå…¥æœ­é¡ã¯ $b_{it} = o_{it}$ ã§ã‚ã‚‹ã€‚
 \end{thm}
-Ø–¾‚É‚Â‚¢‚Ä‚Í Appendix ‚ðŽQÆB
+è¨¼æ˜Žã«ã¤ã„ã¦ã¯ Appendix ã‚’å‚ç…§ã€‚
 
-‚·‚È‚í‚¿AƒG[ƒWƒFƒ“ƒg‚ÍŽ©g‚Ì‹@‰ï‘¹Ž¸‚Ì‚Ý‚ð–â‘è‚É‚·‚ê‚Î‚æ‚¢(!)
-‚µ‚½‚ª‚Á‚ÄANaaA ‚ÌƒƒJƒjƒYƒ€‚Å‚ÍAƒG[ƒWƒFƒ“ƒg‚Í‚ ‚½‚©‚à‘¼‚ÌƒG[ƒWƒFƒ“ƒg‚ð‰¿’l•]‰¿(valuation)‚µA
-‚»‚Ì‰¿’l‚ð³’¼‚É\‚µ‚Ä‚¢‚é‚±‚Æ‚ðˆÓ–¡‚·‚éB
+ã™ãªã‚ã¡ã€ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã¯è‡ªèº«ã®æ©Ÿä¼šæå¤±ã®ã¿ã‚’å•é¡Œã«ã™ã‚Œã°ã‚ˆã„(!)
+ã—ãŸãŒã£ã¦ã€NaaA ã®ãƒ¡ã‚«ãƒ‹ã‚ºãƒ ã§ã¯ã€ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã¯ã‚ãŸã‹ã‚‚ä»–ã®ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã‚’ä¾¡å€¤è©•ä¾¡(valuation)ã—ã€
+ãã®ä¾¡å€¤ã‚’æ­£ç›´ã«ç”³å‘Šã—ã¦ã„ã‚‹ã“ã¨ã‚’æ„å‘³ã™ã‚‹ã€‚
 
-Œn‚Æ‚µ‚ÄŽŸ‚Ì‰ð‚ª“¾‚ç‚ê‚éB
+ç³»ã¨ã—ã¦æ¬¡ã®è§£ãŒå¾—ã‚‰ã‚Œã‚‹ã€‚
 \begin{coro}\label{coro:optimal-bidding}
 The Nash equivalem of the envy-free game $(\vect{b}, q)$ is $(\vect{o}_t, \max_{q} q d_{\vect{o}_t}(q))$.
 \end{coro}
 
-%TODO o_t ‚ÌƒOƒ‰ƒEƒ“ƒh‚ð‚·‚éBÅ‰‚É–]‚Ü‚µ‚¢”z•ª v ‚ðq‚×A‚»‚ÌŒã‚Åd—v«‚É‚Â‚¢‚Ä‰ðà‚·‚éB
+%TODO o_t ã®ã‚°ãƒ©ã‚¦ãƒ³ãƒ‰ã‚’ã™ã‚‹ã€‚æœ€åˆã«æœ›ã¾ã—ã„é…åˆ† v ã‚’è¿°ã¹ã€ãã®å¾Œã§é‡è¦æ€§ã«ã¤ã„ã¦è§£èª¬ã™ã‚‹ã€‚
 
 
 \subsection{Valuation Net}
@@ -250,54 +211,54 @@ The Nash equivalem of the envy-free game $(\vect{b}, q)$ is $(\vect{o}_t, \max_{
 \centering
 \includegraphics[width=\linewidth]{img/network.eps}
 \caption{
-Valuationn Net ‚Íî•ñ‚Ì‰¿’l‚ð•]‰¿‚µAbidding price ‚ðŒˆ’è‚·‚éB
-‰ºˆÊ‚Ìƒjƒ…[ƒƒ“‚É‘Î‚µ‚Ä“üŽD‚µAM†‚ðw“ü‚·‚éBw“ü‚µ‚½ƒf[ƒ^‚ð—p‚¢‚ÄAƒf[ƒ^‚ðŽŸ‚Ìƒjƒ…[ƒƒ“‚É‘Î‚µ‚Ä”„‚éB
+Valuationn Net ã¯æƒ…å ±ã®ä¾¡å€¤ã‚’è©•ä¾¡ã—ã€bidding price ã‚’æ±ºå®šã™ã‚‹ã€‚
+ä¸‹ä½ã®ãƒ‹ãƒ¥ãƒ¼ãƒ­ãƒ³ã«å¯¾ã—ã¦å…¥æœ­ã—ã€ä¿¡å·ã‚’è³¼å…¥ã™ã‚‹ã€‚è³¼å…¥ã—ãŸãƒ‡ãƒ¼ã‚¿ã‚’ç”¨ã„ã¦ã€ãƒ‡ãƒ¼ã‚¿ã‚’æ¬¡ã®ãƒ‹ãƒ¥ãƒ¼ãƒ­ãƒ³ã«å¯¾ã—ã¦å£²ã‚‹ã€‚
 }
 \label{fig:network}
 \end{figure*}
 
-Žc‚é–â‘è‚ÍA$\vect{o}_t$ ‚ð‚¢‚©‚É„’è‚·‚é‚©‚Å‚ ‚éB
-‚±‚Ì„’è‚É‚Í—lX‚È•û–@‚ª‘¶Ý‚µ‚Ä‚¨‚èA‘½‚­‚Ìƒƒ\ƒbƒh‚ðŽg‚¤‚±‚Æ‚ª‚Å‚«‚é‚ªA
-–{˜_•¶‚Å‚Í $Q$ ‚Ì„’è‚É $Q$-learning ‚ðÌ—p‚·‚éB
-‚½‚¾‚µASARSA ‚â actor-critic ‚È‚Ç‚Ì on-policy ‚È•û–@‚àŽg‚¤‚±‚Æ‚ª‚Å‚«‚é‚±‚Æ‚ð•â‘«‚·‚éB
+æ®‹ã‚‹å•é¡Œã¯ã€$\vect{o}_t$ ã‚’ã„ã‹ã«æŽ¨å®šã™ã‚‹ã‹ã§ã‚ã‚‹ã€‚
+ã“ã®æŽ¨å®šã«ã¯æ§˜ã€…ãªæ–¹æ³•ãŒå­˜åœ¨ã—ã¦ãŠã‚Šã€å¤šãã®ãƒ¡ã‚½ãƒƒãƒ‰ã‚’ä½¿ã†ã“ã¨ãŒã§ãã‚‹ãŒã€
+æœ¬è«–æ–‡ã§ã¯ $Q$ ã®æŽ¨å®šã« $Q$-learning ã‚’æŽ¡ç”¨ã™ã‚‹ã€‚
+ãŸã ã—ã€SARSA ã‚„ actor-critic ãªã©ã® on-policy ãªæ–¹æ³•ã‚‚ä½¿ã†ã“ã¨ãŒã§ãã‚‹ã“ã¨ã‚’è£œè¶³ã™ã‚‹ã€‚
 
-}\ref{fig:network}‚ÉŽ¦‚·Valuation Net ‚ÍA’Êí‚Ìƒjƒ…[ƒ‰ƒ‹ƒlƒbƒgƒ[ƒN‚Ìƒ†ƒjƒbƒg‚ÉA
-$Q$-learning ‚É‚æ‚é valuation ‚ð‘g‚Ý‡‚í‚¹‚½ƒlƒbƒgƒ[ƒN‚Å‚ ‚éB
-‚Ü‚¸Aã•”‚ÍƒG[ƒWƒFƒ“ƒgŠÔ‚Ì’ÊM‚É‚Â‚¢‚ÄŽ¦‚µ‚½‚à‚Ì‚Å‚ ‚éB
-ƒjƒ…[ƒ‰ƒ‹ƒlƒbƒgƒ[ƒN‚Å‚Íƒ†ƒjƒbƒg‚ð‰~‚Å•\Œ»‚·‚é‚Ì‚ª’Ê—á‚Å‚ ‚é‚ªA
-‚±‚±‚Å‚Íƒ†ƒjƒbƒg‚ðƒG[ƒWƒFƒ“ƒg‚Æ‚µ‚Ä‚Ý‚È‚·‚±‚Æ‚ð‹­’²‚µ‚ÄA˜ZŠpŒ`‚Åˆê‚Â‚Ìƒ†ƒjƒbƒg‚ð•\Œ»‚µ‚Ä‚¢‚éB
-ƒG[ƒWƒFƒ“ƒgŠÔ‚Å‚ÍA’Êí‚Ìƒjƒ…[ƒ‰ƒ‹ƒlƒbƒgƒ[ƒN‚Æ“¯—l‚ÌM†‚Ì’ÊMˆÈŠO‚ÉA
-Žæˆø‚ÉŠÖ‚·‚é’ÊM(allocate, buy, sell \& bid)‚ª”­¶‚·‚éB
+å›³\ref{fig:network}ã«ç¤ºã™Valuation Net ã¯ã€é€šå¸¸ã®ãƒ‹ãƒ¥ãƒ¼ãƒ©ãƒ«ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ã®ãƒ¦ãƒ‹ãƒƒãƒˆã«ã€
+$Q$-learning ã«ã‚ˆã‚‹ valuation ã‚’çµ„ã¿åˆã‚ã›ãŸãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ã§ã‚ã‚‹ã€‚
+ã¾ãšã€ä¸Šéƒ¨ã¯ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆé–“ã®é€šä¿¡ã«ã¤ã„ã¦ç¤ºã—ãŸã‚‚ã®ã§ã‚ã‚‹ã€‚
+ãƒ‹ãƒ¥ãƒ¼ãƒ©ãƒ«ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ã§ã¯ãƒ¦ãƒ‹ãƒƒãƒˆã‚’å††ã§è¡¨ç¾ã™ã‚‹ã®ãŒé€šä¾‹ã§ã‚ã‚‹ãŒã€
+ã“ã“ã§ã¯ãƒ¦ãƒ‹ãƒƒãƒˆã‚’ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã¨ã—ã¦ã¿ãªã™ã“ã¨ã‚’å¼·èª¿ã—ã¦ã€å…­è§’å½¢ã§ä¸€ã¤ã®ãƒ¦ãƒ‹ãƒƒãƒˆã‚’è¡¨ç¾ã—ã¦ã„ã‚‹ã€‚
+ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆé–“ã§ã¯ã€é€šå¸¸ã®ãƒ‹ãƒ¥ãƒ¼ãƒ©ãƒ«ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ã¨åŒæ§˜ã®ä¿¡å·ã®é€šä¿¡ä»¥å¤–ã«ã€
+å–å¼•ã«é–¢ã™ã‚‹é€šä¿¡(allocate, buy, sell \& bid)ãŒç™ºç”Ÿã™ã‚‹ã€‚
 
-Valuation Net ‚Å‚ÍAó‘Ô $\vect{s}_t$ ‚Æ‚µ‚ÄA
-—\‘ªŒã“ü—Í $\tilde{\vect{x}}_t$ ‚¨‚æ‚Ñ“ü—Í‚ÉˆË‘¶‚µ‚È‚¢\¬î•ñ $\vect{u}$ ‚ð‰¡‚É‚Â‚È‚°‚½ƒxƒNƒgƒ‹ $(\tilde{\vect{x}}_t^\T, \vect{u}^\T)^\T$ ‚ð—p‚¢‚éB
-\¬î•ñ‚Ìˆê—á‚Æ‚µ‚Ä‚Íƒ†ƒjƒbƒg‚Ìƒpƒ‰ƒ[ƒ^‚ª‚ ‚°‚ç‚êA‚½‚Æ‚¦‚Îd‚Ý‚âƒoƒCƒAƒX‚Ìî•ñ‚ð—p‚¢‚é‚±‚Æ‚ª‚Å‚«‚éB
+Valuation Net ã§ã¯ã€çŠ¶æ…‹ $\vect{s}_t$ ã¨ã—ã¦ã€
+äºˆæ¸¬å¾Œå…¥åŠ› $\tilde{\vect{x}}_t$ ãŠã‚ˆã³å…¥åŠ›ã«ä¾å­˜ã—ãªã„æ§‹æˆæƒ…å ± $\vect{u}$ ã‚’æ¨ªã«ã¤ãªã’ãŸãƒ™ã‚¯ãƒˆãƒ« $(\tilde{\vect{x}}_t^\T, \vect{u}^\T)^\T$ ã‚’ç”¨ã„ã‚‹ã€‚
+æ§‹æˆæƒ…å ±ã®ä¸€ä¾‹ã¨ã—ã¦ã¯ãƒ¦ãƒ‹ãƒƒãƒˆã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãŒã‚ã’ã‚‰ã‚Œã€ãŸã¨ãˆã°é‡ã¿ã‚„ãƒã‚¤ã‚¢ã‚¹ã®æƒ…å ±ã‚’ç”¨ã„ã‚‹ã“ã¨ãŒã§ãã‚‹ã€‚
 
-ó‘Ô‚©‚ç‚Ì Q ŠÖ”‚Ì—\‘ª‚Éƒjƒ…[ƒ‰ƒ‹ƒlƒbƒgƒ[ƒN‚ð—p‚¢‚éB
-ƒG[ƒWƒFƒ“ƒg‚ªŽó‚¯Žæ‚Á‚½”„ã‚ÉŠî‚Ã‚«ŽžŠÔ·•ª(TD)-Œë· ‚ªŒvŽZ‚³‚êA
-ƒlƒbƒgƒ[ƒN‚ªŒP—û‚³‚ê‚éB
-ƒlƒbƒgƒ[ƒN‚Ì\¬‚É‚Í‚±‚ê‚Ü‚Å‚Ì deep Q-learning ‚Å—p‚¢‚ç‚ê‚Ä‚¢‚é“ñd‰»ƒlƒbƒgƒ[ƒN(dualing network) \citep{wang2015dueling} ‚ÌƒeƒNƒjƒbƒN‚ð—p‚¢‚éB
-ƒIƒŠƒWƒiƒ‹‚Ì•¶Œ£\citep{wang2015dueling}‚Åq‚×‚ç‚ê‚Ä‚¢‚é“ñd‰»ƒlƒbƒgƒ[ƒN‚ÍAŠwK‚ð‰Á‘¬‚·‚é‚½‚ß‚ÉA
-ó‘ÔŠÖ”‚ÆAQŠÖ”‚Æ‚Ì·•ª‚ð•ÊX‚É—\‘ª‚·‚éŽè–@‚Å‚ ‚éB
-\cite{dosovitskiy2016learning} ‚Í‚±‚ê‚É‘Î‚µ‚ÄA·•ª‚Ì—v‘f‚Ì‘}˜b‚ª 0 ‚É‚È‚é‚æ‚¤‚É³‹K‰»‚·‚é‚æ‚¤‰ü—Ç‚µ‚Ä‚¢‚éB
-–{Œ¤‹†‚Å‚Í \cite{dosovitskiy2016learning} ‚ÌŽè–@‚É]‚¢A
-Šú‘Ò’l $E(\vect{s}_t)$ ‚Æ³‹K‰»·•ª $\tilde{A}(\vect{s}_t)$ ‚ð•ÊX‚É‹‚ß‚éB
+çŠ¶æ…‹ã‹ã‚‰ã® Q é–¢æ•°ã®äºˆæ¸¬ã«ãƒ‹ãƒ¥ãƒ¼ãƒ©ãƒ«ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ã‚’ç”¨ã„ã‚‹ã€‚
+ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆãŒå—ã‘å–ã£ãŸå£²ä¸Šã«åŸºã¥ãæ™‚é–“å·®åˆ†(TD)-èª¤å·® ãŒè¨ˆç®—ã•ã‚Œã€
+ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ãŒè¨“ç·´ã•ã‚Œã‚‹ã€‚
+ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ã®æ§‹æˆã«ã¯ã“ã‚Œã¾ã§ã® deep Q-learning ã§ç”¨ã„ã‚‰ã‚Œã¦ã„ã‚‹äºŒé‡åŒ–ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯(dualing network) \citep{wang2015dueling} ã®ãƒ†ã‚¯ãƒ‹ãƒƒã‚¯ã‚’ç”¨ã„ã‚‹ã€‚
+ã‚ªãƒªã‚¸ãƒŠãƒ«ã®æ–‡çŒ®\citep{wang2015dueling}ã§è¿°ã¹ã‚‰ã‚Œã¦ã„ã‚‹äºŒé‡åŒ–ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ã¯ã€å­¦ç¿’ã‚’åŠ é€Ÿã™ã‚‹ãŸã‚ã«ã€
+çŠ¶æ…‹é–¢æ•°ã¨ã€Qé–¢æ•°ã¨ã®å·®åˆ†ã‚’åˆ¥ã€…ã«äºˆæ¸¬ã™ã‚‹æ‰‹æ³•ã§ã‚ã‚‹ã€‚
+\cite{dosovitskiy2016learning} ã¯ã“ã‚Œã«å¯¾ã—ã¦ã€å·®åˆ†ã®è¦ç´ ã®ç·å’ŒãŒ 0 ã«ãªã‚‹ã‚ˆã†ã«æ­£è¦åŒ–ã™ã‚‹ã‚ˆã†æ”¹è‰¯ã—ã¦ã„ã‚‹ã€‚
+æœ¬ç ”ç©¶ã§ã¯ \cite{dosovitskiy2016learning} ã®æ‰‹æ³•ã«å¾“ã„ã€
+æœŸå¾…å€¤ $E(\vect{s}_t)$ ã¨æ­£è¦åŒ–å·®åˆ† $\tilde{A}(\vect{s}_t)$ ã‚’åˆ¥ã€…ã«æ±‚ã‚ã‚‹ã€‚
 
-$Q$ŠÖ”‚ÍŽŸ‚Ì‚æ‚¤‚É•\Œ»‚³‚ê‚éB
+$Q$é–¢æ•°ã¯æ¬¡ã®ã‚ˆã†ã«è¡¨ç¾ã•ã‚Œã‚‹ã€‚
 \begin{flalign}
-	Q(\vect{s}_t, a_t) &= E(\vect{s}_t) + \tilde{A}(\vect{s}_t, a_t) \label{eq:QisE-A} \\
+	Q(\vect{s}_t, a_t) &= E(\vect{s}_t) + \tilde{A}(\vect{s}_t, a_t) \label{eq:QisE-A} \notag \\
 	\sum_{i+1}^k \tilde{A}_i(\vect{s}_t, a_t) &= 0
 \end{flalign}
-‘æ2Ž®‚ð–ž‚½‚·‚½‚ß‚ÉA‚Ü‚¸A$\vect{s}_t$‚ÉŠî‚Ã‚¢‚½—\‘ª‚ðs‚¢AŽŸ‚Ì‚æ‚¤‚È³‹K‰»‚ðs‚¤B
+ç¬¬2å¼ã‚’æº€ãŸã™ãŸã‚ã«ã€ã¾ãšã€$\vect{s}_t$ã«åŸºã¥ã„ãŸäºˆæ¸¬ã‚’è¡Œã„ã€æ¬¡ã®ã‚ˆã†ãªæ­£è¦åŒ–ã‚’è¡Œã†ã€‚
 \begin{flalign}
 	\tilde{A}_i(\vect{s}_t, a_t) &= A_i(\vect{s}_t, a_t)  - \frac{1}{k} \sum_{j=1}^k  A_j(\vect{s}_t, a_t)
 \end{flalign}
-ŽŸ‚ÉAvaluation ‚ðs‚¢Abidding price $\vect{b}_t$ ‚ð‹‚ß‚éB
-$b_{it}$ ‚Ì’l‚ÍŽ® \ref{eq:def:oppotunity-cost} ‚¨‚æ‚ÑŽ® \ref{eq:QisE-A}‚æ‚èAÅ“K‚È“üŽD‰¿Ši $\hat{b}_{it}$ ‚ÍŽŸ‚Ì‚æ‚¤‚ÉŒvŽZ‚Å‚«‚éB
+æ¬¡ã«ã€valuation ã‚’è¡Œã„ã€bidding price $\vect{b}_t$ ã‚’æ±‚ã‚ã‚‹ã€‚
+$b_{it}$ ã®å€¤ã¯å¼ \ref{eq:def:oppotunity-cost} ãŠã‚ˆã³å¼ \ref{eq:QisE-A}ã‚ˆã‚Šã€æœ€é©ãªå…¥æœ­ä¾¡æ ¼ $\hat{b}_{it}$ ã¯æ¬¡ã®ã‚ˆã†ã«è¨ˆç®—ã§ãã‚‹ã€‚
 \begin{flalign}
 \hat{b}_{it} = \tilde{A}(\state_t, 1) - \tilde{A}(\state_t, 0)
 \end{flalign}
-Valuation Net ‚Å‚Í‚±‚ÌŽ®‚ÉŠî‚Ã‚«Aadvantage ‚Ìo—Í‚ðˆø‚«ŽZ‚·‚é‚±‚Æ‚Å“üŽD‰¿Ši‚ðŒvŽZ‚µ‚Ä‚¢‚éB
+Valuation Net ã§ã¯ã“ã®å¼ã«åŸºã¥ãã€advantage ã®å‡ºåŠ›ã‚’å¼•ãç®—ã™ã‚‹ã“ã¨ã§å…¥æœ­ä¾¡æ ¼ã‚’è¨ˆç®—ã—ã¦ã„ã‚‹ã€‚
 
 
 %\subsection{Valuation Net}

@@ -1,239 +1,38 @@
 \section{Introduction}
 
-% E—L—p‚ÈŠÏ‘ª‚É‘Î‚µ‚ÄƒCƒ“ƒZƒ“ƒeƒBƒu‚ð—^‚¦‚é
-% E‚ŽŸ‚Ìƒjƒ…[ƒƒ“‚àAŒ©•û‚É‚æ‚Á‚Ä‚Í‰ºˆÊ‚Ìƒjƒ…[ƒƒ“‚ÌM†‚ðŠÏ‘ª‚·‚éƒƒ^ƒZƒ“ƒT[‚Å‚ ‚é‚Æl‚¦‚ç‚ê‚é 
+% ãƒ»å¤šåˆ†ä¸€å›ž MTG ã—ãŸæ–¹ãŒã„ã„ï¼ˆã‚¹ãƒˆãƒ¼ãƒªãƒ¼ã®ä½œã‚Šæ–¹ã€ãƒˆãƒ”ãƒƒã‚¯ã‚»ãƒ³ãƒ†ãƒ³ã‚¹ï¼‰
+% ãƒ»æœ‰ç”¨ãªè¦³æ¸¬ã«å¯¾ã—ã¦ã‚¤ãƒ³ã‚»ãƒ³ãƒ†ã‚£ãƒ–ã‚’ä¸Žãˆã‚‹
+% ãƒ»é«˜æ¬¡ã®ãƒ‹ãƒ¥ãƒ¼ãƒ­ãƒ³ã‚‚ã€è¦‹æ–¹ã«ã‚ˆã£ã¦ã¯ä¸‹ä½ã®ãƒ‹ãƒ¥ãƒ¼ãƒ­ãƒ³ã®ä¿¡å·ã‚’è¦³æ¸¬ã™ã‚‹ãƒ¡ã‚¿ã‚»ãƒ³ã‚µãƒ¼ã§ã‚ã‚‹ã¨è€ƒãˆã‚‰ã‚Œã‚‹ 
+% ã“ã®ã‚ãŸã‚Šã¯ã¾ã ã‚¹ãƒˆãƒ¼ãƒªãƒ¼ä½œã‚Šã§ãã¦ã„ã¾ã›ã‚“ã€‚
 
-Œ»Ý¬Œ÷‚µ‚Ä‚¢‚é[‘w‹­‰»ŠwK‚Ìƒ‚ƒfƒ‹‚Ì‘½‚­‚ÍA’Pˆê‚ÌƒG[ƒWƒFƒ“ƒg‚ªŠÂ‹«‚ÌŠÏ‘ª‚©‚ç”F’mAs“®Œˆ’è‚Æ‚¢‚Á‚½ˆê˜A‚ÌƒvƒƒZƒX‚ð’S‚¤B
-DQN \citep{mnih2015human} ‚â A3C \citep{mnih2016asynchronous} ‚ÍAAtari ‚ÌƒXƒNƒŠ[ƒ“Œn—ñ‚©‚çÅ“K‚Ès“®‚ðŒˆ’è‚·‚éB
-AlphaGo \citep{silver2016mastering} ‚ÍˆÍŒé‚Ì”Õ–Ê‚©‚çŸ—˜‚ÉÅ‚à‹ß‚¢ˆêŽè‚ð‘I‚ÔB
-DDPG \citep{lillicrap2015continuous} ‚Í•¨—‹óŠÔ‚É‚¨‚¢‚ÄAÅ“K‚È‹Ø“÷‚Ì“®‚«‚ðŒˆ’è‚·‚é¶•¨‚Ì“®‚«‚ðŠwK‚·‚éB
-’Pˆê‚ÌƒG[ƒWƒFƒ“ƒg‚ð—p‚¢‚Ä‹­‰»ŠwK‚ð‰ð‚­‚Æ‚¢‚¤ŽŽ‚Ý‚ÍAlŠÔ‚ÌŽ‚Âg‘Ì«‚ÌƒAƒiƒƒW[‚©‚çl‚¦‚é‚ÆˆêŒ©‚µ‚Ä‘Ã“–‚Å‚ ‚é‚æ‚¤‚ÉŽv‚¦‚éB
-
-‚µ‚©‚µAŒ»ŽÀ¢ŠE‚Ì–â‘è‚Ì‘½‚­‚Íƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒg‚É‚æ‚Á‚Ä‰ðŒˆ‚³‚ê‚éB
-‚·‚È‚í‚¿AŠÏ‘ªA”F’mAs“®Œˆ’è‚ª‚·‚×‚ÄˆÙ‚È‚éƒG[ƒWƒFƒ“ƒg‚É‚æ‚Á‚Äs‚í‚ê‚éB
-ŠeƒG[ƒWƒFƒ“ƒg‚ªƒZƒ“ƒVƒ“ƒO‚µ‚½ó‘Ô‹óŠÔ‚ÍAƒG[ƒWƒFƒ“ƒg“¯Žm‚ÌƒRƒ~ƒ…ƒjƒP[ƒVƒ‡ƒ“‚ð’Ê‚µ‚Ä“‡‚³‚ê‚Ä‚¢‚«AÅI“I‚É•ñVŒn‚Æ‚ÌÚ“_‚ðŽ‚ÂƒAƒNƒ`ƒ…ƒG[ƒ^[‚Ìs“®‚É—p‚¢‚ç‚ê‚éB
-%ƒG[ƒWƒFƒ“ƒg‚É•ñV‚ð”z•ª‚·‚é—lŽq‚Æ‚µ‚ÄŠÏŽ@‚³‚ê‚éB
-‚½‚Æ‚¦‚ÎAŽ©“®‰^“]ŽÔ‚ÍAŽ©g‚¾‚¯‚Å‚È‚­AŽü•Ó‚ÌŽÔ‚©‚ç“¾‚ç‚ê‚½î•ñ‚ð“‡‚·‚é‚±‚Æ‚ÅÕ“Ë‚ðŒ¸‚ç‚·‚±‚Æ‚ª‚Å‚«‚éB
-‚Ü‚½AŠ”‚ÌƒgƒŒ[ƒ_[‚ÍA‘½‚­‚Ìl•¨‚©‚ç’ñ‹Ÿ‚³‚ê‚½î•ñ‚ð‚à‚Æ‚É„˜_‚µA—L—p‚Èî•ñ’ñ‹ŸŽÒ‚É‚Í‘Î‰¿‚ðŽx•¥‚¤B
-‘¼‚É‚àAƒGƒŒƒx[ƒ^[§Œä\citep{crites1998elevator}AƒZƒ“ƒT[ƒlƒbƒgƒ[ƒN\citep{fox2000probabilistic}Aƒƒ{ƒbƒgƒTƒbƒJ[\citep{stone1998towards}‚È‚Ç‚ªƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒg‚É‚æ‚Á‚Ä‰ð‚©‚ê‚Ä‚¢‚éB
-
-ƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒg‚É‚æ‚é–â‘è‰ðŒˆ‚ªŒ»ŽÀ‚Ì‰Û‘è‚É‘Î‚µ‚Ä—LŒø‚Å‚ ‚é——R‚ÍA‹»–¡[‚¢‚±‚Æ‚É•\Œ»ŠwK‚ÌŒ´—‚Æˆê’v‚·‚éF—L—p‚È•\Œ»‚Í‹@ŠBŠwK‚Ì«”\‚ðŒüã‚³‚¹‚éB%—L—p‚Èó‘Ô•\Œ»‚ª¸“x‚ÌŒüã‚ÉŠñ—^‚·‚é‚½‚ß‚Å‚ ‚éB
-Œ»ŽÀ‚É‚ ‚é–â‘è‚Ì‘½‚­‚ÍADQN ‚â A3C ‚ª‘O’ñ‚Æ‚µ‚Ä‚¢‚éƒ}ƒ‹ƒRƒtŒˆ’è‰ß’ö(MDP)‚Å‚Í‚È‚­•”•ª“IŠÏ‘ªƒ}ƒ‹ƒRƒtŒˆ’è‰ß’ö(POMDP)‚Å‚ ‚é\citep[p.258]{sutton1998reinforcement}B
-POMDP ‚É‚¨‚¢‚Ä^‚Ìó‘Ô‚ÍŠ®‘S‚É‚Í•s‰ÂŽ‹‚Å‚ ‚èA—ÇŽ¿‚ÈŠÏ‘ªŒ‹‰Ê‚ª—ÇŽ¿‚Ès“®‚ÉŒ‹‚Ñ‚Â‚­‚½‚ßAƒAƒeƒ“ƒVƒ‡ƒ“A‚·‚È‚í‚¿A—LŒÀ‚ÌƒŠƒ\[ƒX‚ðŽg‚Á‚Ä‰½‚ðŠÏ‘ª‚·‚é‚©‚ÌÝŒv‚ª•K—v‚Å‚ ‚éB
-‚µ‚½‚ª‚Á‚ÄAŠÏ‘ª‚É—p‚¢‚ç‚ê‚éƒG[ƒWƒFƒ“ƒg‚ª‘½‚¢‚Ù‚ÇA«—ˆ“I‚ÉŠl“¾‚Å‚«‚é•ñV‚à‚‚­‚È‚éB
-‚Ü‚½A•¡”‚Ìƒ‚ƒfƒ‹‚ð‘g‚Ý‡‚í‚¹‚é‚±‚Æ‚É‚æ‚Á‚Ä¸“x‚ª‚‚Ü‚éƒAƒ“ƒTƒ“ƒuƒ‹–@‚Æ‚µ‚Ä‚Ì‘¤–Ê‚ª‘¶Ý‚·‚éB
-
-–{˜_•¶‚ÍA•\Œ»ŠwK‚ÌŒQ‹­‰»ŠwK‚Ö‚ÌŽ©‘R‚ÈŠg’£‚Æ‚µ‚ÄA
-ƒfƒB[ƒvƒjƒ…[ƒ‰ƒ‹ƒlƒbƒgƒ[ƒN‚ðƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒgƒVƒXƒeƒ€‚Æ‚µ‚Äl‚¦‚éB
-ƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒg‚É‚æ‚éŠÏ‘ª‚¨‚æ‚Ñ”F’m‚Ì˜g‘g‚Ý‚ÍAƒZƒ“ƒT[ˆ—‚Ì•ª–ì‚Å‚ÍƒGƒbƒWƒRƒ“ƒsƒ…[ƒeƒBƒ“ƒO\citep{bonomi2012fog}‚Æ‚µ‚Ä‚à’m‚ç‚ê‚Ä‚¢‚éB
-ƒGƒbƒWƒRƒ“ƒsƒ…[ƒeƒBƒ“ƒO‚Í•ªŽUŠÂ‹«‚ð‘O’ñ‚Æ‚µ‚½M†ˆ—‚Ìƒ‚ƒfƒ‹‚Å‚ ‚èAˆê‚Â‚Ìˆ—Œn‚ª‚·‚×‚Ä‚Ìƒf[ƒ^‚ðˆ—‚·‚é‚Ì‚Å‚Í‚È‚­A•¡”‚ÌƒZƒ“ƒT[‚Ìî•ñ‚ðˆê‚Â‚ÌƒGƒbƒWƒT[ƒo‚ªW–ñ‚µA•¡”‚ÌƒGƒbƒWƒT[ƒo‚ªŽŸŒ³íŒ¸‚µ‚½ƒf[ƒ^‚ðƒf[ƒ^ƒZƒ“ƒ^[‚É‘—‚é‚Æ‚¢‚¤ŠK‘w“I‚È\‘¢‚ð‚µ‚Ä‚¢‚éB
-ŽÀÛAlŠÔ‚Ì”]‚ðŠÏŽ@‚µ‚Ä‚àAŠe_Œo×–E‚Í“Æ—§‚µ‚Ä“®ì‚·‚éB
-_Œo×–E‚Íãó×–E‚©‚ç‚Ì”­’B’iŠK‚É‚¨‚¢‚Ä Nerve Growth FactorABDNF ‚Æ‚¢‚Á‚½_Œo‰h—{ˆöŽq(NTF)‚ð’Ç‹‚·‚é‚±‚Æ‚ª’m‚ç‚ê‚Ä‚¨‚èA\•ª‚È NTF ‚ðŽó‚¯Žæ‚é‚±‚Æ‚ª‚Å‚«‚È‚©‚Á‚½ƒjƒ…[ƒƒ“‚ÍƒAƒ|ƒg[ƒVƒX‚ðˆø‚«‹N‚±‚µ‚ÄŽ©Ž€‚·‚é‚±‚Æ‚ª’m‚ç‚ê‚Ä‚¢‚é\citep{almeida2005neuroprotection}B
-‚±‚¤‚µ‚½ŠÏŽ@‚©‚çAŠe_Œo×–E‚ð“Æ—§‚µ‚½¶•¨‚Æ‚µ‚Ä‘¨‚¦‚éŒ©•û‚Íƒjƒ…[ƒ‰ƒ‹ƒ_[ƒEƒBƒYƒ€\citep{edelman1987neural}‚ÆŒÄ‚Î‚ê‚éB
+ãƒžãƒ«ãƒã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã«ã‚ˆã‚‹å¼·åŒ–å­¦ç¿’ãŒç¾å®Ÿã®èª²é¡Œã«å¯¾ã—ã¦æœ‰åŠ¹ã§ã‚ã‚‹ç†ç”±ã¯ã€èˆˆå‘³æ·±ã„ã“ã¨ã«è¡¨ç¾å­¦ç¿’ã®åŽŸç†ã¨ä¸€è‡´ã™ã‚‹ï¼šæœ‰ç”¨ãªè¡¨ç¾ã¯äºˆæ¸¬æ€§èƒ½ã‚’å‘ä¸Šã•ã›ã‚‹ã€‚
+ç¾å®Ÿã«ã‚ã‚‹å•é¡Œã®å¤šãã¯ã€DQN ãŒå‰æã¨ã—ã¦ã„ã‚‹ãƒžãƒ«ã‚³ãƒ•æ±ºå®šéŽç¨‹(MDP)ã§ã¯ãªãéƒ¨åˆ†çš„è¦³æ¸¬ãƒžãƒ«ã‚³ãƒ•æ±ºå®šéŽç¨‹(POMDP)ã§ã‚ã‚‹\citep[p.258]{sutton1998reinforcement}ã€‚
+POMDP ã«ãŠã„ã¦çœŸã®çŠ¶æ…‹ã¯å®Œå…¨ã«ã¯ä¸å¯è¦–ã§ã‚ã‚Šã€è‰¯è³ªãªè¦³æ¸¬çµæžœãŒè‰¯è³ªãªè¡Œå‹•ã«çµã³ã¤ããŸã‚ã€ã‚¢ãƒ†ãƒ³ã‚·ãƒ§ãƒ³ã€ã™ãªã‚ã¡ã€æœ‰é™ã®ãƒªã‚½ãƒ¼ã‚¹ã‚’ä½¿ã£ã¦ä½•ã‚’è¦³æ¸¬ã™ã‚‹ã‹ã®è¨­è¨ˆãŒå¿…è¦ã§ã‚ã‚‹ã€‚
+ã—ãŸãŒã£ã¦ã€è¦³æ¸¬ã«ç”¨ã„ã‚‰ã‚Œã‚‹ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆãŒå¤šã„ã»ã©ã€å°†æ¥çš„ã«ç²å¾—ã§ãã‚‹å ±é…¬ã‚‚é«˜ããªã‚‹ã€‚
+æœ¬è«–æ–‡ã¯ã€è¦³æ¸¬ã¨ã„ã†è¡Œå‹•ã«ãŠã„ã¦ã‚¨ãƒ¼ã‚¸ã‚§ãƒ³ãƒˆã¨ãƒ¦ãƒ‹ãƒƒãƒˆã¯ç­‰ä¾¡ã§ã‚ã‚‹ã¨ã„ã†ã“ã¨ã‚’ä¸»å¼µã™ã‚‹ã€‚
+%ã¾ãŸã€è¤‡æ•°ã®ãƒ¢ãƒ‡ãƒ«ã‚’çµ„ã¿åˆã‚ã›ã‚‹ã“ã¨ã«ã‚ˆã£ã¦ç²¾åº¦ãŒé«˜ã¾ã‚‹ã‚¢ãƒ³ã‚µãƒ³ãƒ–ãƒ«æ³•ã¨ã—ã¦ã®å´é¢ãŒå­˜åœ¨ã™ã‚‹ã€‚
+%æœ‰ç”¨ãªçŠ¶æ…‹è¡¨ç¾ãŒç²¾åº¦ã®å‘ä¸Šã«å¯„ä¸Žã™ã‚‹ãŸã‚ã§ã‚ã‚‹ã€‚
 
 %======OK=========
 
-% –â‘è
-ƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒg‚É‚æ‚é–â‘è‰ðŒˆ‚Å‚ÍAM—Š“xŠ„‚è“–‚Ä–â‘è(credit assignment problem)‚ª”­¶‚·‚éB
-Šù‘¶Œ¤‹†‚Æ‚µ‚ÄA•¡”‚ÌƒG[ƒWƒFƒ“ƒg‚ð‘z’è‚µ‚½‚à‚Ì‚ª‚ ‚é‚ª\citep{agogino2006quicr}A
-ƒG[ƒWƒFƒ“ƒgŠÔ‚ª’¼—ñ‚Éî•ñ‚ð“`’B‚µ‡‚¤ó‹µ‚É‚¨‚¯‚é•ñV•ª”z‚É‚Â‚¢‚Ä‚Í‰ð‚ª—^‚¦‚ç‚ê‚Ä‚¢‚È‚¢B
-–{˜_•¶‚Å’ñˆÄ‚·‚éŠwK‚Ì˜g‘g‚Ý Neuron as an Agent (NaaA) ‚ÍAƒQ[ƒ€—˜_‚ð‘z’è‚µA
-ƒG[ƒWƒFƒ“ƒgŠÔ‚Å•ñV‚Ì•ª”z‚ðs‚¤u’Ê‰Ýv‚ð‘z’è‚·‚é‚±‚Æ‚ÅM—Š“xŠ„‚è“–‚Ä‚Ì–â‘è‚ðˆµ‚¤B
-%ƒQ[ƒ€—˜_‚Ìˆê‚Â‚Å‚ ‚éƒƒJƒjƒYƒ€ƒfƒUƒCƒ“‚Ìl‚¦•û‚ð—p‚¢‚ÄAM—Š“x‚ÌÅ“K”z•ª‚ðŽÀŒ»‚·‚éB
-—˜‰v‚Í•ñV‚ÆƒRƒXƒg‚Ì·•ª‚Å‚ ‚èAƒjƒ…[ƒƒ“‚Í‰ºˆÊ‚ÌƒŒƒCƒ„[‚©‚çî•ñ‚ð”ƒ‚¢AãˆÊ‚ÌƒŒƒCƒ„[‚É‘Î‚µ‚ÄM†‚ð"”„‚é"‚±‚Æ‚Å•ñV‚ð“¾‚éB—˜‰v‚ÍAƒjƒ…[ƒƒ“Ž©‘Ì‚ª¶¬‚µ‚½•t‰Á‰¿’l‚Å‚ ‚èA”„‰¿‚Æ”ƒ‰¿‚ð·‚µˆø‚¢‚ÄŒvŽZ‚³‚ê‚éB
+æœ¬ç ”ç©¶ã®ã‚´ãƒ¼ãƒ«ã¯ã€ã™ã¹ã¦ã®ãƒ¦ãƒ‹ãƒƒãƒˆãŒè‡ªå¾‹çš„ã«å‹•ä½œã™ã‚‹ã¨ä»®å®šã—ãŸå ´åˆã«ã€ã‚·ã‚¹ãƒ†ãƒ å…¨ä½“ãŒç²å¾—ã™ã‚‹ç´¯ç©å ±é…¬ã‚’æœ€å¤§åŒ–ã™ã‚‹ã“ã¨ã§ã‚ã‚‹ã€‚
+ãã®ãŸã‚ã«ã€NaaA ã¯å¾®åˆ†å¯èƒ½(differentiable)ãªé–¢æ•°ã§æ§‹æˆã•ã‚Œã‚‹ãƒ‹ãƒ¥ãƒ¼ãƒ©ãƒ«ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ã‚’ã€å ±é…¬ç³»ã®æ¦‚å¿µã‚’ç”¨ã„ã¦æ‹¡å¼µã™ã‚‹ã€‚
+å ±é…¬ã®åˆ†é…ã®ãŸã‚ã«ã‚ªãƒ¼ã‚¯ã‚·ãƒ§ãƒ³ç†è«–ã‚’ç”¨ã„ã¦ã€ã‚¸ãƒ¬ãƒ³ãƒžå•é¡Œã‚’è§£æ±ºã—ãŸä¸Šã§ã€
+ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å…¥æœ­ä¾¡æ ¼ãŒã€ãƒ¦ãƒ‹ãƒƒãƒˆãŒå­˜åœ¨ã™ã‚‹å ´åˆã¨å­˜åœ¨ã—ãªã„å ´åˆã®å·®ã§ã‚ã‚‹ counterfactual reward \citep{agogino2006quicr} ã«ç­‰ã—ããªã‚‹ã“ã¨ã‚’ç¤ºã™ã€‚
+ä»¥ä¸‹ã§ã¯å ±é…¬åˆ†é…ã®ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¯ãƒ¼ã‚¯ã§ã‚ã‚‹ profit maximization ã«ã¤ã„ã¦è¿°ã¹ã€
+Valuation Net ã«ã¤ã„ã¦èª¬æ˜Žã‚’è¡Œã†ã€‚
 
-ƒQ[ƒ€—˜_‚ð—p‚¢‚Ä‹@ŠBŠwK‚ÌÅ“K‰»‚ðs‚¤Žè–@‚Í‚¢‚­‚Â‚©’ñˆÄ‚³‚ê‚Ä‚¢‚é\citep{stone1998towards,goodfellow2014generative}‚ªAƒQ[ƒ€‚ÌÝŒv•û–@‚É‚æ‚Á‚Ä‚ÍAƒiƒbƒVƒ…‹Ït‚ªƒpƒŒ[ƒgÅ“K‚Æˆê’v‚µ‚È‚¢‚Æ‚¢‚¤ƒWƒŒƒ“ƒ}\citep{holt2007markets}‚ª”­¶‚·‚éB
-ƒiƒbƒVƒ…‹Ït‚Æ‚ÍŒÂX‚ÌƒG[ƒWƒFƒ“ƒg‚É‚æ‚é•ñV’Ç‹y‚ÌŒ‹‰Ê‚Æ‚µ‚Ä“¾‚ç‚ê‚é‹AŒ‹‚Å‚ ‚èAƒpƒŒ[ƒgÅ“K‚Æ‚ÍÝŒvŽÒˆÓ}‚·‚é‘S‘ÌÅ“K‚È‹AŒ‹‚Å‚ ‚éB
-‹ï‘Ì“I‚ÉAŒÂX‚Ìƒ†ƒjƒbƒg‚ªŽ©g‚ÌƒRƒXƒg‚ðÅ¬‰»‚µ‚½Œ‹‰ÊA“ü—Íƒ†ƒjƒbƒg‚É\•ª‚È•ñV‚ª‚¢‚«‚í‚½‚ç‚È‚­‚È‚éB
+NaaA ã¯ã€ç¥žçµŒç´°èƒžã®æŒã¤ã‚¨ãƒãƒ«ã‚®ãƒ¼æ¶ˆè²»ã®ãƒ¡ã‚«ãƒ‹ã‚ºãƒ ã‚’ãƒ¢ãƒ‡ãƒªãƒ³ã‚°ã™ã‚‹ã€‚
+ç¥žçµŒå›žè·¯ã«å«ã¾ã‚Œã‚‹ãƒ‹ãƒ¥ãƒ¼ãƒ­ãƒ³ã¯ä¸€ã¤ã®ç´°èƒžã§ã‚ã‚‹ãŸã‚ã€ã‚¨ãƒãƒ«ã‚®ãƒ¼ã‚’æ¶ˆè²»ã™ã‚‹ã€‚
+é€šå¸¸ã®ç´°èƒžã¨åŒæ§˜ã«é…¸ç´ ã‚„ ATP ãŒã‚¨ãƒãƒ«ã‚®ãƒ¼æºã¨ãªã‚Šã€ã“ã‚Œã‚‰ã¯ãƒ‹ãƒ¥ãƒ¼ãƒ­ãƒ³ã¨æŽ¥ç¶šã—ãŸã€ã‚¢ã‚¹ãƒˆãƒ­ã‚µã‚¤ãƒˆã‹ã‚‰ä¾›çµ¦ã•ã‚Œã‚‹ã€‚
+ã‚¢ã‚¹ãƒˆãƒ­ã‚µã‚¤ãƒˆã¯è„³ã®æ§‹é€ ã‚’æ”¯ãˆã‚‹ã‚°ãƒªã‚¢ç´°èƒžã®ä¸€ç¨®ã§ã‚ã‚Šã€è¡€ç®¡ã‹ã‚‰ãƒ‹ãƒ¥ãƒ¼ãƒ­ãƒ³ã¸ã®æ „é¤Šä¾›çµ¦ã‚’è¡Œã†ã€‚
+ã‚¨ãƒãƒ«ã‚®ãƒ¼é‡ã¯æœ‰é™ã§ã‚ã‚‹ãŸã‚ã€ä¸è¦ãªãƒ‹ãƒ¥ãƒ¼ãƒ­ãƒ³ã¯ã‚¢ãƒãƒˆãƒ¼ã‚·ã‚¹ã«ã‚ˆã£ã¦æ­»æ»…ã™ã‚‹ã€‚
+ã‚¢ãƒãƒˆãƒ¼ã‚·ã‚¹ã¯ NGF (nerve growth factor), BDNF (brain derived neurofactor) ãªã©ã®ç¥žçµŒæ „é¤Šå› å­(neurotorophin; NTF)ã«ã‚ˆã£ã¦åˆ¶å¾¡ã•ã‚Œã‚‹ãŸã‚ã€ã‚ˆã‚Šå¤šãã® NTF ã‚’ç²å¾—ã§ããŸãƒ‹ãƒ¥ãƒ¼ãƒ­ãƒ³ãŒç”Ÿå­˜ã™ã‚‹ã€‚
 
-NaaA‚Å‚ÍAŒoÏŠw‚É‚¨‚¯‚éƒƒJƒjƒYƒ€ƒfƒUƒCƒ“‚ð—p‚¢‚ÄA•ªŽUŠÂ‹«‚É‚¨‚¯‚éM—Š“xŠ„‚è“–‚Ä‚Ì–â‘è‚ð‰ð‚­B
-ƒƒJƒjƒYƒ€ƒfƒUƒCƒ“‚Å‚ÍAƒpƒŒ[ƒgÅ“K‚ÈŒ‹‰Ê‚ªƒiƒbƒVƒ…‹Ït‚Ì‰ð‚Æˆê’v‚·‚é‚æ‚¤‚É‚·‚é‘Îí—ª«‚Ì‚‚¢Žd‘g‚Ý‚Å‚ ‚éB
-NaaA ‚ÍAƒ†ƒjƒbƒg‚ª•¡”àƒI[ƒNƒVƒ‡ƒ“‚ðŽÀs‚·‚é‚±‚Æ‚É‚æ‚Á‚ÄÅ“K‚È‰¿Ši‚ðŒˆ’è‚·‚éŽd‘g‚Ý‚Å‚ ‚éB
-–{˜_•¶‚Å‚ÍAƒƒJƒjƒYƒ€ƒfƒUƒCƒ“‚Ìˆê‚Â‚Å‚ ‚é‚±‚ÌŽd‘g‚Ý‚ªƒG[ƒWƒFƒ“ƒgŠÔ‚ÌŽÐ‰ï“IƒWƒŒƒ“ƒ}‚ð‰ðŒˆ‚µAŠeƒ†ƒjƒbƒg‚ªA‘¼‚Ìƒ†ƒjƒbƒg‚Ì–{Œ¹“I‰¿’l‚ÉŠî‚Ã‚­Å“K‚È‰¿ŠiÝ’è‚ðs‚¤‚±‚Æ‚ðŽ¦‚·B
-‹ï‘Ì“I‚ÉA“¯‚¶ƒŒƒCƒ„[‚É‘®‚·‚éƒjƒ…[ƒƒ““¯Žm‚ð‹£‡ŠwK‚³‚¹‚é‚±‚Æ‚ÅAneural agent ‚ª‘¼‚Ìƒjƒ…[ƒƒ“‚Ì‰¿’l‚ð³’¼‚É\‚·‚é‚±‚Æ‚ðŽ¦‚·B
-‚±‚Ì•ñVƒ‚ƒfƒ‹‚ÍAƒG[ƒWƒFƒ“ƒg‚ª‚Ç‚Ìî•ñ‚É’–Ú‚·‚×‚«‚©‚Æ‚¢‚¤ƒqƒ“ƒg‚ð—^‚¦‚éB
-‚·‚È‚í‚¿A‚±‚ê‚ÍƒAƒeƒ“ƒVƒ‡ƒ“ƒ‚ƒfƒ‹\citep{xu2015show}‚ðŠg’£‚Å‚ ‚é‚Æ‰ðŽß‚Å‚«‚éB
+ã“ã‚Œã¾ã§ã®ãƒ‹ãƒ¥ãƒ¼ãƒ©ãƒ«ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ã®ç›®çš„ã¯ã€äºˆæ¸¬èª¤å·® $e$ ã®æœ€å°åŒ–ã«ã‚ã£ãŸã€‚
+ãã®ãŸã‚ã€å„ãƒ¦ãƒ‹ãƒƒãƒˆã¯ãƒãƒƒã‚¯ãƒ—ãƒ­ãƒ‘ã‚²ãƒ¼ã‚·ãƒ§ãƒ³ã«ã‚ˆã£ã¦å‡ºåŠ› $y$ ã«ã‚ˆã‚‹å¾®åˆ† $\partial e / \partial y$ ã‚’è¨ˆç®—ã—ã€
+$e$ ãŒå°ã•ããªã‚‹æ–¹å‘ã« $y$ ã®å¤§ãã•ã‚’åˆ¶å¾¡ã—ã¦ã„ãŸã€‚
+NaaA ã«ãŠã„ã¦ã€ãƒ¦ãƒ‹ãƒƒãƒˆã®ç›®çš„ã¯å¤§åŸŸçš„èª¤å·®ã®æœ€å°åŒ–ã§ã¯ãªãã€ãƒ¦ãƒ‹ãƒƒãƒˆè‡ªèº«ã®æœŸå¾…ãƒªã‚¿ãƒ¼ãƒ³ã®æœ€å¤§åŒ–ã§ã‚ã‚‹ã€‚
 
-ŽÀŒ±‚Å‚ÍA•W€“I‚È‹­‰»ŠwK‚Ìƒ^ƒXƒN‚É‚æ‚é”’lŽÀŒ±‚ð—p‚¢‚Ä NaaA ‚ª POMDP ‚Ì–â‘è‚Ì¸“x‚ð‚‚ß‚é‚±‚Æ‚ðŽ¦‚·B
-‹ï‘Ì“I‚ÉAAtari ‚¨‚æ‚Ñ VisDoom ‚É‚¨‚¯‚éŠÂ‹«‚ð—p‚¢‚ÄAŠù‘¶Œ¤‹†‚ª DQN ‚â A3C ‚ðã‰ñ‚é‚±‚Æ‚ðŽ¦‚·B
-%‚Ü‚½A‘S‘Ì‚Æ‚µ‚ÄÁ”ïƒGƒlƒ‹ƒM[‚ª‰º‚ª‚é‚±‚Æ‚àŽ¦‚·B
-%‚±‚ê‚ª“ñ‚Â–Ú‚ÌvŒ£‚Å‚ ‚éB
-
-
-%–{Œ¤‹†‚Å‚ÍANeuron as an Agent ‚ð’ñˆÄ‚·‚éB
-%NaaA ‚ÍA
-
-
-
-
-
-%%==================================
-%Œ»Ý¬Œ÷‚µ‚Ä‚¢‚é[‘w‹­‰»ŠwK‚Ìƒ‚ƒfƒ‹‚Ì‘½‚­‚ÍA
-%’Pˆê‚ÌƒG[ƒWƒFƒ“ƒg‚ªŠÂ‹«‚ÌŠÏ‘ª‚©‚ç”F’mAs“®Œˆ’è‚Æ‚¢‚Á‚½ˆê˜A‚ÌƒvƒƒZƒX‚ð’S‚¤B
-%
-%ˆê•û‚ÅAŒ»ŽÀ¢ŠE‚Ì–â‘è‚ð‰ðŒˆ‚·‚é‚½‚ß‚Ìƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒg‚É‚æ‚éŽè–@‚ª’–Ú‚³‚ê‚Ä‚¢‚éB
-%
-%ƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒg‚É‚æ‚é–â‘è‰ðŒˆ‚ªŒ»ŽÀ‚Ì‰Û‘è‚É‘Î‚µ‚Ä—LŒø‚Å‚ ‚é——R‚ÍA—L—p‚Èó‘Ô•\Œ»‚ª¸“x‚ÌŒüã‚ÉŠñ—^‚·‚é‚½‚ß‚Å‚ ‚éB
-%Keyword: POMDP
-%
-%–{˜_•¶‚ÍA•\Œ»ŠwK‚Ì POMDP ‚Ö‚ÌŽ©‘R‚ÈŠg’£‚Æ‚µ‚ÄA
-%ƒfƒB[ƒvƒjƒ…[ƒ‰ƒ‹ƒlƒbƒgƒ[ƒN‚ðƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒgƒVƒXƒeƒ€‚Æ‚µ‚Äl‚¦‚éB
-%ŽÀÛAlŠÔ‚Ì”]‚ðŠÏŽ@‚µ‚Ä‚àAŠe_Œo×–E‚Í“Æ—§‚µ‚Ä“®ì‚·‚éB
-%
-%ƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒg‚É‚æ‚é–â‘è‰ðŒˆ‚Å‚ÍAM—Š“xŠ„‚è“–‚Ä‚Ì–â‘è‚ª”­¶‚·‚éB
-%EƒZƒ“ƒT[”z’u–â‘è
-%
-%–{˜_•¶‚Å’ñˆÄ‚·‚éŠwK‚Ì˜g‘g‚Ý Neuron as an Agent (NaaA) ‚ÍA
-%ƒQ[ƒ€—˜_‚Ìˆê‚Â‚Å‚ ‚éƒƒJƒjƒYƒ€ƒfƒUƒCƒ“‚Ìl‚¦•û‚ð—p‚¢‚ÄAM—Š“x‚ÌÅ“K”z•ª‚ðŽÀŒ»‚·‚éB
-%
-%ŽÀŒ±‚Å‚ÍA•W€“I‚È‹­‰»ŠwK‚Ìƒ^ƒXƒN‚É‚æ‚é”’lŽÀŒ±‚ð—p‚¢‚Ä NaaA ‚ª POMDP ‚Ì–â‘è‚Ì¸“x‚ð‚‚ß‚é‚±‚Æ‚ðŽ¦‚·B
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-%ƒjƒ…[ƒ‰ƒ‹ƒlƒbƒgƒ[ƒN‚Íƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒgƒVƒXƒeƒ€‚Å‚ ‚é‚Æl‚¦‚ç‚ê‚éB
-%‰º‚ÌƒŒƒCƒ„[‚ðó‘Ô‚Æl‚¦‚é‚ÆA
-
-
-%‚±‚¤‚µ‚½ƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒg‚Ìó‹µ‚É‚¨‚¢‚ÄADQN ‚â A3C ‚È‚Ç‚Ì’PˆêƒG[ƒWƒFƒ“ƒg‚ð‘O’ñ‚Æ‚µ‚½ƒ‚ƒfƒ‹‚Í‚¤‚Ü‚­“®ì‚µ‚È‚¢B
-
-%ŽÀÛAƒQ[ƒ€—˜_‚ð—p‚¢‚Ä‹@ŠBŠwK‚ÌÅ“K‰»‚ðs‚¤Žè–@‚Í‚¢‚­‚Â‚©’ñˆÄ‚³‚ê‚Ä‚¢‚é\citep{stone1998towards,goodfellow2014generative}‚ªAƒQ[ƒ€‚ÌÝŒv•û–@‚É‚æ‚Á‚Ä‚ÍAƒiƒbƒVƒ…‹Ït‚ªƒpƒŒ[ƒgÅ“K‚Æˆê’v‚µ‚È‚¢‚Æ‚¢‚¤ŽÐ‰ï“IƒWƒŒƒ“ƒ}\citep{holt2007markets}‚ª”­¶‚·‚éB
-
-
-%%‚Å‚ÍA‚±‚ê‚ç‚ÌŠˆ“®‚ª‚·‚×‚ÄˆÙ‚È‚éŽå‘Ì‚É‚æ‚Á‚Ä’B¬‚³‚ê‚éê‡‚ª‚ ‚è‚¤‚éB
-%%E‹ß”N‚Ì[‘w‹­‰»ŠwK‚Ì¬Œ÷‚ÍA‹­‰»ŠwK‚É[‘wŠwK‚ð‘g‚Ý‡‚í‚¹‚é‚±‚Æ‚Ì—L—p«‚ðŽ¦‚µ‚Ä‚¢‚éB
-%
-%% –â‘è‚Í‰½‚©
-%Œ»ÝŽå—¬‚Æ‚È‚Á‚Ä‚¢‚é[‘w‹­‰»ŠwK‚Ì˜g‘g‚Ý‚Å‚ÍA
-%’Pˆê‚ÌƒG[ƒWƒFƒ“ƒg‚ª–â‘è‹óŠÔ‚ÌŠÏ‘ªA”F’mAs“®Œˆ’è‚Ì‚·‚×‚Ä‚ð’S‚¤B
-%
-%%‚µ‚©‚µAŒ»ŽÀ¢ŠE‚Ì–â‘è‚Å‚ÍAŠÏ‘ªA”F’mAs“®Œˆ’è‚ª‚·‚×‚ÄˆÙ‚È‚éŽå‘Ì‚É‚æ‚Á‚Ä’B¬‚³‚ê‚éê‡‚ª‚ ‚è‚¤‚éB
-%%•ªŽU‰»‚·‚é’m”\‚ÍA‹ß”N—lX‚È•ª–ì‚ÅŒ¾‚í‚ê‚Ä‚¢‚éB
-%%ƒrƒbƒgƒRƒCƒ“‚ÍA‘½‚­‚Ì’Ê‰Ý‚·‚éŽd‘g‚Ý‚Å‚ ‚éB
-%
-%‚±‚Ì‚æ‚¤‚ÉAd—v‚Å‚ ‚éB
-%ŽÀÛAlŠÔ‚Ì”]‚Í•ªŽU‰»‚³‚ê‚½ƒjƒ…[ƒƒ“‚É‚æ‚Á‚Ä\¬‚³‚ê‚éB
-%‚±‚Ìl‚¦•û‚Íƒjƒ…[ƒ‰ƒ‹ƒ_[ƒEƒBƒYƒ€‚ÆŒÄ‚Î‚ê‚éB
-%ƒjƒ…[ƒ‰ƒ‹ƒ_[ƒEƒBƒYƒ€‚Ì’ñ¥ŽÒ‚Å‚ ‚é***‚ÍA”Þ‚Ì’˜‘‚Ì’†‚Å‚±‚Ì‚æ‚¤‚ÉŒê‚Á‚Ä‚¢‚éB
-%
-%–{˜_•¶‚Íƒjƒ…[ƒƒ“‚ð•ªŽU‰»‚µ‚½Žå‘Ì‚Æ‚µ‚Ä‚Ý‚È‚·B
-%
-%ˆê‚Â‚Ìƒjƒ…[ƒƒ“‚ð•ªŽU‰»‚·‚é‚±‚Æ‚Í—eˆÕ‚Å‚Í‚È‚¢B
-%‚È‚º‚È‚çAƒjƒ…[ƒƒ“‚Í•ñV
-%
-%NaaA ‚ÍA
-%
-%‚±‚±‚ÅŒ©•û‚ð•Ï‚¦‚ÄA”]‚Ì’†‚Å‚Ç‚Ì‚æ‚¤‚Éƒjƒ…[ƒƒ“‚ÌŠÔ‚Ìî•ñ‹Ÿ‹‹‚ª‚È‚³‚ê‚Ä‚¢‚é‚©Œ©‚Ä‚Ý‚æ‚¤B
-%ƒjƒ…[ƒƒ“‚É‚æ‚é•ñVŒn‚Ì‚â‚èŽæ‚è‚Í”]‚Ì’†‚Å‚às‚í‚ê‚Ä‚¢‚éB
-%ƒjƒ…[ƒƒ“‚É‚ÍŒŒŠÇ‚©‚çƒOƒŠƒA×–E‚ð’Ê‚µ‚Ä
-%‚·‚È‚í‚¿A—L—p‚Èî•ñ‚ð’ñ‹Ÿ‚µ‚È‚¢ƒjƒ…[ƒƒ“‚ÍŽ©Ž€‚·‚éŽd‘g‚Ý‚ª”]“à‚ÉƒvƒƒOƒ‰ƒ~ƒ“ƒO‚³‚ê‚Ä‚¢‚éB
-%
-%“ü—Í‘¤‚ÌƒG[ƒWƒFƒ“ƒg‚É‚Æ‚Á‚ÄAî•ñˆ—‚ÉŒ©‡‚¤‘Î‰¿‚ð“¾‚é•K—v‚ª‚ ‚éB
-%‚±‚ê‚Ü‚Å¬Œ÷‚µ‚Ä‚«‚½[‘wŠwKƒ‚ƒfƒ‹iDQN‚âA3Cj‚È‚ÇA
-%’Pˆê‚ÌƒG[ƒWƒFƒ“ƒgƒ‚ƒfƒ‹‚ÍA‚±‚ê‚ç‚Ì–â‚¢‚ðˆµ‚¤‚±‚Æ‚ª‚Å‚«‚È‚¢B
-%
-%‚È‚º‚È‚çAƒZƒ“ƒT[Aƒ‚ƒfƒ‹AƒAƒNƒ`ƒ…ƒG[ƒ^‚Ì‚·‚×‚Ä‚ª•½“™‚É•ñV‚ðŽó‚¯Žæ‚é•K—v‚ª‚ ‚éB
-%‚±‚ê‚ÍAM—pŠ„‚è“–‚Ä–â‘è‚ÆŒÄ‚Î‚ê‚éB
-%
-%Œ»ŽÀ‚Ì¢ŠE‚É“K—p‚·‚éê‡A‚æ‚èƒXƒP[ƒ‰ƒuƒ‹‚Él‚¦‚éê‡A
-%•ªŽUŒ^ŠÂ‹«‚É“K—p‚µ‚½‚¢B
-%
-%ˆê•ûA
-%
-%% l‚¦•û
-%–{˜_•¶‚Å‚ÍA
-%ƒG[ƒWƒFƒ“ƒg“¯Ž‚ª’Ê‰Ý‚ðŽg‚Á‚Ä‚â‚èŽæ‚è‚·‚éB
-%ƒQ[ƒ€—˜_‚ÉŠî‚Ã‚«AƒG[ƒWƒFƒ“ƒg‚ªÅ“K‚È‰¿’l‚ð•]‰¿‚Å‚«‚é‚æ‚¤‚É‚·‚éB
-%‚±‚ê‚ç‚ÍAŽÀ¢ŠE‚É‚¨‚¢‚Ä‚àƒrƒbƒgƒRƒCƒ“‚È‚Ç‚Ì‰¼‘z’Ê‰Ý‚É‚¨‚¯‚é‘—‹à‚ª‰Â”\‚Å‚ ‚éƒ‚ƒfƒ‹‚Å‚ ‚éB
-%
-%% ŽÀÛ‚ÌƒI[ƒNƒVƒ‡ƒ“‚ÌŽd‘g‚Ý
-%’Ê‰Ý‚Ì‰¿’l‚ðÅ‘å‰»‚·‚é‚½‚ßANaaA ‚ÍƒI[ƒNƒVƒ‡ƒ“‚Ì—˜_‚ð—p‚¢‚éB
-%
-%% 
-%–{˜_•¶‚ÌvŒ£‚ÍˆÈ‰º‚Ì’Ê‚è‚Å‚ ‚éB
-%EM—Š“xŠ„“––â‘è‚ðAŒÂX‚Ìƒjƒ…[ƒƒ“‚ðƒG[ƒWƒFƒ“ƒg‚Æ‚Ý‚È‚·Žè–@‚ð’ñˆÄ‚·‚é‚±‚Æ‚Å‰ðŒˆ‚µ‚½
-%E’ñˆÄŽè–@‚Ì—L—p«‚ðA”’lŽÀŒ±‚ð—p‚¢‚ÄŠm”F‚µ‚½B
-%
-%NaaA ‚ª’ñˆÄ‚·‚é•ñVŒn‚Ì˜g‘g‚Ý‚ÍA
-%‹ß”N‚ÌƒrƒbƒgƒRƒCƒ“‚È‚Ç‚É‚æ‚é•ñVŒn‚Æ‚à‘g‚Ý‡‚í‚¹‚é‚±‚Æ‚ª‚Å‚«‚éB
-%‚»‚Ì‚½‚ßAŽÐ‰ïŽÀ‘•‚ðŽ‹–ì‚É“ü‚ê‚½ƒ‚ƒfƒ‹‚Å‚ ‚éB
-
-%‚·‚×‚Ä‚Ìƒ†ƒjƒbƒg‚ðƒG[ƒWƒFƒ“ƒg‚Æ‚Ý‚È‚·•û–@‚ÍAƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒg‹¦—ÍƒQ[ƒ€‚Æ‚µ‚ÄÅ“K‰»‚ðs‚¤B
-
-% ‰½‚Ì–â‘è‚ð‰ðŒˆ‚·‚é‚©
-% ‚±‚±‚ð‚à‚¤­‚µ‹­‰»: –â‘è‚ª‰½‚È‚Ì‚©à–¾‚³‚êØ‚ê‚Ä‚¢‚È‚¢
-% ƒGƒlƒ‹ƒM[‚ÉŠÖ‚·‚é˜b‚à‘‚­
-%‚±‚¤‚µ‚½ƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒg‚Ìó‹µ‚É‚¨‚¢‚ÄADQN ‚â A3C ‚È‚Ç‚Ì’PˆêƒG[ƒWƒFƒ“ƒg‚ð‘O’ñ‚Æ‚µ‚½ƒ‚ƒfƒ‹‚Í‚¤‚Ü‚­“®ì‚µ‚È‚¢B
-%‚»‚Ì——R‚Ìˆê‚Â‚ÉÅ“K‚È•ñV•ª”z‚Ì–â‘è‚ª‚ ‚éB
-%‚Ç‚Ì‚æ‚¤‚É•ñV‚ð•ª”z‚·‚é‚Ì‚©‚Æ‚¢‚¤Aƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒgŠwK‚É‚¨‚¯‚éM—Š“xŠ„‚è“–‚Ä‚Ì–â‘è‚É‹A’…‚³‚ê‚éB
-
-%ŒoÏƒ‚ƒfƒ‹‚ð—p‚¢‚ÄŠeƒ†ƒjƒbƒg‚ðƒG[ƒWƒFƒ“ƒg‚Æl‚¦‚é‚Ì‚Í—eˆÕ‚Å‚Í‚È‚¢B
-
-%–{˜_•¶‚Å’ñˆÄ‚·‚éŠwK‚Ì˜g‘g‚Ý Neuron as an Agent (NaaA) ‚ÍA
-%ŒoÏ‚Æƒjƒ…[ƒ‰ƒ‹ƒlƒbƒgƒ[ƒN‚Ì—˜_‚Ì“‡‚ðŽŽ‚Ý‚éB
-%Šù‘¶Œ¤‹†‚É‚¨‚¯‚éƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒgŠwK‚ðˆê”Ê‰»‚µA
-%ƒjƒ…[ƒ‰ƒ‹ƒlƒbƒgƒ[ƒN‚ÉŠÜ‚Ü‚ê‚éƒ†ƒjƒbƒg‚ðŽ©g‚Ì—˜‰v’Ç‹‚ðs‚¤ƒG[ƒWƒFƒ“ƒg‚Æ‚Ý‚È‚³‚ê‚éB
-%NaaA ‚Å‚ÍA’†‰›WŒ “I‚ÈŽå‘Ì‚Í‘¶Ý‚¹‚¸Aƒ†ƒjƒbƒg‚Í‚ ‚­‚Ü‚ÅŽ©g‚Ì—˜‰v‚ðÅ‘å‰»‚·‚éB
-%NaaA ‚ÌƒtƒŒ[ƒ€ƒ[ƒN‚Å‚ÍA’Ê‰Ý‚ð‘z’è‚µA“¾‚ç‚ê‚½•ñV‚ð•ª”z‚·‚é‚±‚Æ‚ÅM—Š“xŠ„‚è“–‚Ä–â‘è‚ð‰ð‚­B
-%ƒ†ƒjƒbƒg‚ªŠl“¾‚·‚é•ñVŠÖ”‚ÍA—˜‰vA‚·‚È‚í‚¿A•ñViãˆÊ‚Ìƒ†ƒjƒbƒg‚©‚çŽó‚¯Žæ‚Á‚½’Ê‰Ýj‚ÆAƒRƒXƒgi‰ºˆÊ‚Ìƒ†ƒjƒbƒg‚ÉŽx•¥‚Á‚½’Ê‰Ýj‚Ì·•ª‚Æ‚µ‚Ä•\Œ»‚³‚ê‚éB
-%‚µ‚½‚ª‚Á‚ÄAƒ†ƒjƒbƒg‚Í
-
-%ˆÈã‚ªˆê‚Â–Ú‚ÌvŒ£‚Å‚ ‚éB
-%ƒoƒbƒNƒvƒƒpƒQ[ƒVƒ‡ƒ“‚Ì‘ã‚í‚è‚Éƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒgƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“‚É‚æ‚éÅ“K‰»‚ðs‚¤B
-%NaaA ‚Í‚Ü‚¸Aƒjƒ…[ƒƒ“‚ÌŠÔ‚ÅŽæˆø‚³‚ê‚é’Ê‰Ý‚ð—pˆÓ‚µAƒjƒ…[ƒƒ““¯Žm‚Å‚â‚èŽæ‚è‚·‚é‚æ‚¤‚É‚·‚éB
-%NaaA ‚Å‚ÍAƒQ[ƒ€—˜_‚ð—p‚¢‚Ä•¡”‚Ìƒjƒ…[ƒƒ“‚ð‹£‡‚³‚¹‚é‚±‚Æ‚ÅAM—Š“xŠ„‚è“–‚Ä–â‘è‚ð‰ðŒˆ‚µAÅ“K‚È•ñV•ª”z‚ðŽÀŒ»‚·‚éB
-
-%ƒjƒ…[ƒ‰ƒ‹ƒ_[ƒEƒBƒYƒ€‚Ì’ñ¥ŽÒ‚Å‚ ‚éƒG[ƒfƒ‹ƒ}ƒ“‚ÍŽŸ‚Ì‚æ‚¤‚ÉŒê‚Á‚Ä‚¢‚éB
-%\begin{quote}
-%{\em
-%... To survive in its econiche,
-%an organism must either inherit or create criteria that
-%enable it to partition theworld into perceptual categories
-%according to its adaptive needs. Even after that
-%partition occurs as a result of experience, the world
-%remains to some extent an unlabeled place full of novelty.
-%}
-%\end{quote}
-
-% TODO: ‚Ü‚¸‚Íu“`‚¦‚év‚±‚Æ‚ð—DæBCü‚ÍŒãB
-% TODO: Bengio ‚ª Neural Darwinism ‚É‘Î‚µ‚Ä‚È‚ñ‚Æ‚¢‚Á‚Ä‚¢‚é‚©‚ð‘‚­
-
-%EŒ»ÝŽå—¬‚Æ‚È‚Á‚Ä‚¢‚é[‘w‹­‰»ŠwK‚Ìƒ‚ƒfƒ‹‚Ì‘½‚­‚ÍA’Pˆê‚ÌƒG[ƒWƒFƒ“ƒg‚ª–â‘è‹óŠÔ‚ÌŠÏ‘ªA”F’mAs“®Œˆ’è‚Ì‚·‚×‚Ä‚ÌƒvƒƒZƒX‚ð’S‚¤B
-%	EDQN ‚â A3C ‚ÍAAtari ‚ÌƒXƒNƒŠ[ƒ“Œn—ñ‚©‚çÅ“K‚Ès“®‚ðŒˆ’è‚·‚éB
-%	EAlphaGo ‚ÍˆÍŒé‚Ì”Õ–Ê‚©‚çŸ—˜‚ÉÅ‚à‹ß‚¢ˆêŽè‚ð‘I‚ÔB
-%	EDDPG ‚Í•¨—‹óŠÔ‚É‚¨‚¢‚ÄAÅ“K‚È‹Ø“÷‚Ì“®‚«‚ðŒˆ’è‚·‚é¶•¨‚Ì“®‚«‚ðŠwK‚·‚éB
-%	E’Pˆê‚ÌƒG[ƒWƒFƒ“ƒg‚ð—p‚¢‚Ä‹­‰»ŠwK‚ð‰ð‚­‚Æ‚¢‚¤ŽŽ‚Ý‚ÍAlŠÔ‚ÌŽ‚Âg‘Ì«‚ÌƒAƒiƒƒW[‚©‚çl‚¦‚é‚ÆˆêŒ‘Ã“–‚Å‚ ‚é‚æ‚¤‚ÉŽv‚¦‚éB
-%
-%E‚µ‚©‚µA‚±‚¤‚µ‚½Šù‘¶Œ¤‹†‚Ì¬Œ÷‚É‚©‚©‚í‚ç‚¸AŒ»ŽÀ¢ŠE‚Ì–â‘è‚Íƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒg‚Å‚ ‚éB
-%	E‚·‚È‚í‚¿AŠÏ‘ªA”F’mAs“®Œˆ’è‚ª‚·‚×‚ÄˆÙ‚È‚éŽå‘Ì‚É‚æ‚Á‚Äs‚í‚ê‚éB
-%	EŽÀÛAlŠÔ‚Ì”]‚ðŠÏŽ@‚µ‚Ä‚àAŠe_Œo×–E‚Í“Æ—§‚µ‚½¶•¨‚Æ‚Æ‚ç‚¦‚é‚±‚Æ‚ª‰Â”\‚Å‚ ‚éB‚±‚¤‚µ‚½Œ©•û‚Íƒjƒ…[ƒ‰ƒ‹ƒ_[ƒEƒBƒYƒ€‚Æ‚àŒÄ‚Î‚ê‚éB
-%
-%E‚±‚¤‚µ‚½ƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒg‚Ìó‹µ‚É‚¨‚¢‚ÄA]—ˆŽè–@‚Í‚¤‚Ü‚­“®ì‚µ‚È‚¢B
-%	E‚»‚Ì——R‚Ìˆê‚Â‚ÉÅ“K‚È•ñV•ª”z‚Ì–â‘è‚ª‘¶Ý‚·‚éB
-%	E‚Ç‚Ì‚æ‚¤‚É•ñV‚ð•ª”z‚·‚é‚Ì‚©‚Æ‚¢‚¤Aƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒgŠwK‚É‚¨‚¯‚éM—Š“xŠ„‚è“–‚Ä‚Ì–â‘è‚É‹A’…‚³‚ê‚éB
-%	E‚¢‚­‚Â‚©‚Ì•¶Œ£‚Í‹¦—ÍƒQ[ƒ€‚ðˆµ‚Á‚Ä‚¢‚é‚ªAƒG[ƒWƒFƒ“ƒgŠÔ‚ª’¼—ñ‚Éî•ñ‚ð“`’B‚µ‡‚¤ó‹µ‚É‚¨‚¯‚é•ñV•ª”z‚É‚Â‚¢‚Ä‚Í‰ð‚ª—^‚¦‚ç‚ê‚Ä‚¢‚È‚¢B
-%
-%E–{˜_•¶‚Å‚ÍAƒ}ƒ‹ƒ`ƒG[ƒWƒFƒ“ƒgŠwK‚É“Á‰»‚µ‚½˜g‘g‚ÝANeuron as an Agent (NaaA) ‚ð’ñˆÄ‚·‚éB
-%	ENaaA ‚Å‚ÍAƒQ[ƒ€—˜_‚ð—p‚¢‚Ä•¡”‚Ìƒjƒ…[ƒƒ“‚ð‹£‡‚³‚¹‚é‚±‚Æ‚ÅAM—Š“xŠ„‚è“–‚Ä–â‘è‚ð‰ðŒˆ‚µAÅ“K‚È•ñV•ª”z‚ðŽÀŒ»‚·‚éB
-%	E‚±‚ê‚ÍƒAƒeƒ“ƒVƒ‡ƒ“ƒ‚ƒfƒ‹‚ðŠg’£‚µ‚½ƒ‚ƒfƒ‹‚Æ‚µ‚Ä‰ðŽß‚Å‚«‚éB
-%	E‚±‚ê‚ªˆê‚Â–Ú‚ÌvŒ£‚Å‚ ‚éB
-%
-%E‚Ü‚½AŽÀŒ±‚Å‚ÍA”’lŽÀŒ±‚ð—p‚¢‚Ä NaaA ‚Ì—L—p«‚ðŽÀØ‚·‚éB‚±‚ê‚ª“ñ‚Â–Ú‚ÌvŒ£‚Å‚ ‚éB
-%
-%E–{˜_•¶‚Ì\¬‚ÍˆÈ‰º‚Ì‚Æ‚¨‚è‚Å‚ ‚éB
-
-
-%Ž©–¾‚È‰ð‚Æ‚µ‚ÄA‘¼‚Ìƒjƒ…[ƒƒ“‚Ìî•ñ‚ðƒ^ƒ_‚Å“¾‚é‰ð‚ª“¾‚ç‚ê‚é‚±‚Æ‚ð–h‚®‚½‚ß‚ÉA
-%NaaA ‚ÍƒQ[ƒ€—˜_‚ÌŽd‘g‚Ý‚ð“±“ü‚µA“¯‚¶ƒŒƒCƒ„[‚É‘®‚·‚éƒjƒ…[ƒƒ““¯Žm‚ð‹£‡ŠwK‚³‚¹‚é‚±‚Æ‚ÅAneural agent ‚ª‘¼‚Ìƒjƒ…[ƒƒ“‚Ì‰¿’l‚ð³’¼‚É\‚·‚é‚±‚Æ‚ðŽ¦‚·B
-
+å®Ÿé¨“ã§ã¯ã€æ¨™æº–çš„ãªå¼·åŒ–å­¦ç¿’ã®ã‚¿ã‚¹ã‚¯ã«ã‚ˆã‚‹æ•°å€¤å®Ÿé¨“ã‚’ç”¨ã„ã¦ NaaA ãŒ POMDP ã®å•é¡Œã®ç²¾åº¦ã‚’é«˜ã‚ã‚‹ã“ã¨ã‚’ç¤ºã™ã€‚
+å…·ä½“çš„ã«ã€Atari ãŠã‚ˆã³ VisDoom ã«ãŠã‘ã‚‹ç’°å¢ƒã‚’ç”¨ã„ã¦ã€æ—¢å­˜ç ”ç©¶ãŒ DQN ã‚„ A3C ã‚’ä¸Šå›žã‚‹ã“ã¨ã‚’ç¤ºã™ã€‚

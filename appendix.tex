@@ -2,17 +2,17 @@
 \section*{Appendix}
 \setcounter{section}{1}
 \renewcommand{\thesection}{\Alph{section}}
-\subsection{�藝\ref{thm:optimal-bidding}�̏ؖ�}
-������̊l�����鐶�U��V $G$ �͎��ŗ^������B
+\subsection{定理\ref{thm:optimal-bidding}の証明}
+買い手の獲得する生涯報酬 $G$ は次で与えられる。
 \begin{flalign}
 G(b,q) = g(b,q) \cdot (v-q) + G_0,
 \end{flalign}
-�������A$g$ �͊���(allocation)�ł���A$G_0$ �̓��j�b�g���w�����Ȃ������ꍇ�̐��U��V�ł���B�����́A$g(b, q) = H(b - q)$ ����������B$H$ �̓X�e�b�v�֐��ł���B
+ただし、$g$ は割当(allocation)であり、$G_0$ はユニットを購入しなかった場合の生涯報酬である。割当は、$g(b, q) = H(b - q)$ が成立する。$H$ はステップ関数である。
 
-������ɂƂ��Ĕ���肪�񎦂��� asking price $\ask$ �͖��m�ł��邽�߁A
-$\ask$ ��� $[0, \infty)$ �̏�̊m���ϐ��ł���Ƃ��Ĉ����A
-���Ғl $\Expect{q}{G(b,q)}$ ���ő剻���邱�Ƃ��l����B
-���̂Ƃ��A
+買い手にとって売り手が提示する asking price $\ask$ は未知であるため、
+$\ask$ を台 $[0, \infty)$ の上の確率変数であるとして扱い、
+期待値 $\Expect{q}{G(b,q)}$ を最大化することを考える。
+このとき、
 \begin{flalign}
 \deriv{b}{}\Expect{q}{G(b,q)} 
 &= \deriv{b}{}\int_0^\infty (H(b - q) \cdot (v-q) + G_0) p(q) dq \notag \\
@@ -20,4 +20,4 @@ $\ask$ ��� $[0, \infty)$ �̏�̊m���ϐ��ł���Ƃ��Ĉ����A
 &= \deriv{b}{} \int_0^b (v-q) p(q) dq \notag \\
 &= (v-b) p(q=b) \notag 
 \end{flalign}
-���������āA $\Expect{q}{G(b,q)}$ ���ő�ƂȂ邽�߂̏����� $b=v$ �ł���B
+したがって、 $\Expect{q}{G(b,q)}$ が最大となるための条件は $b=v$ ある。
