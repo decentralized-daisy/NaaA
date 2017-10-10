@@ -24,7 +24,6 @@
 \newcommand{\T}{\mathrm{T}}
 \newcommand{\tr}{\mathrm{tr}}
 \newcommand{\sigmoid}{\sigma}
-\newcommand{\Simga}{\Sigma}
 \newcommand{\attention}{\vect{g}}
 \def\attentionwithouti{g_2, \dots, g_k}
 %\def\attentionwithouti{\boldsymbol{\gamma}_{i}}
@@ -40,6 +39,8 @@
 \def\S{\mathcal{S}}
 \def\R{\mathcal{R}}
 \def\Trans{\mathcal{T}}
+\def\Observations{\Omega}
+\def\ObProb{\mathcal{O}}
 \def\E{\mathcal{E}}
 \def\deriv#1#2{ \frac{\partial #2}{ \partial #1 } }
 \def\derivN#1#2#3{ \frac{\partial^{#1} #3}{ \partial #2^{#1} } }
@@ -62,7 +63,10 @@
 \def\params{{\boldsymbol{\theta}}}
 \def\Params{{\boldsymbol{\Theta}}}
 \def\opt#1{{\hat{#1}}}
-\def\argmax{\mathrm{argmax}}
+
+\newcommand{\argmax}{\mathop{\rm argmax}\limits}
+\newcommand{\argmin}{\mathop{\rm argmin}\limits}
+
 
 %\def\costof#1{C(#1)}
 \def\costof#1{\mathrm{C}[{#1}]}
@@ -164,3 +168,21 @@
 \newtheorem{coro}{Corollary}[section]
 \newtheorem{prf}{Proof}
 \newtheorem{defn}{Definition}
+
+
+
+
+%=================================
+% Paper specific
+%=================================
+
+\def\neuralnet{\mathfrak{G}}
+\def\units{V}
+\def\edges{E}
+\def\unitAt#1{v_{#1}}
+\def\unit{\unitAt{i}}
+\def\followees{N^\mathrm{in}_i}
+\def\followers{N^\mathrm{out}_i}
+\def\friends{N_i}
+\def\rewardAt#1{R_{#1}}
+\def\reward{\rewardAt{it}}

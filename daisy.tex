@@ -1,35 +1,22 @@
 \documentclass{article} % For LaTeX2e
 \usepackage{iclr2017_conference,times}
-%\usepackage{hyperref}
 \usepackage{url}
 \usepackage{amsthm}
 \input{preamble.tex}
 
 
-%\title{Representation Market: Towards Model Aggregation on Decentralized Environment}
 \title{Neuron as an Agent}
 
-\author{Shohei Ohsawa \\
+\author{Shohei Ohsawa, Kei Akuzawa \& Yutaka Matsuo \\
 The University of Tokyo\\
 7 Chome-3-1 Hongo, Bunkyo, Tokyo \\
 \texttt{ohsawa@weblab.t.u-tokyo.ac.jp} \\
 }
 
-% The \author macro works with any number of authors. There are two commands
-% used to separate the names and addresses of multiple authors: \And and \AND.
-%
-% Using \And between authors leaves it to \LaTeX{} to determine where to break
-% the lines. Using \AND forces a linebreak at that point. So, if \LaTeX{}
-% puts 3 of 4 authors names on the first line, and the last on the second
-% line, try using \AND instead of \And before the third author name.
-
 \newcommand{\fix}{\marginpar{FIX}}
 \newcommand{\new}{\marginpar{NEW}}
 
-%\iclrfinalcopy % Uncomment for camera-ready version
-
 \begin{document}
-
 
 \maketitle
 
@@ -52,80 +39,10 @@ confirm the result by numerical experiment using Atari and VizDoom.
 \input{introduction.tex}
 \input{related.tex}
 \input{method.tex}
-
-\section{Experiment}
-
+\input{experiment.tex}
 \input{discussion.tex}
 \input{conclusion.tex}
 \input{appendix.tex}
-
-%%では、これらの活動がすべて異なる主体によって達成される場合がありうる。
-%%・近年の深層強化学習の成功は、強化学習に深層学習を組み合わせることの有用性を示している。
-%
-%% 問題は何か
-%現在主流となっている深層強化学習の枠組みでは、
-%単一のエージェントが問題空間の観測、認知、行動決定のすべてを担う。
-%
-%%しかし、現実世界の問題では、観測、認知、行動決定がすべて異なる主体によって達成される場合がありうる。
-%%分散化する知能は、近年様々な分野で言われている。
-%%ビットコインは、多くの通貨する仕組みである。
-%
-%このように、重要である。
-%実際、人間の脳は分散化されたニューロンによって構成される。
-%この考え方はニューラルダーウィズムと呼ばれる。
-%ニューラルダーウィズムの提唱者である***は、彼の著書の中でこのように語っている。
-%
-%本論文はニューロンを分散化した主体としてみなす。
-%
-%一つのニューロンを分散化することは容易ではない。
-%なぜなら、ニューロンは報酬
-%
-%NaaA は、
-%
-%ここで見方を変えて、脳の中でどのようにニューロンの間の情報供給がなされているか見てみよう。
-%ニューロンによる報酬系のやり取りは脳の中でも行われている。
-%ニューロンには血管からグリア細胞を通して
-%すなわち、有用な情報を提供しないニューロンは自死する仕組みが脳内にプログラミングされている。
-%
-%入力側のエージェントにとって、情報処理に見合う対価を得る必要がある。
-%これまで成功してきた深層学習モデル（DQNやA3C）など、
-%単一のエージェントモデルは、これらの問いを扱うことができない。
-%
-%なぜなら、センサー、モデル、アクチュエータのすべてが平等に報酬を受け取る必要がある。
-%これは、信用割り当て問題と呼ばれる。
-%
-%現実の世界に適用する場合、よりスケーラブルに考える場合、
-%分散型環境に適用したい。
-%
-%一方、
-%
-%% 考え方
-%本論文では、
-%エージェント同氏が通貨を使ってやり取りする。
-%ゲーム理論に基づき、エージェントが最適な価値を評価できるようにする。
-%これらは、実世界においてもビットコインなどの仮想通貨における送金が可能であるモデルである。
-%
-%% 実際のオークションの仕組み
-%通貨の価値を最大化するため、NaaA はオークションの理論を用いる。
-%
-%% 
-%本論文の貢献は以下の通りである。
-%・信頼度割当問題を、個々のニューロンをエージェントとみなす手法を提案することで解決した
-%・提案手法の有用性を、数値実験を用いて確認した。
-%
-%NaaA が提案する報酬系の枠組みは、
-%近年のビットコインなどによる報酬系とも組み合わせることができる。
-%そのため、社会実装を視野に入れたモデルである。
-
-%すべてのユニットをエージェントとみなす方法は、マルチエージェント協力ゲームとして最適化を行う。
-
-% 何の問題を解決するか
-% ここをもう少し強化: 問題が何なのか説明され切れていない
-% エネルギーに関する話も書く
-%こうしたマルチエージェントの状況において、DQN や A3C などの単一エージェントを前提としたモデルはうまく動作しない。
-%その理由の一つに最適な報酬分配の問題がある。
-%どのように報酬を分配するのかという、マルチエージェント学習における信頼度割り当ての問題に帰着される。
-
 
 \bibliography{daisy}
 \bibliographystyle{iclr2017_conference}
