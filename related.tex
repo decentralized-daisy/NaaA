@@ -9,7 +9,7 @@ DDPG \citep{lillicrap2015continuous} は物理空間において摩擦や重力�
 深層強化学習を POMDP 環境に適用する研究はいくつか行われている。
 Deep Recurrent Q-Network (DRQN) \citep{sorokin2015deep} は、
 隠れマルコフ連鎖を想定し、リカレントニューラルネットワーク(RNN)を用いて真の状態を推定している。
-他にも、エレベーター制御\citep{crites1998elevator}、センサーネットワーク\citep{fox2000probabilistic}、ロボットサッカー\citep{stone1998towards}などがマルチエージェントによって解かれている（あとで修正: 専門家に確認中）。
+%他にも、エレベーター制御\citep{crites1998elevator}、センサーネットワーク\citep{fox2000probabilistic}、ロボットサッカー\citep{stone1998towards}などがマルチエージェントによって解かれている（修正中：最新の研究をサーベイ）。
 
 マルチエージェントシステムによる強化学習へのアプローチにはいくつかの方法がある。
 一つは、学習の効率を高めるために、同一のモデルに従う複数のエージェントを用いて探索を行う方法であり、Gorilla \citep{nair2015massively} , A3C \citep{mnih2016asynchronous} などで採用されている。
@@ -38,3 +38,12 @@ COMA \citep{foerster2017counterfactual} は、actor-critic において critic �
 本研究は、実際に IoT の環境で本研究が適用されるケースを想定している。
 報酬はビットコインなどの決済手段によって送金が可能であるため、
 Web 全体でスケーラブルなモデルが実現できる可能性がある。
+
+NaaA の設計は、神経科学からヒントを得ている。
+神経回路に含まれるニューロンは一つの細胞であるため、エネルギーを消費する。
+通常の細胞と同様に酸素や ATP がエネルギー源となり、これらはニューロンと接続した、アストロサイトから供給される。
+アストロサイトは脳の構造を支えるグリア細胞の一種であり、血管からニューロンへの栄養供給を行う。
+エネルギー量は有限であるため、不要なニューロンはアポトーシスによって死滅する。
+アポトーシスは NGF (nerve growth factor), BDNF (brain derived neurofactor) などの神経栄養因子(neurotorophin; NTF)によって制御されるため、より多くの NTF を獲得できたニューロンが生存する。
+各神経細胞を独立した生物として捉える見方はニューラルダーウィズム\citep{edelman1987neural}と呼ばれる。
+

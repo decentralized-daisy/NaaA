@@ -63,7 +63,7 @@ NOOP が選択されるのは、それ以外のすべての行動の期待報酬
 \begin{flalign}
 	R_{it} = 
 	  \left[ R_{it}^\mathrm{ex} + \sum_{j \in N^\mathrm{out}_i} \rho_{jit} \right] 
-	- \left[\sum_{j \in N^\mathrm{in}_i} \rho_{ijt} + \alpha_{it} \right]
+	- \left[\sum_{j \in N^\mathrm{in}_i} \rho_{ijt} + \alpha_{it} \right].
 \end{flalign}
 この式は、符号が正の項と負の項の二つに分解される。前者を収益(revenue)、後者をコスト(cost)と呼び、それぞれ $r_{it}, c_{it}$ で表す。$R_{it}$を利益(profit)と呼ぶ。
 %今、外的環境を $\unitAt{0}$ と書き、$\rho_{0it} = R_{it}^\mathrm{ex}$, $\rho_{i0t} = \alpha_t$ と書くと、この式は次のように単純化される。
@@ -89,7 +89,7 @@ NOOP が選択されるのは、それ以外のすべての行動の期待報酬
 
 このとき、ユニット $\unit$ は、次式で表現される累積減衰利益 $G_{it}$ を最大化する。
 \begin{flalign}
-	G_{it} = \sum_{k=0}^T \gamma^k R_{i, t+k} = \sum_{k=0}^T \gamma^k (r_{i,t+k} - c_{i,t+k})
+	G_{it} = \sum_{k=0}^T \gamma^k R_{i, t+k} = \sum_{k=0}^T \gamma^k (r_{i,t+k} - c_{i,t+k}).
 \end{flalign}
 $R_{it} > 0$、すなわち、$r_{it} > c_{it}$ であれば、ユニットは得たデータに対して付加価値を与えていることになる。
 もし、すべての $t$ に対して $R_{it} < 0$ であれば、$G_{it} < 0$ であるから、ユニットは NOOP になる。
@@ -182,7 +182,16 @@ Envy-free auction の流れを Figure \ref{fig:double} の左に示す。
 割当を行った後は、$\rho_{jit} = g_{jit} \opt{q}_{it}$ として、送金を行い(3)、
 売り手は割当を行ったノードに対してのみ信号 $x_i$ を送付する(4)。
 信号を受け取れなかったノードは、$x_i$ の期待値 $\Expect{\pi}{x_i}$ によって $x_i$ を近似する。
-以下では、Envy-free auction における収益 $r_{it}$ とコスト $c_{it}$ の最適化について分けて説明を行う。
+
+$G_{it}$ は次のように書くことができる。
+\begin{flalign}
+	G_{it}  &= r_t - c_t + \gamma G_{i,t+1}	\notag \\
+		&\approx r_t - c_t + \gamma V_i^{\pi_i} (s_{i, t+1}),
+\end{flalign}
+ただし、$V^{\pi_i}_i (s_{it})$ は価値関数(value function)であり、ユニットの状態 $s_{it}$ に対して方策 $\pi_i$ を取った場合のリターンの期待値に等しい。
+このため、収益、コスト、価値関数それぞれを最大化する方法について考えればよい。
+
+%以下では、Envy-free auction における収益 $r_{it}$ とコスト $c_{it}$ の最適化について分けて説明を行う。
 
 %この過程は、本や音楽などの、複製可能財、digital goods を対象にしたオークション理論 digital goods auction において、
 %envy-free auction として知られている。
@@ -196,14 +205,15 @@ Envy-free auction の流れを Figure \ref{fig:double} の左に示す。
 \textbf{Revenue}:
 エージェントの収益は次式で与えられる。
 \begin{flalign}
-	r_{it}  &= \sum_{j \in N^\mathrm{in}_i} g(b_{jit}, q_i) q_i + R^\mathrm{ex}_i  = q_i \sum_{j \in N^\mathrm{in}_i} g(b_{ji}, q_i)  + R^\mathrm{ex}_i \notag \\
-		&= q_i d_t(q_t) + R^\mathrm{ex}_i
+	r_{it}  &= \sum_{j \in N^\mathrm{out}_i} g(b_{jit}, q_{it}) q_{it} + R^\mathrm{ex}_i  = q_{it} \sum_{j \in N^\mathrm{out}_i} g(b_{jit}, q_{it})  + R^\mathrm{ex}_i \notag \\
+		&= q_i d_{it}(q_t) + R^\mathrm{ex}_i,
 \end{flalign}
-ここで、$a$ は価格、$d_t(a)$ はユニット $i$ の信号に対する価値を $a$ 以上と評価しているエージェントの数であり、需要(demand)と呼ぶ。
+ただし、$g(\cdot, \cdot)$ は割当(allocation)であり、ステップ関数 $H(\cdot)$を用いて$g(b,q)=H(b - q)$によって定義される。
+$q_{it}$ は価格、$d_{it}(q_{it})$ はユニット $i$ の信号に対する価値を $q_{it}$ 以上と評価しているエージェントの数であり、需要(demand)と呼ぶ。
 同様の式で、右辺を最大化する $a$ を最適価格と呼び、$ \opt{q}_{it} $ で表す。 
 第二項は $q_t$ に対して独立であるから、最適価格 $\opt{q}_{it}$ は次のようにして与えられる。
 \begin{flalign}
-	\opt{q}_{it}  = \argmax_{q \in [0, \infty)} q d_{it}(q)
+	\opt{q}_{it}  = \argmax_{q \in [0, \infty)} q d_{it}(q).
 \end{flalign}
 この仕組みを、Figure \ref{fig:double} の右に図示する。$d_t(q_{it})$ は単調減少な関数であり、$q_{it}$ との積によって表現される。
 
@@ -211,37 +221,68 @@ Envy-free auction の流れを Figure \ref{fig:double} の左に示す。
 %========================================
 % コスト
 %========================================
-
 \textbf{Cost}:
-コストは、正しいデータを購入した場合とそうでない場合の期待リターン $G_{it}$ の差に等しい。
-すなわち、
-%FIXME 多分ここは期待値じゃなくてリターンそのものなのでそのように修正する（最初にリターンを使ったロジックで説明しているため）
+コストは、ユニットが他のユニットに対して払う価格である。
+これは次のように表示される。
 \begin{flalign}
-	o_t 
-	&= \Expect{\pi}{ r_{i,t+1} \mid a_t=1 } - \Expect{\pi}{ r_{i,t+1} \mid a_t=0 } \notag \\
-	&= \Expect{\pi}{ R_{i,t+1} \mid a_t=1 } - \Expect{\pi}{ R_{i,t+1} \mid a_t=0 } \notag \\
-	&= Q(s_t, 1) - Q(s_t, 0) \label{eq:def:oppotunity-cost},
+	c_{it} = \sum_{j \in N^\mathrm{in} } g(b_{ijt}, q_j) q_j+ \alpha_i
 \end{flalign}
-ただし、$Q$ は状態行動価値関数であり、一手先のコストはどちらの行動を選んでも一定であると仮定している。
-$o_{it}$ を counterfractual state-action value と呼ぶ。これは QUICR \citep{agogino2006quicr} と導出は異なるが等価である。
+$c_{it}$ 自体は $b_{ijt} = 0$ のとき最小となる。
+しかし、これは次の value function とトレードオフをなす。
+
+\textbf{Value Function}:
+価値関数は $V(s_{i,t+1})$ の値は $s_{i,t+1}$ に依存する。
+既に述べたようにエージェントの $v_i$ の環境は接続されているユニット集合であり、
+ユニットの出力はこれらのエージェントからの評価、すなわちエッジの重みに影響を及ぼす。
+通常のニューラルネットワークでは、出力の精度に貢献しないニューロンの重みは小さくなることから、報酬は小さくなる。
+したがって、入札価格 $b_{ijt}$ を最小化し 0 と置くとデータの購入に失敗し、
+将来的にエージェントが接続しているエージェントから得られる報酬が小さくなる。
+
+今、割当を $\vect{g}_{it} = (g_{i1t}, \dots, g_{iNt})^\T$ で表し、エージェントが $v_j$ の購入に成功した場合と、そうでない場合に価値関数に及ぼす影響について考える。
+この時、価値関数は、状態価値関数 $Q(s_{i,t+1}, \vect{g}_{i,t+1})$ を用いて次式で表現できる。
+\begin{flalign}
+	V_i^{\pi_i}(s_{it}) 
+	&= Q_i^{\pi_i}(s_{it}, \vect{g}_{it}) \notag \\
+	&= \sum_{j \in \followees} g_{ijt} (Q_i^{\pi_i} (s_{it}, \vect{e}_j) - Q_i^{\pi_i}(s_{it}, \vect{0})) + Q_i^{\pi_i}(s_{it}, \vect{0}) \notag \\
+	&= \sum_{j \in \followees} g_{ijt} o_{ijt} + Q_i^{\pi_i}(s_{it}, \vect{0}) \notag \\
+	&= \vect{g}_{it}^\T \vect{o}_{it} + Q_i^{\pi_i}(s_{it}, \vect{0})
+\end{flalign}
+
+%gこれは、ユニットの出力の精度に応じてユニットの評価が変化することを意味する。
+%gコストは、正しいデータを購入した場合とそうでない場合の期待リターン $G_{it}$ の差に等しい。
+%gすなわち、
+%g%FIXME 多分ここは期待値じゃなくてリターンそのものなのでそのように修正する（最初にリターンを使ったロジックで説明しているため）
+%g\begin{flalign}
+%g	o_t 
+%g	&= \Expect{\pi}{ r_{i,t+1} \mid a_t=1 } - \Expect{\pi}{ r_{i,t+1} \mid a_t=0 } \notag \\
+%g	&= \Expect{\pi}{ R_{i,t+1} \mid a_t=1 } - \Expect{\pi}{ R_{i,t+1} \mid a_t=0 } \notag \\
+%g	&= Q(s_t, 1) - Q(s_t, 0) \label{eq:def:oppotunity-cost},
+%g\end{flalign}
+%gただし、$Q$ は状態行動価値関数であり、一手先のコストはどちらの行動を選んでも一定であると仮定している。
+$o_{ijt} = Q_i^{\pi_i} (s_{it}, \vect{e}_j) - Q_i^{\pi_i}(s_{it}, \vect{0})$ を counterfactual return と呼ぶ。これは QUICR \citep{agogino2006quicr} と導出は異なるが等価である。
 すなわち、エージェントが支払うコストは、データの購入に成功した場合は $\opt{a}_{it}$ であり、
 それ以外は $o_{it}$ となる。
 
-では、コストを最小化するためのエージェントの入札額 $b_{it}$ は何か。
+以上から、最適化問題は次のように書くことができる。
+\begin{flalign}
+	\max_{\vect{b}, q} G_{it} = \max_q q d_{it}(q) - \min_{\vect{b}} \vect{g}_{it}(\vect{b})^\T( \vect{q}_t - \gamma \vect{o}_{i,t+1}  ) + \const
+\end{flalign}
+
+では、リターンを最大化するためのエージェントの入札額 $b_{it}$ は何か。
 これについては次の定理が成立する。
 
 \begin{thm}\label{thm:optimal-bidding}
-コストを最小化する最適な入札額は $b_{it} = o_{it}$ である。
+	(Truthfulness) リターンを最大化する最適な入札額は $\opt{\vect{b}}_{it} = \vect{o}_{it}$ である。
 \end{thm}
 証明については Appendix を参照。
 
-すなわち、エージェントは自身の機会損失のみを問題にすればよい(!)
+すなわち、エージェントは自身のcounterfactual returnのみを問題にすればよい(!)
 したがって、NaaA のメカニズムでは、エージェントはあたかも他のエージェントを価値評価(valuation)し、
 その価値を正直に申告していることを意味する。
 
 系として次の解が得られる。
 \begin{coro}\label{coro:optimal-bidding}
-The Nash equivalem of the envy-free game $(\vect{b}, q)$ is $(\vect{o}_t, \max_{q} q d_{\vect{o}_t}(q))$.
+	The Nash equivalem of the envy-free game $(\vect{b}_{it}, q_{it})$ is $(\vect{o}_{it}, \argmax_{q} q d_{it}(q))$.
 \end{coro}
 
 %TODO o_t のグラウンドをする。最初に望ましい配分 v を述べ、その後で重要性について解説する。
@@ -296,9 +337,9 @@ $Q$関数は次のように表現される。
 	\tilde{A}_i(\vect{s}_t, a_t) &= A_i(\vect{s}_t, a_t)  - \frac{1}{k} \sum_{j=1}^k  A_j(\vect{s}_t, a_t)
 \end{flalign}
 次に、valuation を行い、bidding price $\vect{b}_t$ を求める。
-$b_{it}$ の値は式 \ref{eq:def:oppotunity-cost} および式 \ref{eq:QisE-A}より、最適な入札価格 $\opt{b}_{it}$ は次のように計算できる。
+$\opt{b}_{ijt} = o_{ijt}$ 式 \ref{eq:QisE-A}より、最適な入札価格 $\opt{b}_{it}$ は次のように計算できる。
 \begin{flalign}
-\opt{b}_{it} = \tilde{A}(\state_t, 1) - \tilde{A}(\state_t, 0)
+\opt{b}_{ijt} = \tilde{A}(\state_t, 1) - \tilde{A}(\state_t, 0)
 \end{flalign}
 Valuation Net ではこの式に基づき、advantage の出力を引き算することで入札価格を計算している。
 
