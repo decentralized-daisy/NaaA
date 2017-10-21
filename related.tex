@@ -17,21 +17,14 @@ Deep Recurrent Q-Network (DRQN) \citep{sorokin2015deep} は、
 三つ目は、センサーを増やすことによって観測の量を増やす方法であり、自動運転\citep{sukhbaatar2016learning}やセンサーネットワーク\citep{fox2000probabilistic}などで行われている。
 本研究は、観測困難な環境からいかに良い状態表現を得るかに注目しているため、三つ目のケースをスコープとする。
 
-本研究に近い研究は CommNet \citep{sukhbaatar2016learning} である。
-CommNet は、マルチエージェントシステム全体を一つのニューラルネットワークとみなし、
-バックプロパゲーションによって学習を行っている。
-彼らの手法は、すべてのエージェントが協力的であるという仮定を置いており、すべてのエージェントが一つの目的関数を最大化する。
-本研究では、エージェントが協力的でなく利己的、すなわち裏切り行動をとる可能性がある場合を対象にしている点が異なる。また、中央集権的に誤差情報を管理して分配するサーバが必要なく、完全分散環境で動作することも特徴である。
-実際、IoT のような実環境における問題を考えると、センサーを持っている主体は異なる人物であるために、必ず協力行動をとるとは考えにくい。
-本研究はこのような環境においても動作する。
 
 マルチエージェントで強化学習の問題を解決する場合には、信頼度割り当て問題の解決が重要になる。
 そこで、エージェントの信頼度を、そのエージェントがいた場合と、
 いなかったと仮定した場合の差として定量化する研究が行われている。
 QUICR-learning \citep{agogino2006quicr} では、エージェント $i$ が reward $R(a_t)$ の代わりに、
 そのエージェントがある行動 $a_{it}$ をとった場合 $a_t$ と取らなかった場合 $a_t-a_{ti}$ の差、
-counterfractual reward $R(a_t) - R(a_t - a_{it})$ の cummulative discount summation を最大化している。
-COMA \citep{foerster2017counterfactual} は、actor-critic において critic が共通しており、actor がマルチエージェントであるという actor-critic の仕組みを考え、それぞれの actor が counterfractual reward を最大化するような仕組みを考えている。
+counterfactual reward $R(a_t) - R(a_t - a_{it})$ の cumulative discount summation を最大化している。
+COMA \citep{foerster2017counterfactual} は、actor-critic において critic が共通しており、actor がマルチエージェントであるという actor-critic の仕組みを考え、それぞれの actor が counterfactual reward を最大化するような仕組みを考えている。
 
 マルチエージェントによる観測および認知の枠組みは、センサー処理の分野ではエッジコンピューティング\citep{bonomi2012fog}としても知られている。
 エッジコンピューティングは分散環境を前提とした信号処理のモデルであり、一つの処理系がすべてのデータを処理するのではなく、複数のセンサーの情報を一つのエッジサーバが集約し、複数のエッジサーバが次元削減したデータをデータセンターに送るという階層的な構造をしている。

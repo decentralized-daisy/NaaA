@@ -38,7 +38,9 @@ $\unit$ は環境から報酬を受け取る。
 $\unit$ の性質として以下の前提を加える。
 \begin{enumerate}
 \renewcommand{\labelenumi}{N\arabic{enumi}:}
-\item （利己性）$\unit$ は、各時点 $t$ において、汎化誤差の最小化ではなく、自身のリターン（累積減衰報酬）$G_{it} = \sum_{i=0}^T \gamma^i \rewardAt{i,t+k} $ の最大化を目的として行動する。ただし $\gamma \in [0, 1]$ は減衰率(discount rate)、$T$ は終端時間である。
+\item （利己性）
+	$\unit$ は、各時点 $t$ において、汎化誤差の最小化ではなく、自身のリターン（累積減衰報酬）
+	$G_{it} = \sum_{k=0}^T \gamma^k \rewardAt{i,t+k} $ の最大化を目的として行動する。ただし $\gamma \in [0, 1]$ は減衰率(discount rate)、$T$ は終端時間である。
 \item （保存則）$\unit$ が環境から受け取る報酬 $\reward$ の総和は、マルチユニットシステム全体が外的環境から得る報酬 $R_0$ に等しい。
 \item （取引）$\unit$ は信号 $x_i$ を $\unitAt{j} \in \units$ に伝達する際に、信号と引き換えに報酬 $\rho_{jit}$ を受け取る。
 \item （NOOP）$\unit$ は、期待リターンが 0 の NOOP (no operation) という行動をオプションとして持つ。NOOP では、ユニットは何も入力せず、何も出力しない。
@@ -320,7 +322,7 @@ Valuation Net では、状態 $\vect{s}_t$ として、
 状態からの Q 関数の予測にニューラルネットワークを用いる。
 エージェントが受け取った収益に基づき時間差分(TD)-誤差 が計算され、
 ネットワークが訓練される。
-ネットワークの構成にはこれまでの deep Q-learning で用いられている二重化ネットワーク(dualing network) \citep{wang2015dueling} のテクニックを用いる。
+ネットワークの構成にはこれまでの deep Q-learning で用いられている二重化ネットワーク(dueling network) \citep{wang2015dueling} のテクニックを用いる。
 オリジナルの文献\citep{wang2015dueling}で述べられている二重化ネットワークは、学習を加速するために、
 状態関数と、Q関数との差分を別々に予測する手法である。
 \cite{dosovitskiy2016learning} はこれに対して、差分の要素の総和が 0 になるように正規化するよう改良している。
