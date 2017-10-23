@@ -22,29 +22,25 @@
 \maketitle
 
 \begin{abstract}
-%The reason why swarm of agents solve real-world problem well is, interestingly,
-%same as the principle of representation learning: good representation improves
-%perforamance of machine learning. Most of the problem in real-world is not
-%Markov decision process (MDP) but partially observed MDP (POMDP). On the
-%POMDP environment, good observation yields good action. In this paper, we
-%optimise a deep neural network as a multi-agent system as a natural extension
-%from representation learning to multi-agent reinforcement learning for POMDP.
-%To achieve that, we propose a novel learning framework, neuron as an agent
-%(NaaA). In NaaA, an individual unit is considered as an agent, and they maximizing
-%profit instead of minimizing error. To prevent dillemma, we borrow idea
-%from machanism design, a field of game theory. To this end, we show all the unit
-%have valid price reflecting their contribution to performance at convergence. We
-%confirm the result by numerical experiment using Atari and VizDoom.
+We propose {\em Neuron as an Agent} (NaaA) as a novel framework for reinforcement learning (RL), and show its optimizing mehod.
+NaaA considers all the units in a neural network as agents, and optimizes the reward distribution as a multi-agent RL problem.
+Firstly, with showing the optimization of NaaA, we report the negative result that the performance decreases if we naively consider the units as agents.
+As solution of the problem, we introduce a mechanism of auction which applying game theory.
+As theoretical result, we show that the agent obeys to maximize its {\em counterfactual return} as the Nash equilibrium.
+After that, we show that learning counterfactural return leads the model to learning optimal topology between the units,
+and propose {\em adaptive dropconnect}, a natural extension of dropconnect.
+At the last, we confirm that optimization with the framework of NaaA leads better performance of RL, with numerical experiments.
+Specifically, we use a single-agent environment from Open AI gym, and multi-agent environment from ViZDoom.
 \end{abstract}
 
 \input{introduction3-en.tex}
 \input{related-en.tex}
 \input{background-en.tex}
 \input{method-en.tex}
-\input{method.tex}
+\input{optimization-en.tex}
 \input{experiment.tex}
-\input{discussion.tex}
-\input{conclusion.tex}
+\input{discussion-en.tex}
+\input{conclusion-en.tex}
 \input{appendix.tex}
 
 \bibliography{daisy}

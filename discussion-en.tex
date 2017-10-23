@@ -1,0 +1,30 @@
+\section{Discussion}
+\subsection{Disadvantage}
+The one of disadvantage is computational complexity.
+As envy-free auction uses sort operation for computing demand,
+several part should be serialized.
+It should be improved with Approximation.
+
+For optimization method,
+although envy-free auction guarantees truthfulness if the prices of buyer are sealed,
+in the case which buyer can communicate each other and shares price information, 
+the buyer can fake the price with lower demand in collusion.
+For the issue, several solution such as random sample auction \cite{goldberg2006competitive} is proposesd.
+
+Adoptive dropconnect has difficulty for implementation for several neural network.
+Although, we published source code on GitHub for Linear and CNN, 
+implementation for RNN is a future work.
+
+\subsection{Application}
+NaaA can be applied on learning distributed environment on computer network such as peer-to-peer network, and controlling sub-module of robot such as multiple camera.
+Specifically, it can be applied to various method as below.
+\begin{itemize}
+\item Hyperparameter tuning. 
+Several algorihtm are already proposed such as neuroevolution using genetic algorithm.
+In the case, profit or counterfactual return can be used to fitness function.
+
+\item Pruning. Reducing computing cost with downsizing neural network.
+\item Attention control. In a part of research of attention, they are using reinforcement learning to control attention.
+\item Ensamble. Our method can be applied to mix multiple models.
+\end{itemize}
+These application is direction of the research.
