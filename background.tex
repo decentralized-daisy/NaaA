@@ -2,7 +2,7 @@
 \section{Background}
 まず、単一のエージェントが PODMP 環境で行動する場合について考える。
 POMDP 環境とは 7 つ組 $(\S, \A, \Trans, \R, \Observations, \ObProb, \gamma)$ である。
-ただし、$\S$は状態集合、$\A$ は行動集合、$\Trans$ は遷移確率、$\Observations$ は取りうる観測の集合、$\ObProb$ は観測の集合、$\gamma$ は減衰率である。
+ただし、$\S$は状態集合、$\A$ は行動集合、$\Trans$ は遷移確率、$\Observations$ は取りうる観測の集合、$\ObProb$ は観測確率の集合、$\gamma$ は減衰率である。
 エージェントは観測 $o \in \Observations$ を通して部分的に状態 $\S$ を推定する。
 一般に $o$ の方が $s$ よりも次元が大きく、複雑である。
 たとえば、Atari 2600 は真の状態である RAM は 128 バイトしかないが、そこから生成される画像 $o$ は 10,000 以上の次元を持っている。
