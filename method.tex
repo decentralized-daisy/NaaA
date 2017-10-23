@@ -68,10 +68,18 @@ N3 より、時刻 $t$ に $i$ が獲得する報酬 $R_{it}$ は次のように
 
 このとき、ユニット $\unit$ は、次式で表現される累積減衰利益 $G_{it}$ を最大化する。
 \begin{flalign}
-	G_{it} = \sum_{k=0}^T \gamma^k R_{i, t+k} = \sum_{k=0}^T \gamma^k (r_{i,t+k} - c_{i,t+k}).
+	G_{it}	= \sum_{k=0}^T \gamma^k R_{i, t+k} 
+			= \sum_{k=0}^T \gamma^k (r_{i,t+k} - c_{i,t+k})
+			&= r_t - c_t + \gamma G_{i,t+1}
 \end{flalign}
+ここで、$G_{it}$ はエピソードの最後になるまで明らかにならない。
+最適な行動を選択するためには、現在までの値に基づいた予測を行う必要があるため、$G_{it}$ を価値関数(value function) $V_i^{\pi_i} (s_{it}) = \Expect{\pi_i}{ G_{it} \mid s_{it}}$ で近似する。この時、次式が成立する。
+\begin{flalign} 
+		V_i^{\pi_i} (s_{it}) = r_{it} - c_{it} + \gamma V_i^{\pi_i} (s_{i, t+1}),	\label{eq:V}
+\end{flalign}
+このため、即時収益、価値関数の最大化と、即時コストの最小化についてそれぞれ考えればよい。
 $R_{it} > 0$、すなわち、$r_{it} > c_{it}$ であれば、ユニットは得たデータに対して付加価値を与えていることになる。
-もし、すべての $t$ に対して $R_{it} \leq 0$ であれば、$G_{it} \leq 0 < \delta$ であるから、ユニットは NOOP になる。
+もし、すべての $t$ に対して $R_{it} \leq 0$ であれば、$V_i^{\pi_i} (s_{it}) \leq 0 < \delta$ であるから、ユニットは NOOP になる。
 
 %ユニットは、得た報酬を他のユニットに対してどのように分配するのかに関する方策 $\pi$ を持つ。
 %強化学習と同様に以下の目的関数を持つ。
@@ -164,13 +172,7 @@ Envy-free auction の流れを Figure \ref{fig:double} の左に示す。
 売り手は割当を行ったノードに対してのみ信号 $x_i$ を送付する(4)。
 信号を受け取れなかったノードは、$x_i$ の期待値 $\Expect{\pi}{x_i}$ によって $x_i$ を近似する。
 
-$G_{it}$ は次のように書くことができる。
-\begin{flalign}
-	G_{it}  &= r_t - c_t + \gamma G_{i,t+1}	\notag \\
-		&\approx r_t - c_t + \gamma V_i^{\pi_i} (s_{i, t+1}),
-\end{flalign}
-ただし、$V^{\pi_i}_i (s_{it})$ は価値関数(value function)であり、ユニットの状態 $s_{it}$ に対して方策 $\pi_i$ を取った場合のリターンの期待値に等しい。
-このため、収益、コスト、価値関数それぞれを最大化する方法について考えればよい。
+以下では、式 \ref{eq:V} に基づき、収益、コスト、価値関数についてそれぞれ述べる。
 
 %以下では、Envy-free auction における収益 $r_{it}$ とコスト $c_{it}$ の最適化について分けて説明を行う。
 
@@ -206,7 +208,7 @@ $q_{it}$ は価格、$d_{it}(q_{it})$ はユニット $i$ の信号に対する�
 コストは、ユニットが他のユニットに対して払う価格である。
 これは次のように表示される。
 \begin{flalign}
-	c_{it} = \sum_{j \in N^\mathrm{in} } g(b_{ijt}, q_j) q_j+ \alpha_i
+	c_{it} = \sum_{j \in N^\mathrm{in} } g(b_{ijt}, q_j) q_j
 \end{flalign}
 $c_{it}$ 自体は $b_{ijt} = 0$ のとき最小となる。
 しかし、これは次の value function とトレードオフをなす。
@@ -246,7 +248,7 @@ $o_{ijt} = Q_i^{\pi_i} (s_{it}, \vect{e}_j) - Q_i^{\pi_i}(s_{it}, \vect{0})$ を
 
 以上から、最適化問題は次のように書くことができる。
 \begin{flalign}
-	\max_{\vect{b}, q} G_{it} = \max_q q d_{it}(q) - \min_{\vect{b}} \vect{g}_{it}(\vect{b})^\T( \hat{\vect{q}}_t - \gamma \vect{o}_{i,t+1}  ) + \const
+	\max_{\vect{b}, q} V_i^{\pi_i}(s_{it}) = \max_q q d_{it}(q) - \min_{\vect{b}} \vect{g}_{it}(\vect{b})^\T( \hat{\vect{q}}_t - \gamma \vect{o}_{i,t+1}  ) + \const
 \end{flalign}
 
 では、リターンを最大化するためのエージェントの入札額 $b_{it}$ は何か。
