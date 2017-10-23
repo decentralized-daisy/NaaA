@@ -1,34 +1,9 @@
-% What のみを書く - Why はイントロへ
-\section{Background}
-まず、単一のエージェントが PODMP 環境で行動する場合について考える。
-POMDP 環境とは 7 つ組 $(\S, \A, \Trans, \R, \Observations, \ObProb, \gamma)$ である。
-ただし、$\S$は状態集合、$\A$ は行動集合、$\Trans$ は遷移確率、$\Observations$ は取りうる観測の集合、$\ObProb$ は観測の集合、$\gamma$ は減衰率である。
-エージェントは観測 $o \in \Observations$ を通して部分的に状態 $\S$ を推定する。
-一般に $o$ の方が $s$ よりも次元が大きく、複雑である。
-たとえば、Atari 2600 は真の状態である RAM は 128 バイトしかないが、そこから生成される画像 $o$ は 10,000 以上の次元を持っている。
-そのため、DQN や DRQN では、$o$ の情報を抽象化し、独自の状態表現を作っていると解釈できる（DQN の原著論文では MDP であることを前提としているが、DRQN の論文で環境が POMDP であることが主張されている）。
-もちろん、DQN はモデルフリーの手法であるため、直接は状態遷移を扱わないが、出力層の一個手前の層に状態が格納されているという解釈もできる\citep{zahavy2016graying}。
-以下では、エージェントはニューラルネットワークを通して行動を決定することを前提とする。
-
-次に、互いに通信するマルチエージェントシステムを考える。
-一般にエージェントが多いほど、観測を増やすことが可能である。
-たとえば、自動運転のケースでは自動車同士が通信することでより正確な世界に対する知識を得ることができる。
-この時、エージェントが持っているニューラルネットワーク同士をつなげる方法がとられている\citep{sukhbaatar2016learning}。
-これは、マルチエージェントシステム全体を一つのニューラルネットワークをとらえることができると考えられる。
-そこで、本研究ではこれを拡張し、すべてのユニットをエージェントとみなす。
-%すなわち、ニューラルネットワークにおける各ユニットをエージェントとみなした場合の、最適化を行う。
-
-%以下では、ニューラルネットワークとは広義の
-%DRQN では隠れた状態の推定はニューラルネットワークを使って行われることが多い。
-%リバースエンジニアリングしていると解釈できる。
-
-
 \section{Neuron as an Agent}
 ニューラルネットワークを、ユニット間の有向グラフ $\neuralnet = (\units, \edges)$で表す。
 $\units = \{\unitAt{1}, \dots, \unitAt{N}\}$ はユニットの集合であり、$\edges \subset \units^2$ はユニットの接続関係を表すエッジの集合である。
 $(\unit, \unitAt{j}) \in \edges$ であるとき、$\unit \rightarrow \unitAt{j}$ という接続関係が成立し、$\unitAt{j}$ は $\unit$ から値を入力する。
 ユニットの $\unit$ の時刻 $t$ における出力を $x_{it} \in \Real$ で表す。
-ユニット $i$ の出力先の集合を $\followers = \{j | (\unit, \unitAt{j}) \in \edges \}$、n入力元の集合を $\followees = \{j | (\unitAt{j}, \unit) \in \edges \}$ で表現する。
+ユニット $i$ の出力先の集合を $\followers = \{j | (\unit, \unitAt{j}) \in \edges \}$、入力元の集合を $\followees = \{j | (\unitAt{j}, \unit) \in \edges \}$ で表現する。
 $\friends = \followees \cup \followers$ とする。
 
 NaaA は $\unit$ をエージェントとしてとらえる。すなわち、$\neuralnet$ はマルチエージェントシステムである。
@@ -41,13 +16,14 @@ $\unit$ の性質として以下の前提を加える。
 \item （利己性）
 	$\unit$ は、各時点 $t$ において、汎化誤差の最小化ではなく、自身のリターン（累積減衰報酬）
 	$G_{it} = \sum_{k=0}^T \gamma^k \rewardAt{i,t+k} $ の最大化を目的として行動する。ただし $\gamma \in [0, 1]$ は減衰率(discount rate)、$T$ は終端時間である。
-\item （保存則）$\unit$ が環境から受け取る報酬 $\reward$ の総和は、マルチユニットシステム全体が外的環境から得る報酬 $R_0$ に等しい。
+\item （保存則）$\unit$ が内的環境と外的環境の両方から受け取る報酬 $\reward$ の総和は、マルチユニットシステム全体が外的環境から得る報酬 $R_t^{\mathrm{ex}}$ に等しい。
 \item （取引）$\unit$ は信号 $x_i$ を $\unitAt{j} \in \units$ に伝達する際に、信号と引き換えに報酬 $\rho_{jit}$ を受け取る。
-\item （NOOP）$\unit$ は、期待リターンが 0 の NOOP (no operation) という行動をオプションとして持つ。NOOP では、ユニットは何も入力せず、何も出力しない。
+	同時に $\rho_{jit}$ は $v_j$ の報酬から差し引かれる。
+\item （NOOP）$\unit$ は、期待リターンが $\delta > 0$ の NOOP (no operation) という行動をオプションとして持つ。NOOP では、ユニットは何も入力せず、何も出力しない。
 \end{enumerate}
 N1 はユニットがエージェントとして振る舞うことを述べている。
 N2, N3 は NTF の分配に、N4 はニューロンのアポトーシスに相当する。
-NOOP が選択されるのは、それ以外のすべての行動の期待報酬が負であった場合である。
+NOOP が選択されるのは、それ以外のすべての行動の期待報酬が非正であった場合である。
 以下ではこれらの前提から出発して、NaaA の仕組みを構築していく。
 
 \subsection{Cumulative Discounted Profit Maximization Framework}
@@ -60,14 +36,15 @@ NOOP が選択されるのは、それ以外のすべての行動の期待報酬
 %ユニットは、他のユニットから受け取る報酬と、他のユニットに対して支払う報酬の差が報酬となる。
 %前者を収益(reward)、後者をコスト(cost)と呼び、その差を利益(profit)と呼ぶ。
 
-ユニット $i$ が時刻 $t$ で外部から得る報酬を $R_i^\mathrm{ex}$ と書き、消費エネルギーを $\alpha_{it}$ で表す。
-時刻 $t$ に $i$ が獲得する報酬 $R_i$ は次のように表現される。
+ユニット $i$ が時刻 $t$ で外的環境から得る報酬を $R_{it}^\mathrm{ex}$ と書く。
+ただし、$\sum_{i=1}^n R_{it}^\mathrm{ex} = R_t^{\mathrm{ex}}$ である。
+N3 より、時刻 $t$ に $i$ が獲得する報酬 $R_{it}$ は次のように表現される。
 \begin{flalign}
 	R_{it} = 
-	  \left[ R_{it}^\mathrm{ex} + \sum_{j \in N^\mathrm{out}_i} \rho_{jit} \right] 
-	- \left[\sum_{j \in N^\mathrm{in}_i} \rho_{ijt} + \alpha_{it} \right].
+	  R_{it}^\mathrm{ex} + \sum_{j \in N^\mathrm{out}_i} \rho_{jit} 
+	- \sum_{j \in N^\mathrm{in}_i} \rho_{ijt}.
 \end{flalign}
-この式は、符号が正の項と負の項の二つに分解される。前者を収益(revenue)、後者をコスト(cost)と呼び、それぞれ $r_{it}, c_{it}$ で表す。$R_{it}$を利益(profit)と呼ぶ。
+この式は、符号が正の項と負の項の二つに分解される。前者を収益(revenue)、後者をコスト(cost)と呼び、それぞれ $r_{it} = R_{it}^\mathrm{ex} + \sum_{j \in N^\mathrm{out}_i} \rho_{jit}, \, c_{it} = \sum_{j \in N^\mathrm{in}_i} \rho_{ijt}$ で表す。$R_{it}$を利益(profit)と呼ぶ。
 %今、外的環境を $\unitAt{0}$ と書き、$\rho_{0it} = R_{it}^\mathrm{ex}$, $\rho_{i0t} = \alpha_t$ と書くと、この式は次のように単純化される。
 %\begin{flalign}
 %	R_{it} 
@@ -94,7 +71,7 @@ NOOP が選択されるのは、それ以外のすべての行動の期待報酬
 	G_{it} = \sum_{k=0}^T \gamma^k R_{i, t+k} = \sum_{k=0}^T \gamma^k (r_{i,t+k} - c_{i,t+k}).
 \end{flalign}
 $R_{it} > 0$、すなわち、$r_{it} > c_{it}$ であれば、ユニットは得たデータに対して付加価値を与えていることになる。
-もし、すべての $t$ に対して $R_{it} < 0$ であれば、$G_{it} < 0$ であるから、ユニットは NOOP になる。
+もし、すべての $t$ に対して $R_{it} \leq 0$ であれば、$G_{it} \leq 0 < \delta$ であるから、ユニットは NOOP になる。
 
 %ユニットは、得た報酬を他のユニットに対してどのように分配するのかに関する方策 $\pi$ を持つ。
 %強化学習と同様に以下の目的関数を持つ。
@@ -116,6 +93,8 @@ $R_{it} > 0$、すなわち、$r_{it} > c_{it}$ であれば、ユニットは�
 NaaA では利益を最大化するため、二つの相反する指標である収益 $r_{it}$ とコスト $c_{it}$ のバランスを取ることが重要になる。
 本研究では、この最適化にゲーム理論の一つであるメカニズムデザインを応用する。
 メカニズムデザインは、マルチエージェントシステムを対象にしたゲーム理論の分野であり、各エージェントが利己的であることを想定した上で、システム全体が最適になるような帰結を目指すメカニズムの設計を目的とするものである。
+
+TODO: 否定的な結論
 
 メカニズムデザインを導入する理由は、NaaA いくつかの既存研究と異なり、すべてのエージェントが協力的ではなく、利己的であると仮定していることに起因している。
 前述の問題は、そのまま最適化すると報酬額は 0 に収束するため、すべてのニューロンが NOOP になるという trivial な解が得られる。
@@ -217,7 +196,7 @@ $q_{it}$ は価格、$d_{it}(q_{it})$ はユニット $i$ の信号に対する�
 \begin{flalign}
 	\opt{q}_{it}  = \argmax_{q \in [0, \infty)} q d_{it}(q).
 \end{flalign}
-この仕組みを、Figure \ref{fig:double} の右に図示する。$d_t(q_{it})$ は単調減少な関数であり、$q_{it}$ との積によって表現される。
+この仕組みを、Figure \ref{fig:double} の右に図示する。$d_t(q_{it})$ は単調減少な関数であり、収益 $r_{it}$ は $q_{it}$ と $d_t(q_{it})$ との積によって表現される。
 
 
 %========================================
@@ -261,13 +240,13 @@ $c_{it}$ 自体は $b_{ijt} = 0$ のとき最小となる。
 %g	&= Q(s_t, 1) - Q(s_t, 0) \label{eq:def:oppotunity-cost},
 %g\end{flalign}
 %gただし、$Q$ は状態行動価値関数であり、一手先のコストはどちらの行動を選んでも一定であると仮定している。
-$o_{ijt} = Q_i^{\pi_i} (s_{it}, \vect{e}_j) - Q_i^{\pi_i}(s_{it}, \vect{0})$ を counterfactual return と呼ぶ。これは QUICR \citep{agogino2006quicr} と導出は異なるが等価である。
-すなわち、エージェントが支払うコストは、データの購入に成功した場合は $\opt{a}_{it}$ であり、
+$o_{ijt} = Q_i^{\pi_i} (s_{it}, \vect{e}_j) - Q_i^{\pi_i}(s_{it}, \vect{0})$ を {\em counterfactual return} と呼ぶ。これは、counterfactual reward の cummulative discounted summation である QUICR \citep{agogino2006quicr} と導出は異なるが等価である。
+すなわち、エージェントが支払うコストは、データの購入に成功した場合は $\opt{q}_{it}$ であり、
 それ以外は $o_{it}$ となる。
 
 以上から、最適化問題は次のように書くことができる。
 \begin{flalign}
-	\max_{\vect{b}, q} G_{it} = \max_q q d_{it}(q) - \min_{\vect{b}} \vect{g}_{it}(\vect{b})^\T( \vect{q}_t - \gamma \vect{o}_{i,t+1}  ) + \const
+	\max_{\vect{b}, q} G_{it} = \max_q q d_{it}(q) - \min_{\vect{b}} \vect{g}_{it}(\vect{b})^\T( \hat{\vect{q}}_t - \gamma \vect{o}_{i,t+1}  ) + \const
 \end{flalign}
 
 では、リターンを最大化するためのエージェントの入札額 $b_{it}$ は何か。
