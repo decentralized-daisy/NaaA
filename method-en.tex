@@ -1,0 +1,40 @@
+\section{Neuron as an Agent}
+TODO: Show the figure.
+
+A typical artificial neural network is a directed graph $\neuralnet = (\units, \edges)$ among the units.
+$\units = \{\unitAt{1}, \dots, \unitAt{N}\}$ is a set of the units, and $\edges \subset \units^2$ is a set of edge indicating connection between two units.
+If $(\unit, \unitAt{j}) \in \edges$, then connection $\unit \rightarrow \unitAt{j}$ holds, indicating $\unitAt{j}$ observes activation of $\unit$.
+We denote activation of the unit $\unit$ at time $t$ as $x_{it} \in \Real$.
+Also, we denote a set of units which unit $i$ connects to as $\followers = \{j | (\unit, \unitAt{j}) \in \edges \}$, and a set of units which unit $i$ is connected from is $\followees = \{j | (\unitAt{j}, \unit) \in \edges \}$.
+We denote $\friends = \followees \cup \followers$.
+
+NaaA interprets $\unit$ as an agent.
+Hence, $\neuralnet$ is a multi-agent system.
+An environment for $\unit$ is made of an environment which the multi-agent system itself touches to, and 
+set of the unit which $\unit$ directly connects to: $\{v_i \in V | i \in \friends\}$.
+We distinguish the both environments by naming the former as an external environment, and latter as an internal environment.
+$\unit$ will receive reward from both the environments.
+We add the following assumption as the characteristics of $\unit$.
+\begin{enumerate}
+\renewcommand{\labelenumi}{N\arabic{enumi}:}
+\item (Selfishness) 
+	Instead of minimizing the global training error,
+	at each timing $t$, $\unit$ acts to maximize toward maximizing its own return (cumulative discounted reward)
+	$G_{it} = \sum_{k=0}^T \gamma^k \rewardAt{i,t+k}$, where $\gamma \in [0, 1]$ is discount rate, $T$ is terminal time.
+\item (Conversation) 
+	The summation of reward which $\units$ will receive both internal and external environment $\reward$ over 
+	all the units equivalents to reward $R_t^{\mathrm{ex}}$ which the entire multi-agent system receives from 
+	the external environment.
+\item (Trade) 
+	$\unit$ receives internal reward $\rho_{jit}$ from $\unitAt{j} \in \units$ in exchange of activation signal $x_i$ 
+	before transferring the signal to the unit. At the same time, $\rho_{jit}$ is subtracted from the reward of $v_j$.
+\item (NOOP) 
+	$\unit$ has NOOP (no operation) in which the return is $\delta > 0$ as an action.
+	With NOOP, the unit inputs nothing, and outputs nothing.
+\end{enumerate}
+In terms of neuroscience,
+N1 states that the unit act as a cell.
+N2 and N3 state distribution of NTF, and N4 corresponds to apoptosis.
+NOOP is selected when expected return of the other actions are non-positive.
+In the following, we construct the framework  of NaaA getting off from the assumptions.
+
