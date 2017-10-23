@@ -1,0 +1,25 @@
+\section{Background}
+First, we consider a POMDP environment in which a single agent acts.
+POMDP environment is a 7-tuple $(\S, \A, \Trans, \R, \Observations, \ObProb, \gamma)$,
+where $\S$ is a set of states, $\A$ is a set of actions, $\Trans$ is a transitive probability, 
+$\Observations$ is a possible set of observation, $\ObProb$ is a set of observation probability, and
+$\gamma$ is discount rate.
+An agent predicts partially state $h \in \S$ through an observation $s \in \Observations$.
+Generally, $s$ has higher dimension than $h$, and is complex.
+For example, although Atari 2600 has a read only memory (RAM) as the true state, which contains 128 bytes,
+the generated image from that $s$ has more than 10,000 dimension.
+Hence, DQN and DRQN abstracts $s$, and creates original state representation to predict good action efficiently.
+(although the original paper of DQN assumes MDP, the paper of DRQN pointed out that the environment is POMDP).
+Though DQN does not address the state transition directly because it is model-free method, 
+some interpretation holds that the hidden state representation is learned in the previous layer of the output layer \citep{zahavy2016graying}
+In the method below, we assume that the agent decides the action through a neural network.
+
+TODO: POSG
+
+The design of NaaA is inspired by neuroscience.
+A neuron in a neurocircuit consumes adenosine triphosphate (ATP) supplied from connected astrocytes.
+The astrocyte is a glia cell, which forms structure of a brain, and it supplies fuel from vessel.
+As the amount of ATP is limited, the discarded neuron will become extinct with executing apoptosis.
+As aspotosis of a neuron is restrained by neurotorophin (NTF) such as nerve growth factor (NGF) and brain-derived neurotrophic factor (BDNF),
+The neuron which can obtain a lot of NTF will live.
+The perspective to interpret a neuron as an independent living object is kwown as neural Darwinism \citep{edelman1987neural}.

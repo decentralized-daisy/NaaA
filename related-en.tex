@@ -1,0 +1,24 @@
+\section{Related Work}
+Training neural network with multi-agent game is emerging methodology.
+Generative adversarial nets (GAN) \citep{goodfellow2014generative} has goal to obtain true generative distribution as Nash equilibrium of a competitive game made of two agents with contradicting rewards: a generator and a discriminator. 
+In game theory, the outcome maximizing overall reward is named Pareto optimality.
+Nash equilibrium is not guaranteed to converge Pareto optimality, and difference of the both is named dilemma.
+As existence of dilemma depends on the reward design, the method to resolve the dilemma with good reward design is being researched: mechanism design \citep{myerson1983mechanism} also known as inverse game theory.
+Mechanism design is applied to auction \citep{vickrey1961counterspeculation} and matching \citep{gale1962college}.
+GAN and our proposal, NaaA, are outcome from mechanism design.
+NaaA applies digital goods auction \citep{guruswami2005profit} to reinforcement learning with multi-agent neural network, 
+and obtain maximized return by units as Nash equilibrium.
+
+NaaA belongs to a class of partially observable stochastic game (POSG) \citep{hansen2004dynamic} as it processes multiple units as agents.
+POSG is a class of reinforcement learning in which multiple agents in a POMDP environment, and it has several research issues.
+The one is communication.
+CommNet \citep{sukhbaatar2016learning} exploits the characteristics of a unit which agnostic to topology of other units, it employs backpropagation to training multi-agent communication.
+The another one is credit assignment.
+Instead of reward $R(a_t)$ of an agent $i$ for actions at $t$ $a_t$, 
+QUICR-learning \citep{agogino2006quicr} maximizes counterfactual reward $R(a_t) - R(a_t - a_{it})$, the difference in the case of the agent $i$ takes an action $a_{it}$ ($a_t$) and not ($a_t-a_{it}$).
+COMA \citep{foerster2017counterfactual} also maximizes counterfactual reward in a setting of actor-critic.
+In the setting, all the actors has common critic, and improves the both actors and critic with time difference (TD)-error of counterfactual reward.
+This paper unifies both the issues, communication and credit assignment.
+The main proposal is framework to manage the agents to maximize {\em counterfactual return}, the extended counterfactual reward along with time axis.
+
+TODO: Dropconnect
