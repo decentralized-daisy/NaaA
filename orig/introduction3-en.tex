@@ -1,0 +1,39 @@
+\section{Introduction}
+Deep reifnorcement learning (DRL) succeed in many area.
+Deep Q-Network (DQN) \citep{mnih2015human,silver2016mastering} descides the optimal action from screen sequence from Atari, and selects the move closest to win from a face of a board of Go.
+Deep Deterministic Policy Gradient (DDPG) \citep{lillicrap2015continuous} realizes the multiple-join control considering condition such as friction and gravity factor in a physical space.
+The applicable are of DRL is becoming wider year by year, the reasonable performance is reported 3D game such as Doom \citep{dosovitskiy2016learning}.
+
+The reason why a neural network is workable for DRL is that a neural network abstracts the implicit state in an environment, and obtains informative state representation.
+From the micro perspective, the abstraction capability of each unit contributes to return of the entire system.
+So, we address the one following question.
+
+\begin{center}
+{\em Will reinforcement learning work even if we consider each of units as an autonomous agent?}
+\end{center}
+
+The contribution of this paper is that, we propose {\em Neuron as an Agent} (NaaA) as a novel framework for RL, and show its optimizing mehod.
+NaaA considers all the units in a neural network as agents, and optimizes the reward distribution as a multi-agent RL problem.
+In the reward design of NaaA, a unit distributes its received reward to other input units passing its activation to the unit as cost.
+Hence, the actual reward is profit which defined as difference between inflow (received reward) and outflow (paid cost).
+In the setting, the economic metaphor can be introduced: profit is balance of revenue and cost. 
+It means that a unit should address trade-off between both optimization of cumulative revenue maximization and cumulative cost minimization.
+
+This paper is organized as below.
+Firstly, with showing the optimization of NaaA, we report the negative result that the performance decreases if we naively consider the units as agents.
+As solution of the problem, we introduce a mechanism of auction which applying game theory.
+As theoretical result, we show that the agent obeys to maximize its {\em counterfactual return} as the Nash equilibrium.
+Counterfactual return is the one which we extend counterfactual reward, the criterion which proposed for multi-agent reward distribution problem \citep{agogino2006quicr}, along time axis.
+
+After that, we show that learning counterfactural return leads the model to learning optimal topology between the units,
+and propose {\em adaptive dropconnect}, a natural extension of dropconnect \citep{wan2013regularization}.
+Adaptive dropconnect combines dropconnect, which pure-randomly masks the topology, with adaptive algorithm, which prunes the connection with less counterfactual return with higher probability.
+It uses $\varepsilon$-greedy as a policy, and is equivalent to dropconnect in the case of $\varepsilon = 0$, and is equivalent to counterfactual return maximization which constructs the topology deterministically in the case of $\varepsilon = 1$.
+
+At the last, we confirm that optimization with the framework of NaaA leads better performance of RL, with numerical experiments.
+Specifically, we use a single-agent environment from Open AI gym, and multi-agent environment from ViZDoom.
+
+Although considering all the units as agents might be vacuity at first glance, it has wider applicable area.
+At the perspective of optimization for single neural network, it can apply to pruning by optimizing the topology.
+Not only that, introducing the concept of reward distribution divides the single neural network to a lot of autonomous parts.
+It enable us to not only address sensor placing problem in IoT for partially observed Markov decision process (POMDP), but arbitrary incentivized participants can join the framework. 

@@ -1,18 +1,56 @@
 \section{Experiment}
-\subsection{Single-agent environment}
-\subsection{Multi-agent environment}
-\subsubsection{ViZDoom}
-To 阿久澤君: ここの執筆をお願いできないでしょうか
+To confirm NaaA widely work with machine learning tasks,
+we confirm our method supervised learning tasks as well as reinforcement learning tasks.
+As supervised learning tasks, we use typical machine learning tasks such as image classification
+using CIFER-10, NORB and SVHN.
+In the experiment, we ignore MNIST because the accuracy is in saturant, and there are no meaning of comparison.
 
-\iffalse
-・交通ネットワーク - 大澤
-・Atari - 田村
-・VisDoom - 阿久澤
+As reinforcement tasks, we confirm single- and multi-agent environment.
+The single-agent environment is from OpenAI gym.
+We confirm the result with a simple reinforcement task, CartPole.
 
-可能であれば
-・ニューロエボリューション
+\subsection{Classification}
+We confirm NaaA works well in our method.
 
-乗せる図
-・精度（Learning Curve）
-・価値の評価をレイヤーごとに表示
-\fi
+\subsection{Single-agent RL}
+
+\subsection{Multi-agent RL}
+As multi-agent RL, we use ViZDoom, an environment using Doom.
+
+\subsubsection{Setup}
+We used a scenario based on Defend the Center (DtC) provided by ViZDoom platform.
+In DtC, players are placed in a center of a field of circle, and attack enemies which will come from the wall.
+The players are two mans: a main player and a cameraman.
+Though the main player can attack the enemy with bullets, 
+the cameraman does not have the way to attack, and only scout for the enemy.
+The action space for main player is the combination of \{ attack, turn left, turn right \} (total amount is 8),
+and \{ turn left, turn right \} for the cameraman.
+Although, the players only can move the direction, they cannot move on the field.
+The enemy will die if have the attack (bullet) from the main player once.
+The amount of ammo is 26 as a default on an episode.
+The main player will die if have attacks from the enemy, and the health become 0.
+The cameraman won't die if have attacks from the enemy.
+The episode will terminate when the maim player dies, or 525 steps elapsed.
+
+DtC is standard scenario which prepared by ViZDoom platform.
+In DtC, up to 5 enemies appear can exists in the same time. 
+The main player will receive reward every time defeat the enemy.
+After the enemy dies, the player receives 1, if the player die, he receives -1.
+
+\subsubsection{Model}
+We compared three models: one is the proposed method, and the remaining are comparing target.
+
+{\em Baseline} DQN without communication. The main player learns standard DQN with vision which he watching.
+Since the cameraman does not learn, he continues to move randomly.
+
+{\em Comm} DQN with communication. The main player learns DQN with two visions of him and cameraman.
+The communication vector is learnt with a feed-forward neural network .  The method is inspired by CommNet.
+
+{\em NaaA} The proposed method. The main player learns DQN with two visions of him and cameraman.
+The transmission of reward and communication will be performed by proposed method.
+
+\subsubsection{Results}
+The training is performed in 10 million steps.
+
+%訓練は1000万ステップ行われた。
+%TODO: 1.スコアが高いことを言う。2.潜在変数の値段や、シグナルの活性化を見る。

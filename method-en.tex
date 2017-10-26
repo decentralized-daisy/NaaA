@@ -1,69 +1,69 @@
 \section{Neuron as an Agent}
-TODO: Show the figure.
+%TODO: Show the figure.
 
 A typical artificial neural network is a directed graph $\neuralnet = (\units, \edges)$ among the units.
-$\units = \{\unitAt{1}, \dots, \unitAt{N}\}$ is a set of the units, and $\edges \subset \units^2$ is a set of edge indicating connection between two units.
-If $(\unit, \unitAt{j}) \in \edges$, then connection $\unit \rightarrow \unitAt{j}$ holds, indicating $\unitAt{j}$ observes activation of $\unit$.
+$\units = \{\unitAt{1}, \dots, \unitAt{N}\}$ is a set of the units. $\edges \subset \units^2$ is a set of edges representing connections between two units.
+If $(\unit, \unitAt{j}) \in \edges$, then connection $\unit \rightarrow \unitAt{j}$ holds, indicating that $\unitAt{j}$ observes activation of $\unit$.
 We denote activation of the unit $\unit$ at time $t$ as $x_{it} \in \Real$.
-Also, we denote a set of units which unit $i$ connects to as $\followers = \{j | (\unit, \unitAt{j}) \in \edges \}$, and a set of units which unit $i$ is connected from is $\followees = \{j | (\unitAt{j}, \unit) \in \edges \}$.
+Additionally, we designate a set of units which unit $i$ connects to as $\followers = \{j | (\unit, \unitAt{j}) \in \edges \}$ and a set of units which unit $i$ is connected from as $\followees = \{j | (\unitAt{j}, \unit) \in \edges \}$.
 We denote $\friends = \followees \cup \followers$.
 
 NaaA interprets $\unit$ as an agent.
-Hence, $\neuralnet$ is a multi-agent system.
-An environment for $\unit$ is made of an environment which the multi-agent system itself touches to, and 
-set of the unit which $\unit$ directly connects to: $\{v_i \in V | i \in \friends\}$.
-We distinguish the both environments by naming the former as an external environment, and latter as an internal environment.
-$\unit$ will receive reward from both the environments.
-We add the following assumption as the characteristics of $\unit$.
+Therefore, $\neuralnet$ is a multi-agent system.
+An environment for $\unit$ comprises an environment that the multi-agent system itself touches and a 
+set of the unit to which $\unit$ directly connects: $\{v_i \in V | i \in \friends\}$.
+We distinguish both environments by naming the former as an external environment, and by naming the latter as an internal environment.
+$\unit$ will receive rewards from both environments.
+We add the following assumption for characteristics of the $\unit$.
 \begin{enumerate}
 \renewcommand{\labelenumi}{N\arabic{enumi}:}
 \item (Selfishness) 
 	Instead of minimizing the global training error,
 	at each timing $t$, $\unit$ acts to maximize toward maximizing its own return (cumulative discounted reward)
-	$G_{it} = \sum_{k=0}^T \gamma^k \rewardAt{i,t+k}$, where $\gamma \in [0, 1]$ is discount rate, $T$ is terminal time.
+	$G_{it} = \sum_{k=0}^T \gamma^k \rewardAt{i,t+k}$, where $\gamma \in [0, 1]$ is the discount rate and $T$ is the terminal time.
 \item (Conversation) 
-	The summation of reward which $\units$ will receive both internal and external environment $\reward$ over 
-	all the units equivalents to reward $R_t^{\mathrm{ex}}$ which the entire multi-agent system receives from 
+	The summation of a reward by which $\units$ will receive both an internal and external environment $\reward$ over 
+	all the units are equivalent to reward $R_t^{\mathrm{ex}}$, which the entire multi-agent system receives from 
 	the external environment.
 \item (Trade) 
-	$\unit$ receives internal reward $\rho_{jit}$ from $\unitAt{j} \in \units$ in exchange of activation signal $x_i$ 
+	The $\unit$ receives internal reward $\rho_{jit}$ from $\unitAt{j} \in \units$ in exchange of activation signal $x_i$
 	before transferring the signal to the unit. At the same time, $\rho_{jit}$ is subtracted from the reward of $v_j$.
 \item (NOOP) 
-	$\unit$ has NOOP (no operation) in which the return is $\delta > 0$ as an action.
-	With NOOP, the unit inputs nothing, and outputs nothing.
+	$\unit$ has NOOP (no operation), for which the return is $\delta > 0$ as an action.
+	With NOOP, the unit inputs nothing and outputs nothing.
 \end{enumerate}
 In terms of neuroscience,
-N1 states that the unit act as a cell.
-N2 and N3 state distribution of NTF, and N4 corresponds to apoptosis.
-NOOP is selected when expected return of the other actions are non-positive.
-In the following, we construct the framework  of NaaA getting off from the assumptions.
+N1 states that the unit acts as a cell.
+N2 and N3 state the distribution of NTF. N4 corresponds to apoptosis.
+NOOP is selected when the expected returns of the other actions are non-positive.
+In the following, we construct the framework of NaaA from the assumptions.
 
 \subsection{Cumulative Discounted Profit Maximization Framework}
-We denote the external reward which unit $\unit$ receives at time step $t$ as $R_{it}^\mathrm{ex}$, where $\sum_{i=1}^n R_{it}^\mathrm{ex} = R_t^{\mathrm{ex}}$ holds.
-From N3, reward $R_{it}$ which $\unit$ receives at $t$ can be written as following:
+We denote the external reward by which unit $\unit$ receives at time step $t$ as $R_{it}^\mathrm{ex}$, where $\sum_{i=1}^n R_{it}^\mathrm{ex} = R_t^{\mathrm{ex}}$ holds.
+From N3, reward $R_{it}$, which $\unit$ receives at $t$ can be written as the following.
 \begin{flalign}
 	R_{it} = 
 	  R_{it}^\mathrm{ex} + \sum_{j \in N^\mathrm{out}_i} \rho_{jit} 
 	- \sum_{j \in N^\mathrm{in}_i} \rho_{ijt}.
 \end{flalign}
-The equation devicded into positive terms and a negative term, we name former as revenue, and latter as cost, and denote them $r_{it} = R_{it}^\mathrm{ex} + \sum_{j \in N^\mathrm{out}_i} \rho_{jit}, \, c_{it} = \sum_{j \in N^\mathrm{in}_i} \rho_{ijt}$, respectively.
+The equation is divided into positive terms and a negative term, we name the former as revenue, and the latter as cost, and denote them respectively as $r_{it} = R_{it}^\mathrm{ex} + \sum_{j \in N^\mathrm{out}_i} \rho_{jit}, \, c_{it} = \sum_{j \in N^\mathrm{in}_i} \rho_{ijt}$.
 We name $R_{it}$ as profit.
 
-In this case, $\unit$ maximizes the cumulative discounted profit $G_{it}$ represented as the following equation.
+In this case, $\unit$ maximizes the cumulative discounted profit $G_{it}$ represented as
 \begin{flalign}
 	G_{it}	= \sum_{k=0}^T \gamma^k R_{i, t+k} 
 			= \sum_{k=0}^T \gamma^k (r_{i,t+k} - c_{i,t+k})
 			&= r_t - c_t + \gamma G_{i,t+1}.
 \end{flalign}
 $G_{it}$ is unobserved unless the time is reached at the end of the episodes.
-Since prediction based on the current value is needed to select the optimal actions, 
-we approximate $G_{it}$ with value function $V_i^{\pi_i} (s_{it}) = \Expect{\pi_i}{ G_{it} \mid s_{it}}$.
+Because prediction based on the current value is needed to select the optimal actions, 
+we approximate $G_{it}$ with value function $V_i^{\pi_i} (s_{it}) = \Expect{\pi_i}{ G_{it} \mid s_{it}}$ where $s_{it} \in \Observations$.
 In this case, the following equation holds.
 \begin{flalign} 
 		V_i^{\pi_i} (s_{it}) = r_{it} - c_{it} + \gamma V_i^{\pi_i} (s_{i, t+1}),	\label{eq:V}
 \end{flalign}
-Hence, we only have to consider maximization of revenue and value function and minimization of cost.
-$R_{it} > 0$, namely $r_{it} > c_{it}$ indicates that the unit give the additional value to the obtained data.
-If $R_{it} \leq 0$ for all $t$, the unit acts NOOP since $V_i^{\pi_i} (s_{it}) \leq 0 < \delta$.
+Therefore, we need only consider maximization of revenue, the value function, and cost minimization.
+$R_{it} > 0$, i.e., $r_{it} > c_{it}$ indicates that the unit gives the additional value to the obtained data.
+The unit acts NOOP because $V_i^{\pi_i} (s_{it}) \leq 0 < \delta$ if $R_{it} \leq 0$ for all $t$.
 
-TODO: V の式の正しさを検証する。
+%TODO: verify equation of V

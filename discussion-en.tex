@@ -1,30 +1,30 @@
 \section{Discussion}
 \subsection{Disadvantage}
-The one of disadvantage is computational complexity.
-As envy-free auction uses sort operation for computing demand,
-several part should be serialized.
-It should be improved with Approximation.
+\subsection{Shortcoming}
+An important shortcoming is its computational complexity.
+Because the envy-free auction uses a sort operation for computing demand,
+several parts should be serialized and should be improved through approximation.
 
-For optimization method,
-although envy-free auction guarantees truthfulness if the prices of buyer are sealed,
-in the case which buyer can communicate each other and shares price information, 
-the buyer can fake the price with lower demand in collusion.
-For the issue, several solution such as random sample auction \cite{goldberg2006competitive} is proposesd.
+Regarding the optimization method,
+although envy-free auction guarantees truthfulness if the buyer prices are sealed,
+in cases where buyers can mutually communicate and share price information, 
+the buyer can fake the price with lower demand in a process of collusion.
+To address the issue, several solutions such as random sample auction \cite{goldberg2006competitive} are proposed.
 
-Adoptive dropconnect has difficulty for implementation for several neural network.
-Although, we published source code on GitHub for Linear and CNN, 
-implementation for RNN is a future work.
+Adoptive dropconnect has difficulty for implementation for several neural networks.
+Although we published source code on GitHub for Linear and CNN, 
+implementation for RNN remains as a subject for future work.
 
 \subsection{Application}
-NaaA can be applied on learning distributed environment on computer network such as peer-to-peer network, and controlling sub-module of robot such as multiple camera.
-Specifically, it can be applied to various method as below.
+NaaA is applicable to learning distributed environments on a computer network such as a peer-to-peer network, and controlling the sub-modules of robots such as multiple cameras.
+Specifically, it is applicable to various methods as described below.
 \begin{itemize}
 \item Hyperparameter tuning. 
-Several algorihtm are already proposed such as neuroevolution using genetic algorithm.
-In the case, profit or counterfactual return can be used to fitness function.
+Several algorithms have been proposed such as neuroevolution using genetic algorithms.
+In the case, profit or counterfactual return is useful for a fitness function.
 
-\item Pruning. Reducing computing cost with downsizing neural network.
-\item Attention control. In a part of research of attention, they are using reinforcement learning to control attention.
-\item Ensamble. Our method can be applied to mix multiple models.
+\item Pruning. Computing costs can be reduced by downsizing a neural network.
+\item Attention control. Research of attention is using reinforcement learning to control attention.
+\item Ensemble. Our method is applicable to mixed multiple models.
 \end{itemize}
-These application is direction of the research.
+These applications illustrate the direction of our research.

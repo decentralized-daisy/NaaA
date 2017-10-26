@@ -1,0 +1,187 @@
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{url}
+\usepackage{textcomp}
+\usepackage{amsthm}
+\usepackage{float}
+
+\frenchspacing
+
+\def\presentationmode{1}
+
+\def\beginFrame#1{\if\presentationmode1 \begin{frame}{#1} \else \fi}
+\def\endFrame{\if\presentationmode1 \end{frame} \else \fi}
+
+\newcommand{\mat}[1]{\mathrm{\mathbf{#1}}}
+\newcommand{\vect}[1]{\mathrm{\mathbf{#1}}}
+\newcommand{\fros}[1]{\left\| #1 \right\|_\mathrm{F}^2}
+\newcommand{\Expect}[2]{\mathbb{E}_{#1}\left[ #2 \right]}
+\newcommand{\KL}[2]{ \mathrm{KL}\left( #1 \| #2 \right) }
+\newcommand{\Real}{\mathbb{R}}
+\newcommand{\T}{\mathrm{T}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\sigmoid}{\sigma}
+\newcommand{\attention}{\vect{g}}
+\def\attentionwithouti{g_2, \dots, g_k}
+%\def\attentionwithouti{\boldsymbol{\gamma}_{i}}
+\newcommand{\attraction}{\vect{h}}
+
+\def\x{\vect{x}}
+\def\y{\vect{y}}
+\def\h{\vect{h}}
+\def\g{\vect{g}}
+\def\s{\vect{s}}
+\def\c{\vect{c}}
+\def\A{\mathcal{A}}
+\def\S{\mathcal{S}_\mathrm{H}}
+\def\R{\mathcal{R}}
+\def\Trans{\mathcal{T}}
+\def\Observations{\mathcal{S}_\mathrm{O}}
+\def\ObProb{\mathcal{O}}
+\def\E{\mathcal{E}}
+\def\deriv#1#2{ \frac{\partial #2}{ \partial #1 } }
+\def\derivN#1#2#3{ \frac{\partial^{#1} #3}{ \partial #2^{#1} } }
+\def\grad#1#2{ \deriv{#1}{#2} }
+\def\gradN#1#2#3{ \derivN{#1}{#2}{#3} }
+\def\Grad#1#2{ \nabla_{#1} {#2} }
+\def\obs{\vect{o}}
+\def\u{{\boldsymbol{b}}}
+\def\w{{\boldsymbol{\alpha}}}
+\def\vmu{{\boldsymbol{\mu}}}
+\def\v{\vect{v}}
+\def\g{\attention}
+\def\h{\attraction}
+\def\G{\mat{G}}
+\def\op{}
+%\def\Qg{Q^{\mathrm{g}}}
+%\def\ug{\vect{u}^{\mathrm{g}}}
+\def\Qg{Q}
+\def\ug{\u}
+\def\params{{\boldsymbol{\theta}}}
+\def\Params{{\boldsymbol{\Theta}}}
+\def\opt#1{{\hat{#1}}}
+
+\newcommand{\argmax}{\mathop{\rm argmax}\limits}
+\newcommand{\argmin}{\mathop{\rm argmin}\limits}
+
+
+%\def\costof#1{C(#1)}
+\def\costof#1{\mathrm{C}[{#1}]}
+\def\budget{B}
+\def\cost{c}
+\def\vcost{\vect{\cost}}
+\def\costat#1{\cost_{#1}}
+\def\costi{c_i}
+\def\unit{\vect{e}}
+\def\state{\s}
+\def\action{a}
+\def\rewards{y}
+
+\def\sumk#1{\sum_{#1=1}^k}
+\def\Si{\sumk{i}}
+\def\Sj{\sumk{j}}
+
+\def\vcatout{\tilde{\vect{h}}}
+\def\catout{\tilde{h}_i}
+\def\catoutj{\tilde{h}_j}
+\def\changeof#1{\Delta #1}
+
+\def\vcatin{\vect{h}}
+\def\catin{h_{i}}
+\def\catinj{h_{j}}
+
+\def\vcatbias{\vect{h}_i}
+\def\catbias{\mu_i}
+\def\catbiasj{\mu_j}
+
+\def\qbias{q_i}
+\def\vqbias{\mathbf{q}}
+\def\qin{Q}
+
+\def\ebias{e_{-i}}
+\def\ein{e}
+\def\changeofebias{{\changeof\qbias} \left[ \changeof\qbias + 2 \TDerror{\qin} \right]}
+%\def\changeofebias{{\changeof\qbias}\left( \changeof\qbias + 2 \delta_t \right)}
+
+\def\regret{\rho_{-i}}
+%\def\TDerror#1{E_{\mathrm{TD}}\left({#1}\right)}
+\def\TDerror#1{\delta}
+
+
+\def\prA{p(\rewards|\state, \action, \params, \g)}
+\def\LLAttention{\log \prA}
+
+\def\Square#1{\left[ #1 \right]^2}
+
+\def\ReplayMemory{\mathcal{D}}
+\def\play{\s_t, a_t, r_t, \s_{t+1}}
+\def\Play{(\play)}
+\def\pl{\mathsf{d}_t}
+\def\Replays#1{\Expect{ \pl \sim \ReplayMemory}{#1}}
+
+\def\bUpdate#1{p(o_{t+1}|s_${#1},a_t) \sum_i p(s_{#1}|s_i, a_t) b_{t}^i}
+\def\beliefState#1{ \vect{b}_{#1} }
+
+\def\const{\mathrm{const.}}
+\def\test{_\mathrm{test}}
+\def\train{_\mathrm{train}}
+\def\bs{\boldsymbol}
+\def\etal#1{{et al.} (\citeyear{#1})}
+\def\Etal{{et al.}}
+\def\Long{1}
+\def\eg{e.g., }
+
+\def\eAt#1{e_{#1}}
+\def\eBase{\eAt{\one}}
+\def\one{\mathbf{1}}
+\def\zero{\mathbf{0}}
+\def\unit#1{\vect{u}_{#1}}
+\def\eChange#1{ \Delta e_{#1} }
+
+\def\ask{q}
+
+
+% probability
+\def\prob#1{p\left(#1\right)}
+\def\prob#1#2{p\left(#1 \mid #2 \right)}
+
+\def\deprecated{\alert{[Deprecated]}}
+\def\softmax{\mathrm{softmax}}
+
+
+\newcommand{\penalvec}[3]{ \frac{1}{2 \sigma_#1^2} \sum_{#2=1}^{#3} \vect{#1}_{#2}^\T  \vect{#1}_{#2} }
+
+\newcommand{\CON}{\color{red}}
+%\newcommand{\CON}{\color{black}}
+\newcommand{\COFF}{\color{black}}
+
+%\newcommand{\CON}{\color{red} -------- My modification starts from here. ------- \color{black}}
+%\newcommand{\CON}{\color{black}}
+%\newcommand{\COFF}{\color{red} -------- My modification ends here. ------- \color{black} }
+
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{coro}{Corollary}[section]
+\newtheorem{prf}{Proof}
+\newtheorem{defn}{Definition}
+
+
+
+
+%=================================
+% Paper specific
+%=================================
+
+\def\neuralnet{\mathfrak{G}}
+\def\units{\mathcal{V}}
+\def\edges{\mathcal{E}}
+\def\unitAt#1{v_{#1}}
+\def\unit{\unitAt{i}}
+\def\followees{N^\mathrm{in}_i}
+\def\followers{N^\mathrm{out}_i}
+\def\friends{N_i}
+\def\rewardAt#1{R_{#1}}
+\def\reward{\rewardAt{it}}
