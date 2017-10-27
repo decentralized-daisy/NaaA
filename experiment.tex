@@ -1,84 +1,84 @@
 \section{Experiment}
-To confirm NaaA widely work with machine learning tasks,
-we confirm our method supervised learning tasks as well as reinforcement learning tasks.
+To confirm that NaaA works widely with machine learning tasks,
+we confirm our method of supervised learning tasks as well as reinforcement learning tasks.
 As supervised learning tasks, we use typical machine learning tasks such as image classification
-using MNIST, CIFER-10 and SVHN.
+using MNIST, CIFER-10, and SVHN.
 
 As reinforcement tasks, we confirm single- and multi-agent environment.
 The single-agent environment is from OpenAI gym.
-We confirm the result with a simple reinforcement task, CartPole.
+We confirm the result using a simple reinforcement task: CartPole.
 In multi-agent, we use ViZDoom, a 3D environment for reinforcement learning.
 
 \subsection{Classification}
-In classification task, we experiment our method with several standard datasets, MNIST, CIFER-10 and SVHN.
-As comparison method, we compare baseline (vanilla feed-forward neural network) and DropConnect.
-In hyperparemeter setting, we set $\epsilon = 0.2$, which means the agent randomly masks the weights in 0.2 of chance rate, 
+In the classification task, we experiment with our method using several standard datasets: MNIST, CIFER-10, and SVHN.
+As a method of comparison, we compare baseline (vanilla feed-forward neural network) and DropConnect.
+In a hyperparameter setting, we set $\epsilon = 0.2$, which means that the agent randomly masks the weights in 0.2 of the chance rate, 
 and playing the auction game in 0.8 of chance rate.
-Table \ref{tbl:result} shows our framework of NaaA complements drawback of DropConnect, 
-which it completely randomly drops the weight, and does not considering implicit counterfactual return of units.
+Table \ref{tbl:result} presents our framework of NaaA complements disadvantage of DropConnect.
+It randomly drops the weight completely, and does not consider implicit counterfactual return of units.
 
 \subsection{Single-agent RL}
 Next, we set the single-agent reinforcement learning task.
-We used CartPole task from OpenAI gym with visual input.
-In the setting, the agent need to balancing a pole with moving a cart.
-There are a lot of unuseful information on the image, pruning the pixel is important issue.
-The result shows that our method improves the standard RL,
+We used the CartPole task from OpenAI gym with visual input.
+In this setting, the agent must balance a pole while moving a cart.
+There is much non-useful information related to the image. For that reason, pruning the pixels is important.
+The result demonstrates that our method improves the standard RL.
 
 \subsection{Multi-agent RL}
 The additional feature of NaaA is credit assignment for reward distribution, 
-meant that if the neural network divided into multiple agents, it works by playing auction game.
-We confirm additional agents complements the main player, we used ViZDoom, an environment for Doom.
-A player in Doom environment should seek in the map, and defeat the enemy.
-ViZDoom provides several maps. So, we used it.
+meaning that if the neural network is divided into multiple agents, it works by playing the auction game.
+We confirmed that additional agents complement the main player using ViZDoom, an environment for Doom.
+A player in Doom environment should seek the enemy in the map, and then defeat the enemy.
+Because ViZDoom provides several maps, we used ViZDoom.
 
 \subsubsection{Setup}
-We used a scenario based on Defend the Center (DtC) provided by ViZDoom platform.
-In DtC, players are placed in a center of a field of circle, and attack enemies which will come from the wall.
-The setting of a game has has two players: a main player and a cameraman.
-Though the main player can attack the enemy with bullets, 
-the cameraman does not have the way to attack, and only scout for the enemy.
-The action space for main player is the combination of \{ attack, turn left, turn right \}. That is total amount of action is $2^3 = 8$.
-Cameraman has two possible actions \{ turn left, turn right \}.
-Although, the players only can move the direction, they cannot move on the field.
+We used a scenario based on Defend the Center (DtC), provided by ViZDoom platform.
+In DtC, players are placed in the center of a field of circle. They attack enemies that come from the wall.
+The game has two players: a main player and a cameraman.
+Alhough the main player can attack the enemy with bullets, 
+the cameraman has no way to attack, and only scouts for the enemy.
+The action space for the main player is the combination of \{ attack, turn left, turn right \}. Therefore, the total number of actions is $2^3 = 8$.
+The cameraman has two possible actions: \{ turn left, turn right \}.
+Although the players can only change direction, they cannot move on the field.
 The enemy will die if have the attack (bullet) from the main player once.
-The amount of ammo is 26 as a default on an episode.
-The main player will die if have attacks from the enemy, and the health become 0.
-The cameraman won't die if have attacks from the enemy.
-The episode will terminate when the maim player dies, or 525 steps elapsed.
+As a default on an episode, the ammunition amount is 26.
+The main player will die if under attack from the enemy to the extent that health becomes 0.
+The cameraman will not die if attacked by the enemy.
+The episode will terminate when the maim player dies, or after 525 steps have elapsed.
 
-DtC is standard scenario which prepared by ViZDoom platform.
-In DtC, up to 5 enemies appear can exists in the same time. 
-The main player will receive reward every time defeat the enemy.
-After the enemy dies, the player receives 1, if the player die, he receives -1.
+DtC is standard scenario prepared using the ViZDoom platform.
+In DtC, up to five enemies can exist at the same time. 
+The main player will receive a reward every time the enemy is defeated.
+After the enemy dies, the player receives 1; the player receives -1 if killed.
 
 \subsubsection{Model}
-We compared three models: one is the proposed method, and the remaining are comparing target.
+We compared three models: the proposed method and two comparison targets.
 
-{\em Baseline} DQN without communication. The main player learns standard DQN with vision which he watching.
-Since the cameraman does not learn, he continues to move randomly.
+{\em Baseline} DQN without communication. The main player learns standard DQN with the perspective that the player is viewing.
+Because the cameraman does not learn, the player continues to move randomly.
 
-{\em Comm} DQN with communication. The main player learns DQN with two visions of him and cameraman.
-The communication vector is learnt with a feed-forward neural network .  The method is inspired by CommNet.
+{\em Comm} DQN with communication. The main player learns DQN with two perspectives: the player's own and the cameraman's.
+The communication vector is learned with a feed-forward neural network. The method is inspired by Commnet.
 
-{\em NaaA} The proposed method. The main player learns DQN with two visions of him and cameraman.
-The transmission of reward and communication will be performed by proposed method.
+{\em NaaA} The proposed method. The main player learns DQN with two perspectives: the player's own and the cameraman's.
+The transmission of reward and communication are performed using the proposed method.
 
 \subsubsection{Results}
-The training is performed in 10 million steps.
-The figure \ref{fig:learning_curve} illustrates that our model NaaA outperforms CommNet.
-The improvement is achieved by distribution of rewards and adaptive dropout.
-We confirmed the cameraman see the enemy through an episode.
-This can interpret as the cameraman reports the position of enemy.
-Not only the enemy, the cameraman sees the behind of main player in several times.
+Training is performed in 10 million steps.
+Figure \ref{fig:learning_curve} presents that our model NaaA outperforms CommNet.
+Improvement is achieved by a distribution of rewards and adaptive dropout.
+We confirmed that the cameraman sees the enemy through an episode.
+This can be interpreted as the cameraman reporting the enemy position.
+In addition to seeing the enemy, the cameraman sees the area behind of main player several times.
 This action enables the cameraman to observes attacks from the enemy with grabbing relative position.
 
 For further interpretation of the result, 
-we illustrates the visualization of revenue which the agent earned in Figure \ref{fig:vis} as a heatmap.
-The background picture is screen in Doom taken in the moment which the filter in CNN is mostly activated.
-Figure \ref{fig:vis} (a) shows that the agent see the top and center of screen.
-The center corresponds to position that enemy appears far away, 
-and the top corresponds to position that enemy come closer.
-Figure \ref{fig:vis} (b) shows that the agent see the pistol.
+we present visualization of the revenue that the agent earned in Figure \ref{fig:vis} as a heatmap.
+The background picture is a screen in Doom taken at the moment when the filter in CNN is mostly activated.
+Figure \ref{fig:vis}(a) shows what the agent sees at the top and center of the screen.
+The center corresponds to a position with the enemy appearing far away.
+The top corresponds to a position with the enemy coming closer.
+Figure \ref{fig:vis}(b) shows that the agent sees the pistol.
 
 %\begin{figure*}[t]
 %\begin{center}
@@ -110,12 +110,12 @@ Figure \ref{fig:vis} (b) shows that the agent see the pistol.
 \includegraphics[width=\linewidth]{img/lc_vis.eps}
 \caption{
 	\textbf{Left:}
-		Learning curve for the multi-agent task of VizDoom.  
-		Our method based on NaaA outperforms other two methods, baseline and CommNet \citep{sukhbaatar2016learning}.
+		Learning curve for the multi-agent task of VizDoom. 
+		Our method based on NaaA outperforms the other two methods: baseline and Comm DQN.
 	\textbf{Right:} 
-		Reward visualization tells us what the cameraman sees. 
-		(a) the main player sees the pistol.
-		(b) cameraman sees the point which enemy appear and come closer.
+		Reward visualization shows us what the cameraman sees:
+		(a) The cameraman sees the point which enemy appear and come closer.
+		(b) The cameraman sees the pistol.
 }
 \label{fig:double}
 \end{figure*}
@@ -125,7 +125,7 @@ Figure \ref{fig:vis} (b) shows that the agent see the pistol.
 \centering
 \includegraphics[width=\linewidth]{img/circleworld.eps}
 \caption{
-NaaA leads the selfish agents to obtain cooperate relationship by incorporating the social dilemma with mechanism design.
+NaaA leads the agents to obtain cooperate relationship.
 First, the two agents are seeing different direction, and the cameraman sells its information to the main player (\textbf{1}).
 The main player who bought the information starts to turn right to find the enemy.
 The cameraman who sold the information starts to turn left to seek new information by seeing dead angle of the main player (\textbf{2} and \textbf{3}).

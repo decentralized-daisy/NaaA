@@ -28,7 +28,7 @@ The counterfactual return is that by which we extend counterfactual reward, the 
 Subsequently, we present that learning counterfactual return leads the model to learning optimal topology between the units.
 In addition, we propose {\em adaptive dropconnect}, a natural extension of dropconnect \citep{wan2013regularization}.
 Adaptive dropconnect combines dropconnect, which pure-randomly masks the topology, with adaptive algorithm, which prunes the connection with less counterfactual return with higher probability.
-It uses $\varepsilon$-greedy as a policy, and is equivalent to dropconnect in the case of $\varepsilon = 0$. It is equivalent to counterfactual return maximization, which constructs the topology deterministically in the case of $\varepsilon = 1$.
+It uses $\varepsilon$-greedy as a policy, and is equivalent to dropconnect in the case of $\varepsilon = 1$. It is equivalent to counterfactual return maximization, which constructs the topology deterministically in the case of $\varepsilon = 0$.
 
 Finally, we confirm that optimization with the framework of NaaA leads to better performance of RL, with numerical experiments.
 Specifically, we use a single-agent environment from Open AI gym, and a multi-agent environment from ViZDoom.
