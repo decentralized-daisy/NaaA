@@ -1,9 +1,9 @@
 \section{Discussion}
 \subsection{Disadvantage}
 \subsection{Shortcoming}
-An important shortcoming is its computational complexity.
-Because the envy-free auction uses a sort operation for computing demand,
-several parts should be serialized and should be improved through approximation.
+%An important shortcoming is its computational complexity.
+%Because the envy-free auction uses a sort operation for computing demand,
+%several parts should be serialized and should be improved through approximation.
 
 Regarding the optimization method,
 although envy-free auction guarantees truthfulness if the buyer prices are sealed,
@@ -11,9 +11,11 @@ in cases where buyers can mutually communicate and share price information,
 the buyer can fake the price with lower demand in a process of collusion.
 To address the issue, several solutions such as random sample auction \cite{goldberg2006competitive} are proposed.
 
-Adoptive dropconnect has difficulty for implementation for several neural networks.
-Although we published source code on GitHub for Linear and CNN, 
-implementation for RNN remains as a subject for future work.
+%Adaptive dropconnect has difficulty for implementation for several neural networks.
+%Although we published source code on GitHub for Linear, 
+%implementation for RNN remains as a subject for future work.
+
+% Dropconnect: Theoertical background 
 
 \subsection{Application}
 NaaA is applicable to learning distributed environments on a computer network such as a peer-to-peer network, and controlling the sub-modules of robots such as multiple cameras.
@@ -22,9 +24,15 @@ Specifically, it is applicable to various methods as described below.
 \item Hyperparameter tuning. 
 Several algorithms have been proposed such as neuroevolution using genetic algorithms.
 In the case, profit or counterfactual return is useful for a fitness function.
-
 \item Pruning. Computing costs can be reduced by downsizing a neural network.
 \item Attention control. Research of attention is using reinforcement learning to control attention.
 \item Ensemble. Our method is applicable to mixed multiple models.
+
+% On-policy DropConnect
+% Theoretical Analysis for Adaptive DropConnect
+% Attention and sensor placement 
+% Graph-based Algorithm such as PageRank
+% Application to genrrative model
+% Biological interpretation
 \end{itemize}
 These applications illustrate the direction of our research.

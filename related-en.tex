@@ -1,7 +1,7 @@
 \section{Related Work}
 NaaA belongs to a class of partially observable stochastic game (POSG) \citep{hansen2004dynamic} because it processes multiple units as agents.
 POSG, a class of reinforcement learning with multiple agents in a POMDP environment, presents several research issues, one of which is communication.
-Commnet \citep{sukhbaatar2016learning}, which exploits the characteristics of a unit that is agnostic to the topology of other units, employs backpropagation to train multi-agent communication.
+CommNet \citep{sukhbaatar2016learning}, which exploits the characteristics of a unit that is agnostic to the topology of other units, employs backpropagation to train multi-agent communication.
 Another one is credit assignment.
 Instead of reward $R(a_t)$ of an agent $i$ for actions at $t$ $a_t$, 
 QUICR-learning \citep{agogino2006quicr} maximizes counterfactual reward $R(a_t) - R(a_t - a_{it})$, the difference in the case of the agent $i$ takes an action $a_{it}$ ($a_t$) and not ($a_t-a_{it}$).
@@ -20,4 +20,9 @@ GAN and our proposal, NaaA, are outcomes from mechanism design.
 NaaA applies a digital goods auction \citep{guruswami2005profit} to reinforcement learning with a multi-agent neural network, 
 to obtain a maximized return by units as a Nash equilibrium.
 
-%TODO: Dropconnect
+Adaptive DropConnect (ADC) which we propose in a late part of this paper, extends DropConnect \citep{wan2013regularization}, a regularization technique.
+The idea of ADC (instead of dropping each connection between the units in constant probability, using skew probability correlated to absolute value of weights) is eventually closer to Adaptive DropOut \citep{ba2013adaptive} although the derivation is different, 
+and the adjective ``adaptive'' is added respecting the method.
+Optimizing neural network with RL is investigated by \cite{andrychowicz2016learning}.
+In contrast to their methods which uses recurrent neural network (RNN) and hence the implementation is difficult,
+our method is RNN-free and forms as a layer, and hence the implementation is easy and fast, and it has wide applicable area.
