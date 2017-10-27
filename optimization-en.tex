@@ -2,14 +2,14 @@
 To maximize the cumulative discounted profit in a framework of NaaA,
 it is important to balance the two contradicting criteria: revenue $r_{it}$ and cost $c_{it}$.
 
-TODO: Negative result. State what is the problem.
-\begin{thm}\label{thm:optimal-bidding-simple}
-	The Nash equivalent of the game $(\rho_{ijt})$ is $0$.
-\end{thm}
+%TODO: Negative result. State what is the problem.
+%\begin{thm}\label{thm:optimal-bidding-simple}
+%	The Nash equivalent of the game $(\rho_{ijt})$ is $0$.
+%\end{thm}
 
 To achieve that, we use the mechanism design.
 We introduce mechanism design because, unlike several existing studies \citep{sukhbaatar2016learning}, NaaA assumes that all agents are not cooperative but selfish.
-(TODO: Bad writing.)
+%(TODO: Bad writing.)
 If we naively optimize the optimization problem of NaaA, then we obtain the trivial solution that the internal rewards will converge to 0, and that all the units become NOOP.
 Therefore, the multi-agent system should select the action with no information. It is equivalent to taking an action randomly.
 For that reason, the external reward $R_t^{\mathrm ex}$ shrinks markedly.
@@ -152,46 +152,46 @@ So, as an action, we employ allocation $g_{ijt}$ instead of $\vect{b}_{it}$ and 
 The overall algorithm is shown in Algorithm 1.
 
 \subsection{Adaptive DropConnect}
-NaaA can be used to not only multi-agent RL but training of network.
-Typical training algorithms of a neural network such as RMSProp \citep{tieleman2012lecture} and Adam \citep{kingma2014adam} are based on stochastic gradient descent (SGD), 
-and the optimization is performed sequentially.
-Hence, the problem can be interpreted as the problem to update the state (i.e., weight) to the goal which is manimization of expected likelihood.
+Actually, NaaA is useful not only for multi-agent RL, but also for training of the network.
+Typical training algorithms of a neural network such as those of RMSProp \citep{tieleman2012lecture} and Adam \citep{kingma2014adam} are based on stochastic gradient descent (SGD).
+The optimization is performed sequentially.
+Therefore, the problem can be interpreted as a problem to update the state (i.e., weight) to the goal, which is minimization of the expected likelihood.
 
-The learning can be accelarated by applying NaaA to the optimizer.
-We name what applying NaaA to SGD as {\em Adaptive DropConnect} (ADC), 
-which is eventually combination of DropConnect \citep{wan2013regularization} and Adaptive DropOut \citep{ba2013adaptive}.
-We introduce ADC herein as one of the application of NaaA.
+The learning can be accelerated by application of NaaA to the optimizer.
+We designate the application of NaaA to SGD as {\em Adaptive DropConnect} (ADC), 
+which is eventually a combination of DropConnect \citep{wan2013regularization} and Adaptive DropOut \citep{ba2013adaptive}.
+We introduce ADC herein as one application of NaaA.
 
-ADC uses NaaA for supervised optimization problem with several revises.
-Firstly, an environment has an input state such as image, the agent should update its parameters to maximize its reward obtained from the criterion calculator.
-The criterion calculator give batch-likelihood as the reward to the agent.
-The agent is the classifier which updates its weights to maximize the reward from criterion calculator.
+ADC uses NaaA for supervised optimization problem with several revisions.
+First, an environment has an input state such as an image. The agent is expected to update its parameters to maximize its reward obtained from the criterion calculator.
+The criterion calculator gives batch-likelihood as the reward to the agent.
+The agent is a classifier which updates its weights to maximize the reward from the criterion calculator.
 The weights are recorded as an internal state.
-As counterfactual return $o_{ijt}$, we employed heuristic that uses absolute value of the weight $|w_{ijt}|$, 
-same technique as the one which used by Adaptive DropOut.
-The reason why we use absolute value of weights is the update amount for the magnitude of error of output of units is in proportion to $|w_{ijt}|$.
+As a counterfactual return $o_{ijt}$, we used a heuristic that uses the absolute value of weight $|w_{ijt}|$, which is the
+same technique as that used by Adaptive DropOut.
+We use the absolute value of weights because it is the update amount for which the magnitude of error of the output of units is proportional to $|w_{ijt}|$.
 
-The algorithm is shown in Algorithm 2.
-Since the algorithm is quite simple, the implementation can be performed easily,
-and hence it can be widely applied for the most of general deep learning problem such as 
+The algorithm is presented as Algorithm 2.
+Because the algorithm is quite simple, its implementation can be performed easily.
+For that reason, it can be widely applied for most general deep learning problems such as 
 image recognition, sound recognition, and even for deep reinforcement learning.
 
 \begin{algorithm}[t]
 \caption{Envy-free auction for NaaA}
 \begin{algorithmic}[1]
 	\FOR{ $t=1$ \TO $T$ }
-		\STATE Compute bidding price for every edges: \textbf{for} $(v_j, v_i) \in \edges$ \textbf{do} \
+		\STATE Compute a bidding price for every edge: \textbf{for} $(v_j, v_i) \in \edges$ \textbf{do} \
 		$b_{ijt} \leftarrow Q^{\pi_i}( \vect{s}_{it}, \vect{e}_j) - Q^{\pi_i}( \vect{s}_{it}, \vect{0})$ 
-		\STATE Compute asking price for every nodes: \textbf{for} $\unit \in \units$ \textbf{do} \
+		\STATE Compute an asking price for every node: \textbf{for} $\unit \in \units$ \textbf{do} \
 		$\opt{q}_{it} \leftarrow \argmax_{q \in [0, \infty)} q d_{it}(q).$
 		\FOR{$(v_i, v_j) \in \edges$}
 				\STATE Compute allocation: $g_{jit} \leftarrow H(b_{jit} - \opt{q}_{it})$ 
-				\STATE Compute price the agent should pay: $\rho_{jit} \leftarrow g_{jit} \opt{q}_{it}$ 
+				\STATE Compute the price the agent should pay: $\rho_{jit} \leftarrow g_{jit} \opt{q}_{it}$ 
 		\ENDFOR
-		\STATE Make payment: \textbf{for} $\unit \in \units$ \textbf{do} \
+		\STATE Make a payment: \textbf{for} $\unit \in \units$ \textbf{do} \
 		$R_{it} \leftarrow \sum_{j \in N^\mathrm{out}_i} \rho_{jit} 
 				- \sum_{j \in N^\mathrm{in}_i} \rho_{ijt},$
-		\STATE Make shipment: \textbf{for} $\unit \in \units$ \textbf{do} \
+		\STATE Make a shipment: \textbf{for} $\unit \in \units$ \textbf{do} \
 		$\tilde{x}_{ijt} = g_{ijt} x_{ijt} + ( 1 - g_{ijt} ) \bar{x}_{ijt} $
 
 		\FOR{$\unit \in \units$} 
@@ -199,7 +199,7 @@ image recognition, sound recognition, and even for deep reinforcement learning.
 			\STATE $\vect{s}_{it} \leftarrow (\vect{s}_{it}^{\mathrm ex}, \vect{\tilde{x}}_{it}, \bs{\theta}_i)$
 			\STATE Sample action $a_{it}^{\mathrm ex} \sim \pi_i^{\mathrm ex}(\vect{s}_{it})$
 			\STATE Receive external reward $R_{it} \leftarrow R_{it} + R_{it}^{\mathrm ex}(a_{it}^{\mathrm ex})$
-			\STATE Update $Q^{\pi_i}$ under the manner of $Q$-learning by calculating time difference (TD)-error 
+			\STATE Update $Q^{\pi_i}$ under the manner of $Q$-learning by calculating the time difference (TD)-error 
 		\ENDFOR
 	\ENDFOR
 \end{algorithmic}
@@ -209,9 +209,9 @@ image recognition, sound recognition, and even for deep reinforcement learning.
 \caption{Adaptive DropConnect}
 \begin{algorithmic}[1]
 	\FOR{ $t=1$ \TO $T$ }
-		\STATE Compute bidding price for every edges: \textbf{for} $(v_j, v_i) \in \edges$ \textbf{do} \
+		\STATE Compute a bidding price for every edge: \textbf{for} $(v_j, v_i) \in \edges$ \textbf{do} \
 		$b_{ijt} \leftarrow |w_{ijt}|$ 
-		\STATE Compute asking price for every nodes: \textbf{for} $\unit \in \units$ \textbf{do} \
+		\STATE Compute an asking price for every node: \textbf{for} $\unit \in \units$ \textbf{do} \
 		$\opt{q}_{it} \leftarrow \argmax_{q \in [0, \infty)} q d_{it}(q).$
 		\FOR{$(v_i, v_j) \in \edges$}
 				%\STATE Sample $u$ from a Bernoulli distribution: $u \sim \mathrm{Bernoulli}(\varepsilon)$
@@ -221,12 +221,13 @@ image recognition, sound recognition, and even for deep reinforcement learning.
 		\STATE Sample a switching matrix $U_t$ from a Bernoulli distribution: $U_t \sim \mathrm{Bernoulli}(\varepsilon)$
 		\STATE Sample the random mask $M_t$ from a Bernoulli distribution: $M_t \sim \mathrm{Bernoulli}(1/2)$
 		\STATE Generate the adaptive mask: $M_t' \leftarrow U_t \circ M_t + (1 - U_t) \circ G_{ijt}$ 
-		\STATE Compute $\vect{h}_t$ with making shipment:
+		\STATE Compute $\vect{h}_t$ for making a shipment:
 			$\vect{h}_t \leftarrow (M_t' \circ W_t) \vect{x}_t + \vect{b}_t$
 		\STATE Update $W_t$ and $\vect{b}_t$ by backpropagation.
 	\ENDFOR
 \end{algorithmic}
 \end{algorithm}
+
 
 %========================================================================
 % 【論旨】

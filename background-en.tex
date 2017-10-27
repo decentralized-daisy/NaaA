@@ -13,24 +13,26 @@ Therefore, DQN and DRQN abstract $s$, and create original state representation t
 Although DQN does not address the state transition directly because it is model-free method, 
 some interpretations hold that the hidden state representation is learned in the previous layer of the output layer \citep{zahavy2016graying}
 Using the method below, we assume that the agent chooses an action through a neural network.
+The POSG environment is a natural extension of POMDP to multi-agent environment defined by a tuple $(\S, \A^i, \Trans, \R^i, \Observations^i, \ObProb^i, \gamma^i)_{i \in \mathcal{I}}$,
+where $\mathcal{I}$ is a finite set of agents indexed 1.
 
-The POSG environment is a multi-agent environment defined by a tuple $(\S, \A^i, \Trans, \R^i, \Observations^i, \ObProb^i, \gamma^i)_{i \in \mathcal{I}}$,
-where $\mathcal{I}$ is a finite set of agents indexed 1, \dots, $N$, $\S$ represents a set of states, $\A^i$ stands for a set of actions, $\Trans$ denotes a transitive probability, 
-$\R^i: \S \times \A^1 \times \cdots \times \A^N \rightarrow \Real $ is a function from the state and the action of all the agent to rel value.
-$\Observations^i$ represents a possible set of observations, $\ObProb^i$ denotes a set of observation probability, and
-$\gamma^i$ is the discount rate.
-Each agent has an policy $\pi_i: \Observations^i \rightarrow \A^i$, and they maximize their return by interacting the environment.
-What is differ than POMDP is there are $N$-agents.
+%The POSG environment is a multi-agent environment defined by a tuple $(\S, \A^i, \Trans, \R^i, \Observations^i, \ObProb^i, \gamma^i)_{i \in \mathcal{I}}$,
+%where $\mathcal{I}$ is a finite set of agents indexed 1, \dots, $N$, $\S$ represents a set of states, $\A^i$ stands for a set of actions, $\Trans$ denotes a transitive probability, and 
+%$\R^i: \S \times \A^1 \times \cdots \times \A^N \rightarrow \Real $ is a function from the state and the action of all agents to the real value.
+%$\Observations^i$ represents a possible set of observations. $\ObProb^i$ denotes a set of observation probability.
+%$\gamma^i$ is the discount rate.
+%Each agent has a policy $\pi_i: \Observations^i \rightarrow \A^i$. They maximize their return by interacting with the environment.
+%A difference from POMDP is that there are $N$-agents.
 
-We employ several concept from game theory.
-Although RL and game theory are typically investigated in parallel, several concepts in game theory can be written in domain of RL.
-The (Bayesian) Nash equilibrium $\hat{\pi}_{i}$ is a policy that all the agent maximize their expected reward. That is,
+We employ several concepts from game theory.
+Although RL and game theory are typically investigated in parallel, several concepts in game theory can be written in the domain of RL.
+The (Bayesian) Nash equilibrium $\hat{\pi}_{i}$ is a policy by which all agents maximize their expected reward. That is,
 \begin{flalign}
-\hat{\pi}(s_{it}) = \argmax_{a_i \in \A^i} \Expect{ \vect{a}_{-i} \in A^{-i}, h \sim \ObProb^i(\cdot) }{ \R^i(h, \vect{a}) | s_{it}} \, \forall i \in \mathcal{I},
+\hat{\pi}(s_{it}) = \argmax_{a_i \in \A^i} \Expect{ \vect{a}_{-i} \in A^{-i}, h \sim \ObProb^i }{ \R^i(h, \vect{a}) | s_{it}} \, \forall i \in \mathcal{I},
 \end{flalign}
-where $\mathcal{A}^{-i}$ is a set of actions except of $i$. 
-Intuitively, the equation took an expected value of reward to integrate out unobserved other agents' action.
-As the Nash equilibrium is enough to state only the best action in the most cases, we use the notation with action $\hat{\vect{a}}$ in the following.
+where $\mathcal{A}^{-i}$ is a set of actions except for $i$. 
+Intuitively, the equation took an expected value of reward to integrate out other agents' unobserved actions.
+Because the Nash equilibrium is sufficient to state only the best action in the most cases, we use the notation with action $\hat{\vect{a}}$ in the following.
 
 The design of NaaA is inspired by neuroscience.
 A neuron in a neurocircuit consumes adenosine triphosphate (ATP) supplied from connected astrocytes.

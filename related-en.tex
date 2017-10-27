@@ -20,9 +20,9 @@ GAN and our proposal, NaaA, are outcomes from mechanism design.
 NaaA applies a digital goods auction \citep{guruswami2005profit} to reinforcement learning with a multi-agent neural network, 
 to obtain a maximized return by units as a Nash equilibrium.
 
-Adaptive DropConnect (ADC) which we propose in a late part of this paper, extends DropConnect \citep{wan2013regularization}, a regularization technique.
-The idea of ADC (instead of dropping each connection between the units in constant probability, using skew probability correlated to absolute value of weights) is eventually closer to Adaptive DropOut \citep{ba2013adaptive} although the derivation is different, 
-and the adjective ``adaptive'' is added respecting the method.
-Optimizing neural network with RL is investigated by \cite{andrychowicz2016learning}.
-In contrast to their methods which uses recurrent neural network (RNN) and hence the implementation is difficult,
-our method is RNN-free and forms as a layer, and hence the implementation is easy and fast, and it has wide applicable area.
+Adaptive DropConnect (ADC), which we propose in a later part of this paper, extends DropConnect \citep{wan2013regularization}, a regularization technique.
+The idea of ADC (instead of dropping each connection between units in constant probability, using skew probability correlated to the absolute value of weights) is eventually closer to Adaptive DropOut \citep{ba2013adaptive}, although the derivation differs.
+The adjective ``adaptive'' is added with respect to the method.
+Optimizing the neural network with RL was investigated by \cite{andrychowicz2016learning}.
+In contrast to their methods, which use recurrent neural network (RNN) and which therefore have difficult implementation,
+our method is RNN-free and forms as a layer. For those reasons, its implementation is simple and fast. Moreover, it has a wide area of applicability.
