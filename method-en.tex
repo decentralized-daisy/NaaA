@@ -21,7 +21,7 @@ We add the following assumption for characteristics of the $\unit$.
 	Instead of minimizing the global training error,
 	at each timing $t$, $\unit$ acts to maximize toward maximizing its own return (cumulative discounted reward)
 	$G_{it} = \sum_{k=0}^T \gamma^k \rewardAt{i,t+k}$, where $\gamma \in [0, 1]$ is the discount rate and $T$ is the terminal time.
-\item (Conversation) 
+\item (Conservation) 
 	The summation of a reward by which $\units$ will receive both an internal and external environment $\reward$ over 
 	all the units are equivalent to reward $R_t^{\mathrm{ex}}$, which the entire multi-agent system receives from 
 	the external environment.

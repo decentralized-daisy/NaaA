@@ -2,6 +2,7 @@
 First, we consider a POMDP environment in which a single agent acts.
 The POMDP environment is a seven-tuple $(\S, \A, \Trans, \R, \Observations, \ObProb, \gamma)$,
 where $\S$ represents a set of states, $\A$ stands for a set of actions, $\Trans$ denotes a transitive probability, 
+$\R: \S \times \A \rightarrow \Real $ is a function from the state and the action of an agent to the real value.
 $\Observations$ represents a possible set of observations, $\ObProb$ denotes a set of observation probability, and
 $\gamma$ is the discount rate.
 An agent partially predicts state $h \in \S$ through an observation $s \in \Observations$.
@@ -15,10 +16,15 @@ Although DQN does not address the state transition directly because it is model-
 some interpretations hold that the hidden state representation is learned in the previous layer of the output layer \citep{zahavy2016graying}
 Using the method below, we assume that the agent chooses an action through a neural network.
 The POSG environment is a natural extension of POMDP to multi-agent environment defined by a tuple $(\S, \A^i, \Trans, \R^i, \Observations^i, \ObProb^i, \gamma^i)_{i \in \mathcal{I}}$,
-where $\mathcal{I}$ is a finite set of agents indexed 1.
+where $\mathcal{I}$ is a finite set of agents indexed 1, \dots, $N$.
+Each agent has a policy $\pi_i: \Observations^i \rightarrow \A^i$. 
+They maximize their return by interacting with the environment.
 
 %The POSG environment is a multi-agent environment defined by a tuple $(\S, \A^i, \Trans, \R^i, \Observations^i, \ObProb^i, \gamma^i)_{i \in \mathcal{I}}$,
-%where $\mathcal{I}$ is a finite set of agents indexed 1, \dots, $N$, $\S$ represents a set of states, $\A^i$ stands for a set of actions, $\Trans$ denotes a transitive probability, and 
+%where $\mathcal{I}$ is a finite set of agents indexed 1, \dots, $N$, 
+%$\S$ represents a set of states, 
+%$\A^i$ stands for a set of actions, 
+%$\Trans$ denotes a transitive probability, and 
 %$\R^i: \S \times \A^1 \times \cdots \times \A^N \rightarrow \Real $ is a function from the state and the action of all agents to the real value.
 %$\Observations^i$ represents a possible set of observations. $\ObProb^i$ denotes a set of observation probability.
 %$\gamma^i$ is the discount rate.
