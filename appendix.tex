@@ -13,15 +13,34 @@
 %To maximizing this equation, $\rho_{ijt} = 0$ holds. 
 
 \subsection{Proof of Theorem \ref{thm:optimal-bidding}}
-As for a buyer, the asking price $\ask$ for a seller is unknown,
-we address $\ask$ which has support $[0, \infty)$,
-and consideration to maximize $\Expect{q}{G(b,q)}$,
-In this case, the following equation holds.
+%As for a buyer, the asking price $\ask$ for a seller is unknown,
+%we address $\ask$ which has support $[0, \infty)$,
+%and consideration to maximize $\Expect{q}{G(b,q)}$,
+%In this case, the following equation holds.
+%\begin{flalign}
+%\deriv{b}{}\Expect{q}{G(b,q)} 
+%&= \deriv{b}{}\int_0^\infty (H(b - q) \cdot (v-q) + G_0) p(q) dq \notag \\
+%&= \deriv{b}{} \left[ \int_0^b (v-q) p(q) dq + G_0 \int_0^\infty p(q)dq \right] \notag \\
+%&= \deriv{b}{} \int_0^b (v-q) p(q) dq \notag \\
+%&= (v-b) p(q=b), \notag 
+%\end{flalign}
+%Therefore, the condition to maximize $\Expect{q}{G(b,q)}$ is $b=v$.
+
+The optimization problem in Eq:\ref{} is made of two terms except of the constant, 
+and the only second term is depends on $\vect{b}$.
+Hence, we consider to optimize the second term.
+
 \begin{flalign}
-\deriv{b}{}\Expect{q}{G(b,q)} 
-&= \deriv{b}{}\int_0^\infty (H(b - q) \cdot (v-q) + G_0) p(q) dq \notag \\
-&= \deriv{b}{} \left[ \int_0^b (v-q) p(q) dq + G_0 \int_0^\infty p(q)dq \right] \notag \\
-&= \deriv{b}{} \int_0^b (v-q) p(q) dq \notag \\
-&= (v-b) p(q=b), \notag 
+\hat{b}_{ijt} = \argmin_{b} \Expect{q_{jt}}{g_{ijt} ( q_{jt} - \gamma o_{ij,t+1}  )}
 \end{flalign}
-Therefore, the condition to maximize $\Expect{q}{G(b,q)}$ is $b=v$.
+
+For simplicity, we let $q = q_{jt}$ and $o = o_{ij,t+1}$. Then, the following equation holds.
+
+\begin{flalign}
+\deriv{b}{}\Expect{q}{H(b - q)( q - \gamma o  )} 
+&= \deriv{b}{}\int_0^\infty H(b - q)(q - \gamma o) p(q) dq \notag \\
+&= \deriv{b}{} \int_0^b (q - \gamma o) p(q) dq \notag \\
+&= (b-\gamma o) p(q=b), \notag 
+\end{flalign}
+
+Therefore, $\hat{b}_{ijt} = \gamma o_{ij,t+1}$ holds.
