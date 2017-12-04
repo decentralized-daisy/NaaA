@@ -14,20 +14,20 @@ Therefore, we address the following question.
 
 The contribution of this paper is that we propose {\em Neuron as an Agent} (NaaA) as a novel framework for RL, and its optimization method.
 NaaA incorporates all neural network units as agents and optimizes the reward distribution as a multi-agent RL problem.
-In the of NaaA reward design, a unit distributes its received reward to other input units, passing its activation to the unit as cost.
+In the reward design of NaaA, a unit distributes its received reward as cost to other input units in order to observe their activation.
 Consequently, the actual reward is profit, defined as the difference between inflow (received reward) and outflow (paid cost).
 In the setting, the economic metaphor can be introduced: profit is the balance of revenue and cost. 
 Therefore, a unit should address tradeoffs between optimization of cumulative revenue maximization and cumulative cost minimization.
 
 This paper is organized as presented below.
-First, showing the optimization of NaaA, this report describes the negative result that the performance decreases if we naively consider units as agents.
+First, showing the optimization of NaaA, this report describes the negative result that the return (cumulative discounted reward) decreases if we naively consider units as agents.
 As a solution to this difficulty, we introduce a mechanism of auction which applies game theory.
-As a theoretical result, we demonstrate that the agent obeys to maximize its {\em counterfactual return} as the Nash equilibrium.
+As a theoretical result, we demonstrate that the agents maximize their {\em counterfactual return} in Nash equilibrium.
 The counterfactual return is that by which we extend counterfactual reward, the criterion proposed for multi-agent reward distribution problem \citep{agogino2006quicr}, along a long time axis.
 
-Subsequently, we present that learning counterfactual return leads the model to learning optimal topology between the units.
+Subsequently, we present that maximizing counterfactual return leads the model to learning optimal topology between the units with respect to supervised learning as well as RL.
 In addition, we propose {\em adaptive dropconnect}, a natural extension of dropconnect \citep{wan2013regularization}.
-Adaptive dropconnect combines dropconnect, which pure-randomly masks the topology, with adaptive algorithm, which prunes the connection with less counterfactual return with higher probability.
+Adaptive dropconnect combines dropconnect, which randomly masks the topology, with an adaptive algorithm, which prunes connections with less counterfactual return with higher probability.
 It uses $\varepsilon$-greedy as a policy, and is equivalent to dropconnect in the case of $\varepsilon = 1$. It is equivalent to counterfactual return maximization, which constructs the topology deterministically in the case of $\varepsilon = 0$.
 
 Finally, we confirm that optimization with the framework of NaaA leads to better performance of RL, with numerical experiments.
