@@ -32,16 +32,6 @@ In NaaA, it can be represented as the following assumption:
 Therefore, $\unit$ has an intrinsic price at the same timing $t$.
 We denote the price as $q_{it}$.
 
-\begin{figure*}[t]
-\centering
-\includegraphics[width=\linewidth]{img/double.eps}
-\caption{
-\textbf{Left}: The process of trade in an envy-free auction.
-\textbf{Right}: A price determination curve for a unit. Revenue of a unit is a product of monotonically decreasing demand and price. The price maximizing the revenue is the optimal price.
-}
-\label{fig:double}
-\end{figure*}
-
 %TODO: Describe for allocation
 
 We present the envy-free auction process at the left of Figure \ref{fig:double}.
@@ -50,11 +40,16 @@ The negotiation performed per time step in RL.
 We name the unit in sending activation as a seller, and units in buying activation as buyers.
 First, the buyer bids the unit in bidding price $b_{jit}$ (\textbf{1}).
 Next, the seller decides the optimal price $\opt{q}_{it}$, and performs allocation (\textbf{2}).
+Payment occurs if $b_{ijt}$ exceeds $q_{jt}$.
+In this case, $\rho_{jit} = H(b_{jit} - q_{it}) q_{it}$ holds where $H(\cdot)$ is a step function.
+Besides, we define $g_{jit} = H(b_{jit} - q_{it})$ and name it {\em allocation}.
 After allocation, the buyers perform payment as $\rho_{jit} = g_{jit} \opt{q}_{it}$ (\textbf{3}).
+Eventually, seller earns 
 The seller only sends activation $x_i$ to the allocated buyers (\textbf{4}).
 A buyer which cannot receive the activation approximates $x_i$ with $\Expect{\pi}{x_i}$.
 
 In the following, we discuss revenue, cost, and value functions based on Eq:(\ref{eq:V}).
+
 
 
 %========================================
@@ -64,11 +59,10 @@ In the following, we discuss revenue, cost, and value functions based on Eq:(\re
 \textbf{Revenue}:
 The revenue of a unit is given as
 \begin{flalign}
-	r_{it}  &= \sum_{j \in N^\mathrm{out}_i} g(b_{jit}, q_{it}) q_{it} + R^\mathrm{ex}_i  = q_{it} \sum_{j \in N^\mathrm{out}_i} g(b_{jit}, q_{it})  + R^\mathrm{ex}_i \notag \\
-		&= q_i d_{it}(q_t) + R^\mathrm{ex}_i,
+	r_{it}  &= \sum_{j \in N^\mathrm{out}_i} g_{jit} q_{it} + R^\mathrm{ex}_i \\
+		&= q_i d_{it} + R^\mathrm{ex}_i,
 \end{flalign}
-where $g(\cdot, \cdot)$ is allocation. It is defined using a step function $H(\cdot)$ as $g(b,q)=H(b - q)$.
-$d_{it}(q_{it})$ is a count of units for which the bidding price for $q_{it}$ is greater than or equal to $q_{it}$, designated as demand.
+where $d_{it} = \sum_{j \in N^\mathrm{out}_i} g_{jit}$ is a count of units for which the bidding price for $q_{it}$ is greater than or equal to $q_{it}$, designated as demand.
 $q_{it}$ maximizing the equation is designated as the optimal price. It is denoted as $ \opt{q}_{it} $.
 Because the second term in the equation is independent of $q_t$, the optimal price $\opt{q}_{it}$ is given as
 \begin{flalign}
@@ -77,7 +71,7 @@ Because the second term in the equation is independent of $q_t$, the optimal pri
 We present the curve of $q_{it}$ on the right side of Figure \ref{fig:double}.
 
 %========================================
-% コスチE
+% コスト
 %========================================
 \textbf{Cost}:
 The cost is an internal reward that the unit should pay to other units.
@@ -114,12 +108,24 @@ We designate $o_{ijt} = Q_i^{\pi_i} (s_{it}, \vect{e}_j) - Q_i^{\pi_i}(s_{it}, \
 which is equivalent to the cumulative discount value of counterfactual reward \citep{agogino2006quicr}.
 That is, the cost the unit will pay is $\opt{q}_{it}$ in success of purchasing data, and $o_{it}$ otherwise.
 
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\linewidth]{img/double.eps}
+\caption{
+\textbf{Left}: The process of trade in an envy-free auction.
+\textbf{Right}: A price determination curve for a unit. Revenue of a unit is a product of monotonically decreasing demand and price. The price maximizing the revenue is the optimal price.
+}
+\label{fig:double}
+\end{figure*}
+
+
 Therefore, the optimization problem is presented below.
 \begin{flalign}
 	\max_{\vect{b}, q} \Expect{\hat{\vect{q}}_t}{ V_i^{\pi_i}(s_{it}) } = 
 		\max_q q d_{it}(q) - 
 		\min_{\vect{b}} \Expect{\hat{\vect{q}}_t}{\vect{g}_{it}(\vect{b})^\T( \hat{\vect{q}}_t - \gamma \vect{o}_{i,t+1}  )} + \const.
 \end{flalign}
+Note that $\vect{g}_{it} = H(\vect{b} - \vect{q}_t)$.
 We take the expectation $\Expect{\hat{\vect{q}}_t}{\cdot}$ 
 because the asked price $\hat{\vect{q}}_t$ is unknown for $v_i$, except for $\hat{q}_{it}$, and $g_{iit} = 0$.
 

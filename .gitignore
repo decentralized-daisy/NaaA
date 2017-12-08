@@ -26,3 +26,5 @@ sh.exe.stackdump
 *.swm
 *.log
 *.stackdump
+.pptx
+~$daisy.pptx
