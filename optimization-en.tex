@@ -1,16 +1,21 @@
 \section{Optimization}
 To maximize the cumulative discounted profit in a framework of NaaA,
 it is important to balance the two contradicting criteria: revenue $r_{it}$ and cost $c_{it}$.
+%First, we show the following negative result.
+
+%TODO:
+% ・語られていない前提: R_ex は出力ユニットにのみ配分される
+% ・語られていない前提: どんなゲームを行うのか（必要なアクションは何か）
 
 %TODO: Negative result. State what is the problem.
 %\begin{thm}\label{thm:optimal-bidding-simple}
-%	The Nash equivalent of the game $(\rho_{ijt})$ is $0$.
+%$\pi_i$ is the Nash equilibrium if and only if $\rho_{ijt} = 0$ regardless $\neuralnet$
 %\end{thm}
 
-To achieve that, we use the mechanism design.
 We introduce mechanism design because, unlike several existing studies \citep{sukhbaatar2016learning}, NaaA assumes that all agents are not cooperative but selfish.
 %(TODO: Bad writing.)
-If we naively optimize the optimization problem of NaaA, then we obtain the trivial solution that the internal rewards will converge to 0, and that all the units become NOOP.
+If we naively optimize the optimization problem of NaaA, then we obtain the trivial solution that the internal rewards will converge to 0, and that all the units except of the output units become NOOP.
+This phenomena occurs regardless the network topology $\neuralnet$ as any nodes have no incentive to send payment $\rho_{ijt}$ to other units.
 Therefore, the multi-agent system should select the action with no information. It is equivalent to taking an action randomly.
 For that reason, the external reward $R_t^{\mathrm ex}$ shrinks markedly.
 
