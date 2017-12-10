@@ -1,5 +1,12 @@
 \section{Neuron as an Agent}
 %TODO: Show the figure.
+The design of NaaA is inspired by neuroscience.
+A neuron in a neurocircuit consumes adenosine triphosphate (ATP) supplied from connected astrocytes.
+The astrocyte is a glia cell, which forms the structure of a brain. It supplies fuel from the vessel.
+Because the amount of ATP is constrained, the discarded neuron will become extinct with execution of apoptosis.
+Also, because apoptosis of a neuron is restrained by neurotrophins (NTFs) such as nerve growth factor (NGF) and brain-derived neurotrophic factor (BDNF),
+neurons which can obtain much NTF will live.
+The perspective of interpreting a neuron as an independent living object is known as neural Darwinism \citep{edelman1987neural}.
 
 A typical artificial neural network is a directed graph $\neuralnet = (\units, \edges)$ among the units.
 $\units = \{\unitAt{1}, \dots, \unitAt{N}\}$ is a set of the units. $\edges \subset \units^2$ is a set of edges representing connections between two units.
@@ -22,9 +29,8 @@ We add the following assumption for characteristics of the $\unit$.
 	at each timing $t$, $\unit$ acts to maximize toward maximizing its own return (cumulative discounted reward)
 	$G_{it} = \sum_{k=0}^T \gamma^k \rewardAt{i,t+k}$, where $\gamma \in [0, 1]$ is the discount rate and $T$ is the terminal time.
 \item (Conservation) 
-	The summation of a reward by which $\units$ will receive both an internal and external environment $\reward$ over 
-	all the units are equivalent to reward $R_t^{\mathrm{ex}}$, which the entire multi-agent system receives from 
-	the external environment.
+	The summation of internal reward over $\units$ equals to 0.
+	Hence, the summation of a reward by which $\units$ will receive both an internal and external environment $\reward$ are equivalent to reward $R_t^{\mathrm{ex}}$, which the entire multi-agent system receives from fhe external environment.
 \item (Trade) 
 	The $\unit$ receives internal reward $\rho_{jit}$ from $\unitAt{j} \in \units$ in exchange of activation signal $x_i$
 	before transferring the signal to the unit. At the same time, $\rho_{jit}$ is subtracted from the reward of $v_j$.
@@ -37,6 +43,17 @@ N1 states that the unit acts as a cell.
 N2 and N3 state the distribution of NTF. N4 corresponds to apoptosis.
 NOOP is selected when the expected returns of the other actions are non-positive.
 In the following, we construct the framework of NaaA from the assumptions.
+
+The goal of NaaA is to maximize return of all agents:
+\begin{equation}
+	G^\mathrm{all} = \sum_{i=1}^n G_{it} = \sum_{i=1}^n \left[ \sum_{k=0}^T \gamma^k R_{i,k+t} \right] 
+		= \sum_{k=0}^T \left[ \gamma^k \sum_{i=1}^n R_{i,k+t} \right].
+\end{equation}
+From N2, the following equation holds.
+\begin{equation}
+	G^\mathrm{all} = \sum_{k=0}^T \gamma^k R_{t+k}^{\mathrm{ex}}
+\end{equation}
+Thus, the objective is equivalent to maximize the whole external return.
 
 \subsection{Cumulative Discounted Profit Maximization Framework}
 We denote the external reward by which unit $\unit$ receives at time step $t$ as $R_{it}^\mathrm{ex}$, where $\sum_{i=1}^n R_{it}^\mathrm{ex} = R_t^{\mathrm{ex}}$ holds.
