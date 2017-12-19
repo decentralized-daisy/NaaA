@@ -12,15 +12,19 @@ Considering an environment such as Web, these agents will be developed by differ
 Hence, they are not incentivesed to develop an agent without an appropriate reward distribution.
 As the recent work \citep{sukhbaatar2016learning} considers whole multi-agent system with communication as a neural network,
 this discussion for incentive is reduced to consider a unit as an agent ultimately.
+Therefore, we address the following question.
 % equivalent to asking the following question.
 %Eventually, the problem is dealt with by answering the following question.
 %MARL allows each agents made of a single unit.
-Therefore, we address the following question.
 %CommNet considers an agent as an neuron, and train the communication between the agents with back propagation.
 
 \begin{center}
 {\em Will reinforcement learning work even if we consider each unit as a selfish agent?}
 \end{center}
+
+%==========================
+% 例えば、はじめに research question を挙げているのはわかりやすくていいのですが、そこから NaaA へは論理的に繋がらないです。この research question に答えようとする研究は多分過去にもいっぱいあるはずなので、それらの研究の中でどこまでできていて何ができていないのか？できていないことの中でどの課題に取り組むことが大事なのか？その課題の解決はなぜ難しいのか？その課題をどういうアイデアで解決しようとしているのか？なぜそのアイデアで解決できるのか？ということを、論理的に必然性を持って繋げて書くと NaaA を考えたくなる気持ちになると思います。現状だと、なにか面白そうなこと言っているけど突拍子もなく出てきたので評価しようがないものになってる気がします。Section 3 でも、はじめに神経科学の話を持ってきているのですが、なぜこういうニューロンのモデルをこの問題に適用したくなったのかが共感できないまま話が進むので、なんかわからんという気持ちになりました。
+%==========================
 
 The contribution of this paper is that we propose {\em Neuron as an Agent} (NaaA) as a novel framework for RL, and its optimization method.
 NaaA incorporates all neural network units as agents and optimizes the reward distribution as a multi-agent RL problem.
