@@ -1,13 +1,9 @@
 \section{Neuron as an Agent}
 %TODO: Show the figure.
-The design of NaaA is inspired by neuroscience.
-A neuron in a neurocircuit consumes adenosine triphosphate (ATP) supplied from connected astrocytes.
-The astrocyte is a glia cell, which forms the structure of a brain. It supplies fuel from the vessel.
-Because the amount of ATP is constrained, the discarded neuron will become extinct with execution of apoptosis.
-Also, because apoptosis of a neuron is restrained by neurotrophins (NTFs) such as nerve growth factor (NGF) and brain-derived neurotrophic factor (BDNF),
-neurons which can obtain much NTF will live.
-The perspective of interpreting a neuron as an independent living object is known as neural Darwinism \citep{edelman1987neural}.
-
+% この章でいうこと
+% ・ニューロンをエージェントとみなす
+% ・いくつかの前提を提案する
+% ・NaaA の social welfare function を最大化することが、外部からのリワード最大化に一致する。
 A typical artificial neural network is a directed graph $\neuralnet = (\units, \edges)$ among the units.
 $\units = \{\unitAt{1}, \dots, \unitAt{N}\}$ is a set of the units. $\edges \subset \units^2$ is a set of edges representing connections between two units.
 If $(\unit, \unitAt{j}) \in \edges$, then connection $\unit \rightarrow \unitAt{j}$ holds, indicating that $\unitAt{j}$ observes activation of $\unit$.
@@ -18,7 +14,7 @@ We denote $\friends = \followees \cup \followers$.
 NaaA interprets $\unit$ as an agent.
 Therefore, $\neuralnet$ is a multi-agent system.
 An environment for $\unit$ comprises an environment that the multi-agent system itself touches and a 
-set of the unit to which $\unit$ directly connects: $\{v_i \in V | i \in \friends\}$.
+set of the unit to which $\unit$ directly connects: $\{v_i \in \units | i \in \friends\}$.
 We distinguish both environments by naming the former as an external environment, and by naming the latter as an internal environment.
 $\unit$ will receive rewards from both environments.
 We add the following assumption for characteristics of the $\unit$.
@@ -44,7 +40,7 @@ N2 and N3 state the distribution of NTF. N4 corresponds to apoptosis.
 NOOP is selected when the expected returns of the other actions are non-positive.
 In the following, we construct the framework of NaaA from the assumptions.
 
-The goal of NaaA is to maximize return of all agents:
+The goal of NaaA is to maximize the social welfare function of all the agents:
 \begin{equation}
 	G^\mathrm{all} = \sum_{i=1}^n G_{it} = \sum_{i=1}^n \left[ \sum_{k=0}^T \gamma^k R_{i,k+t} \right] 
 		= \sum_{k=0}^T \left[ \gamma^k \sum_{i=1}^n R_{i,k+t} \right].
@@ -84,3 +80,13 @@ $R_{it} > 0$, i.e., $r_{it} > c_{it}$ indicates that the unit gives the addition
 The unit acts NOOP because $V_i^{\pi_i} (s_{it}) \leq 0 < \delta$ if $R_{it} \leq 0$ for all $t$.
 
 %TODO: verify equation of V
+
+
+
+%The design of NaaA is inspired by neuroscience.
+%A neuron in a neurocircuit consumes adenosine triphosphate (ATP) supplied from connected astrocytes.
+%The astrocyte is a glia cell, which forms the structure of a brain. It supplies fuel from the vessel.
+%Because the amount of ATP is constrained, the discarded neuron will become extinct with execution of apoptosis.
+%Also, because apoptosis of a neuron is restrained by neurotrophins (NTFs) such as nerve growth factor (NGF) and brain-derived neurotrophic factor (BDNF),
+%neurons which can obtain much NTF will live.
+%The perspective of interpreting a neuron as an independent living object is known as neural Darwinism \citep{edelman1987neural}.

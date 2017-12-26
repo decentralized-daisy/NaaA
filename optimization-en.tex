@@ -34,8 +34,8 @@ In NaaA, it can be represented as the following assumption:
 \item (Law of one price)
 	If $\rho_{j_1,i,t}, \rho_{j_2,i,t} > 0$, then $\rho_{j_1,i,t} = \rho_{j_2,i,t}$.
 \end{enumerate}
-Therefore, $\unit$ has an intrinsic price at the same timing $t$.
-We denote the price as $q_{it}$.
+The assumption above indicates that $\rho_{jit}$ takes either 0 or a positive value depending on $i$ at a same timing $t$.
+Therefore, we name the positive side $\unit$'s {\em price}, and denote as $q_{it}$.
 
 %TODO: Describe for allocation
 
@@ -69,11 +69,11 @@ The revenue of a unit is given as
 \end{flalign}
 where $d_{it} = \sum_{j \in N^\mathrm{out}_i} g_{jit}$ is a count of units for which the bidding price for $q_{it}$ is greater than or equal to $q_{it}$, designated as demand.
 $q_{it}$ maximizing the equation is designated as the optimal price. It is denoted as $ \opt{q}_{it} $.
-Because the second term in the equation is independent of $q_t$, the optimal price $\opt{q}_{it}$ is given as
+Because $R^\mathrm{ex}_i$ is independent of $q_t$, the optimal price $\opt{q}_{it}$ is given as
 \begin{flalign}
 	\opt{q}_{it}  = \argmax_{q \in [0, \infty)} q d_{it}(q).
 \end{flalign}
-We present the curve of $q_{it}$ on the right side of Figure \ref{fig:double}.
+We present the curve of $r_{it}$ on the right side of Figure \ref{fig:double}.
 
 %========================================
 % コスト
@@ -82,36 +82,37 @@ We present the curve of $q_{it}$ on the right side of Figure \ref{fig:double}.
 The cost is an internal reward that the unit should pay to other units.
 It is represented as shown below.
 \begin{flalign}
-	c_{it} = \sum_{j \in N^\mathrm{in} } g(b_{ijt}, q_j) q_j
+		c_{it} = \sum_{j \in N^\mathrm{in} } g_{ijt} q_{jt} = \vect{g}_{it}^\mathrm{T} \vect{q}_{t},
 \end{flalign}
+where $\vect{g}_{it} = (g_{i1t}, \dots, g_{iNt})^\T$ and $\vect{q}_{t} = (q_{1t}, \dots, q_{Nt})^\T$.
 Although $c_{it}$ itself is minimized when $b_{ijt} = 0$,
 this represents a tradeoff with the following value function.
 
 \textbf{Value Function}:
-%Value of the value function $V(s_{i,t+1})$ depends on $s_{i,t+1}$.
-%As we already defined, the internal environment of $v_i$ is a set of connected units,
-%and the output of units affect to evaluation from the units, namely, weight of edges.
-%As the learning rule of a typical artificial neural network obeys to law of Hebb, 
-%the reward becomes lower because weight of unit which do not contribute
-%the accuracy of output becomes lower.
-Activation $x_i$ depends on input from the units in $N_i^{\mathrm in}$. It affects the bidding price from units in $N_i^{\mathrm out}$.
-If we minimize $b_{ijt}$ and let $b_{ijt} = 0$, then the purchase of activation fails, and the reward the unit can obtain from the units to which 
-the unit connects becomes lower in the future.
+The activation $x_{it}$ depends on input from the units in $N_i^{\mathrm in}$ affecting the bidding price from units in $N_i^{\mathrm out}$.
+If we minimize $b_{ijt}$ and let $b_{ijt} = 0$, then the purchase of activation fails, and the reward the unit can obtain from the units to which the unit connects becomes lower in the future.
 
-Then, we designate the allocation as $\vect{g}_{it} = (g_{i1t}, \dots, g_{iNt})^\T$, 
-and consider effects for value functions in the cases when a unit succeeds in purchasing $v_j$ or not.
-The value function can be written as the equation using a state-value function $Q(s_{i,t+1}, \vect{g}_{i,t+1})$.
+We consider effects for value functions in the cases when a unit succeeds in purchasing $v_j$ or not.
+We apploximate the value function as a linear function of $\vect{g}_{it}$:
 \begin{flalign}
-	V_i^{\pi_i}(s_{it}) 
-	&= Q_i^{\pi_i}(s_{it}, \vect{g}_{it}) \notag \\
-	&= \sum_{j \in \followees} g_{ijt} (Q_i^{\pi_i} (s_{it}, \vect{e}_j) - Q_i^{\pi_i}(s_{it}, \vect{0})) + Q_i^{\pi_i}(s_{it}, \vect{0}) \notag \\
-	&= \sum_{j \in \followees} g_{ijt} o_{ijt} + Q_i^{\pi_i}(s_{it}, \vect{0}) \notag \\
-	&= \vect{g}_{it}^\T \vect{o}_{it} + Q_i^{\pi_i}(s_{it}, \vect{0}),
+		V_i^{\pi_i}(s_{i,t+1}) \approx \vect{o}_{it}^\mathrm{T} \vect{g}_{it} + V_{i,t+1}^0,
 \end{flalign}
+where $\vect{o}_{it}$ is a parameter implemented as difference between two returns of $v_i$ whether we observe $x_i$ or not.
+As $\vect{o}_{it}$ is equivalent to the cumulative discount value of counterfactual reward \citep{agogino2006quicr}, we name it {\em counterfactual return}. $V_{it}^0$ is a constant independent of $\vect{g}_{it}$ and we name it {\em blind value function} as it is equivalent to value function when $v_i$ takes action without any observation $x_1, \dots, x_N$.
+%That is, the cost the unit will pay is $\opt{q}_{it}$ in success of purchasing data, and $o_{it}$ otherwise.
 
-We designate $o_{ijt} = Q_i^{\pi_i} (s_{it}, \vect{e}_j) - Q_i^{\pi_i}(s_{it}, \vect{0})$ as the {\em counterfactual return}, 
-which is equivalent to the cumulative discount value of counterfactual reward \citep{agogino2006quicr}.
-That is, the cost the unit will pay is $\opt{q}_{it}$ in success of purchasing data, and $o_{it}$ otherwise.
+%The value function can be written as the equation using a state-value function $Q(s_{i,t+1}, \vect{g}_{i,t+1})$.
+%\begin{flalign}
+%	V_i^{\pi_i}(s_{it}) 
+%	&= Q_i^{\pi_i}(s_{it}, \vect{g}_{it}) \notag \\
+%	&= \sum_{j \in \followees} g_{ijt} (Q_i^{\pi_i} (s_{it}, \vect{e}_j) - Q_i^{\pi_i}(s_{it}, \vect{0})) + Q_i^{\pi_i}(s_{it}, \vect{0}) \notag \\
+%	&= \sum_{j \in \followees} g_{ijt} o_{ijt} + Q_i^{\pi_i}(s_{it}, \vect{0}) \notag \\
+%	&= \vect{g}_{it}^\T \vect{o}_{it} + Q_i^{\pi_i}(s_{it}, \vect{0}),
+%\end{flalign}
+%
+%We designate $o_{ijt} = Q_i^{\pi_i} (s_{it}, \vect{e}_j) - Q_i^{\pi_i}(s_{it}, \vect{0})$ as the {\em counterfactual return}, 
+%which is equivalent to the cumulative discount value of counterfactual reward \citep{agogino2006quicr}.
+%That is, the cost the unit will pay is $\opt{q}_{it}$ in success of purchasing data, and $o_{it}$ otherwise.
 
 \begin{figure*}[t]
 \centering
@@ -126,10 +127,12 @@ That is, the cost the unit will pay is $\opt{q}_{it}$ in success of purchasing d
 
 Therefore, the optimization problem is presented below.
 \begin{flalign}
-	\max_{\vect{b}, q} \Expect{\hat{\vect{q}}_t}{ V_i^{\pi_i}(s_{it}) } = 
+	%\max_{\vect{b}, q} \Expect{\hat{\vect{q}}_t}{ V_i^{\pi_i}(s_{it}) } = 
+		\max_{\vect{a} } Q_i(s_{it}, \vect{a} )  = 
 		\max_q q d_{it}(q) - 
-		\min_{\vect{b}} \Expect{\hat{\vect{q}}_t}{\vect{g}_{it}(\vect{b})^\T( \hat{\vect{q}}_t - \gamma \vect{o}_{i,t+1}  )} + \const
+		\min_{\vect{b}} \Expect{\hat{\vect{q}}_t}{\vect{g}_{it}(\vect{b})^\T( \hat{\vect{q}}_t - \gamma \vect{o}_{it}  )} + \const,
 \end{flalign}
+where $\vect{a} = (\vect{b}, q)$.
 Note that $\vect{g}_{it} = H(\vect{b} - \vect{q}_t)$.
 We take the expectation $\Expect{\hat{\vect{q}}_t}{\cdot}$ 
 because the asked price $\hat{\vect{q}}_t$ is unknown for $v_i$, except for $\hat{q}_{it}$, and $g_{iit} = 0$.
@@ -138,11 +141,12 @@ Then, what is bidding price $b_{it}$ to maximize return?
 The following theorem holds.
 
 \begin{thm}\label{thm:optimal-bidding}
-	(Truthfulness) the optimal bidding price for maximizing return is $\opt{\vect{b}}_{it} = \vect{o}_{it}$.
+	(Truthfulness) the optimal bidding price for maximizing return is $\opt{\vect{b}}_{it} = \gamma \vect{o}_{it}$.
 \end{thm}
 See the Appendix for the proof.
 
 That is, the unit should only consider its counterfactual return (!).
+If $\gamma = 0$, the case is equivalent to a case without auction. Hence, the bidding value raises if each unit consider long-time reward. 
 Consequently, in the mechanism of NaaA, the unit obeys as if performing valuation to the other units, 
 and declares the value truthfully.
 
@@ -164,8 +168,7 @@ The overall algorithm is shown in Algorithm 1.
 
 \subsection{Adaptive DropConnect}
 Actually, NaaA is useful not only for multi-agent RL, but also for training of the network.
-Typical training algorithms of a neural network such as those of RMSProp \citep{tieleman2012lecture} and Adam \citep{kingma2014adam} are based on stochastic gradient descent (SGD).
-The optimization is performed sequentially.
+Typical training algorithms of a neural network such as those of RMSProp \citep{tieleman2012lecture} and Adam \citep{kingma2014adam} are based on a sequential algorithm such as stochastic gradient descent (SGD).
 Therefore, the problem can be interpreted as a problem to update the state (i.e., weight) to the goal, which is minimization of the expected likelihood.
 
 The learning can be accelerated by application of NaaA to the optimizer.
@@ -191,23 +194,25 @@ image recognition, sound recognition, and even for deep reinforcement learning.
 \caption{Envy-free auction for NaaA}
 \begin{algorithmic}[1]
 	\FOR{ $t=1$ \TO $T$ }
-		\STATE Compute a bidding price for every edge: \textbf{for} $(v_j, v_i) \in \edges$ \textbf{do} \
+		\STATE Compute a bidding price for every edge: \textbf{for} $(v_j, v_i) \in \edges$ \textbf{do}\
 		$b_{ijt} \leftarrow Q^{\pi_i}( \vect{s}_{it}, \vect{e}_j) - Q^{\pi_i}( \vect{s}_{it}, \vect{0})$ 
-		\STATE Compute an asking price for every node: \textbf{for} $\unit \in \units$ \textbf{do} \
+		\STATE Compute an asking price for every node: \textbf{for} $\unit \in \units$ \textbf{do}\
 		$\opt{q}_{it} \leftarrow \argmax_{q \in [0, \infty)} q d_{it}(q).$
 		\FOR{$(v_i, v_j) \in \edges$}
 				\STATE Compute allocation: $g_{jit} \leftarrow H(b_{jit} - \opt{q}_{it})$ 
 				\STATE Compute the price the agent should pay: $\rho_{jit} \leftarrow g_{jit} \opt{q}_{it}$ 
 		\ENDFOR
-		\STATE Make a payment: \textbf{for} $\unit \in \units$ \textbf{do} \
+		\STATE Make a payment: \textbf{for} $\unit \in \units$ \textbf{do}\
 		$R_{it} \leftarrow \sum_{j \in N^\mathrm{out}_i} \rho_{jit} 
 				- \sum_{j \in N^\mathrm{in}_i} \rho_{ijt},$
-		\STATE Make a shipment: \textbf{for} $\unit \in \units$ \textbf{do} \
+		\STATE Make a shipment: \textbf{for} $\unit \in \units$ \textbf{do}\
 		$\tilde{x}_{ijt} = g_{ijt} x_{ijt} + ( 1 - g_{ijt} ) \bar{x}_{ijt} $
 
 		\FOR{$\unit \in \units$} 
 			\STATE Observe external state $\vect{s}_{it}^{\mathrm ex}$
-			\STATE $\vect{s}_{it} \leftarrow (\vect{s}_{it}^{\mathrm ex}, \vect{\tilde{x}}_{it}, \bs{\theta}_i)$
+			\STATE $\vect{s}_{it} \leftarrow (\vect{s}_{it}^{\mathrm ex}, \vect{\tilde{x}}_{it}, \bs{\theta}_i)$,\
+				where $\vect{\tilde{x}}_{it} = (\tilde{x}_{i1t}, \dots, \tilde{x}_{int})^\mathrm{T}$ and\
+				$\bs{\theta}_i$ is $\unit$'s parameter.
 			\STATE Sample action $a_{it}^{\mathrm ex} \sim \pi_i^{\mathrm ex}(\vect{s}_{it})$
 			\STATE Receive external reward $R_{it} \leftarrow R_{it} + R_{it}^{\mathrm ex}(a_{it}^{\mathrm ex})$
 			\STATE Update $Q^{\pi_i}$ under the manner of $Q$-learning by calculating the time difference (TD)-error 
@@ -268,3 +273,10 @@ image recognition, sound recognition, and even for deep reinforcement learning.
 %
 %次に、adaptive dropconnect について述べる。
 %
+%Value of the value function $V(s_{i,t+1})$ depends on $s_{i,t+1}$.
+%As we already defined, the internal environment of $v_i$ is a set of connected units,
+%and the output of units affect to evaluation from the units, namely, weight of edges.
+%As the learning rule of a typical artificial neural network obeys to law of Hebb, 
+%the reward becomes lower because weight of unit which do not contribute
+%the accuracy of output becomes lower.
+
