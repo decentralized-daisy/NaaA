@@ -1,16 +1,4 @@
 \section{Experiment}
-%To confirm that NaaA works widely with machine learning tasks,
-%we confirm our method of supervised learning tasks as well as reinforcement learning tasks.
-%As supervised learning tasks, we use typical machine learning tasks such as image classification
-%using MNIST, CIFAR-10, and SVHN.
-
-%As reinforcement tasks, we confirm single- and multi-agent environment.
-%The single-agent environment is from OpenAI gym.
-%We confirm the result using a simple reinforcement task: CartPole.
-%In multi-agent, we use ViZDoom, a 3D environment for reinforcement learning.
-
-The additional feature of NaaA is credit assignment for reward distribution, 
-meaning that if the neural network is divided into multiple agents, it works by playing the auction game.
 We confirmed that additional agents complement the main player using ViZDoom, an environment for Doom.
 A player in Doom environment should seek the enemy in the map, and then defeat the enemy.
 Because ViZDoom provides several maps, we used ViZDoom.
@@ -90,3 +78,16 @@ The background picture is a screen in Doom taken at the moment when the filter i
 %(b) shows that the agent sees the pistol.
 Figure \ref{fig:circleworld} shows an example of learnt sequence of actions by our method.
 
+
+%To confirm that NaaA works widely with machine learning tasks,
+%we confirm our method of supervised learning tasks as well as reinforcement learning tasks.
+%As supervised learning tasks, we use typical machine learning tasks such as image classification
+%using MNIST, CIFAR-10, and SVHN.
+
+%As reinforcement tasks, we confirm single- and multi-agent environment.
+%The single-agent environment is from OpenAI gym.
+%We confirm the result using a simple reinforcement task: CartPole.
+%In multi-agent, we use ViZDoom, a 3D environment for reinforcement learning.
+
+%The additional feature of NaaA is credit assignment for reward distribution, 
+%meaning that if the neural network is divided into multiple agents, it works by playing the auction game.
