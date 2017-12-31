@@ -1,1 +1,83 @@
-\section{Adaptive DropConnect}
+\section{Application for Single Agent}
+Actually, NaaA is useful not only for multi-agent RL, but also for training of the network.
+Typical training algorithms of a neural network such as those of RMSProp \citep{tieleman2012lecture} and Adam \citep{kingma2014adam} are based on a sequential algorithm such as stochastic gradient descent (SGD).
+Therefore, the problem can be interpreted as a problem to update the state (i.e., weight) to the goal, which is minimization of the expected likelihood.
+
+The learning can be accelerated by application of NaaA to the optimizer.
+We designate the application of NaaA to SGD as {\em Adaptive DropConnect} (ADC), 
+which is eventually a combination of DropConnect \citep{wan2013regularization} and Adaptive DropOut \citep{ba2013adaptive}.
+We introduce ADC herein as one application of NaaA.
+
+ADC uses NaaA for supervised optimization problem with several revisions.
+First, an environment has an input state such as an image. The agent is expected to update its parameters to maximize its reward obtained from the criterion calculator.
+The criterion calculator gives batch-likelihood as the reward to the agent.
+The agent is a classifier which updates its weights to maximize the reward from the criterion calculator.
+The weights are recorded as an internal state.
+As a counterfactual return $o_{ijt}$, we used a heuristic that uses the absolute value of weight $|w_{ijt}|$, which is the
+same technique as that used by Adaptive DropOut.
+We use the absolute value of weights because it is the update amount for which the magnitude of error of the output of units is proportional to $|w_{ijt}|$.
+
+The algorithm is presented as Algorithm 2.
+Because the algorithm is quite simple, its implementation can be performed easily.
+For that reason, it can be widely applied for most general deep learning problems such as 
+image recognition, sound recognition, and even for deep reinforcement learning.
+
+\begin{algorithm}[t]
+\caption{Adaptive DropConnect}
+\begin{algorithmic}[1]
+	\FOR{ $t=1$ \TO $T$ }
+		\STATE Compute a bidding price for every edge: \textbf{for} $(v_j, v_i) \in \edges$ \textbf{do} \
+		$b_{ijt} \leftarrow |w_{ijt}|$ 
+		\STATE Compute an asking price for every node: \textbf{for} $\unit \in \units$ \textbf{do} \
+		$\opt{q}_{it} \leftarrow \argmax_{q \in [0, \infty)} q d_{it}(q).$
+		\FOR{$(v_i, v_j) \in \edges$}
+				%\STATE Sample $u$ from a Bernoulli distribution: $u \sim \mathrm{Bernoulli}(\varepsilon)$
+				%\STATE Sample $m$ from a Bernoulli distribution: $m \sim \mathrm{Bernoulli}(1/2)$
+				\STATE Compute allocation: $g_{jit} \leftarrow H(b_{jit} - \opt{q}_{it})$ 
+		\ENDFOR
+		\STATE Sample a switching matrix $U_t$ from a Bernoulli distribution: $U_t \sim \mathrm{Bernoulli}(\varepsilon)$
+		\STATE Sample the random mask $M_t$ from a Bernoulli distribution: $M_t \sim \mathrm{Bernoulli}(1/2)$
+		\STATE Generate the adaptive mask: $M_t' \leftarrow U_t \circ M_t + (1 - U_t) \circ G_{ijt}$ 
+		\STATE Compute $\vect{h}_t$ for making a shipment:
+			$\vect{h}_t \leftarrow (M_t' \circ W_t) \vect{x}_t + \vect{b}_t$
+		\STATE Update $W_t$ and $\vect{b}_t$ by backpropagation.
+	\ENDFOR
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{Experiment}
+
+\subsubsection{Setup}
+In this experiment, we confirm two tasks of classification and single-agent reinforcement learning.
+
+For classification task, we used three types of datasets, MNIST, CIFAR-10 and STL-10. 
+The task given here is to predict the label for each image. The number of class is 10 in those three datasets.
+The first dataset, MNIST, is a collection of black and white images of handwritten digits whose size is 28x28. The training set and test set are composed of 60,000 examples and 10,000 examples respectively. 
+The images in CIFAR-10 dataset are colored and the size of each image is 32x32. The task is to predict what is shown in each picture. This dataset contains 6,000 images per class (5,000 for training and 1,000 for test).
+STL-10 is a dataset for image recognition, the number of which is 1,300 for each class (500 for training and 800 for test). The size of each image is 96x96. In this experiment, however, images were resized into 48x48, since the resolution is large compared to the datasets shown above and this dataset requires far more time and resource to compute.
+
+Next, we set the single-agent reinforcement learning task.
+We used the CartPole task from OpenAI gym with visual input.
+In this setting, the agent must balance a pole while moving a cart.
+There is much non-useful information related to the image. For that reason, pruning the pixels is important.
+
+\subsubsection{Model}
+In this experiment, we compared two models, DropConnect and Adaptive DropConnect (proposed model in this paper). The baseline model is composed of two convolutional layers and two fully connected layers whose outputs are dropped out (we set the possibility as 0.5). The labels of input data are predicted using log-softmaxed value of last fully connected layer. In DropConnect model and Adaptive DropConnect model, first fully connected layer is replaced by DropConnected layer  and Adaptive DropConnected layer respectively. Note that DropConnect model corresponds to the our method with $\varepsilon$ = 1.0 and this means agents do not perform their auctions, and randomly mask the weights.
+
+\subsubsection{Results}
+For the MNIST datasets, the models are trained for 10 epochs and then evaluated with the test data. The numbers of epochs for CIFAR-10 and STL-10 are 20 and 40 respectively. Experiments are repeated 20 times for each condition, and the average and standard deviation of  error rate was calculated. The results is shown in Table \ref{tbl:cls}. As expected, with the model using Adaptive DropConnect, the classification error rate was lower than both the baseline and DropConnect regardless of the datasets given in this experiment.
+
+
+\begin{table}[h]
+	\caption{ Experimental result for image classification tasks and single-agent RL }\label{tbl:cls}. 
+\centering
+\begin{tabular}{l|ccc|c}
+\hline
+		& MNIST & CIFAR-10 & STL-10 & CartPole \\
+\hline
+		DropConnect \citep{wan2013regularization}	&	1.72 $\pm$ 0.160	&	43.14 $\pm$ 1.335	&	50.92 $\pm$ 1.322 & 285 \\
+		Adaptive DropConnect	&	\textbf{1.36} $\pm$ 0.132	&	\textbf{39.84} $\pm$ 1.035	&	\textbf{42.17} $\pm$ 2.329 & \textbf{347} \\
+\hline
+\end{tabular}
+\end{table}
+
