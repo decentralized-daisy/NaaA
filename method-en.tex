@@ -4,6 +4,30 @@
 % ・ニューロンをエージェントとみなす
 % ・いくつかの前提を提案する
 % ・NaaA の social welfare function を最大化することが、外部からのリワード最大化に一致する。
+
+\subsection{Problem Definition}
+Suppose there are $N$ agents interacting to an environment. 
+%This paper addresses reward distribution problem at multi-agent communication among the agents.
+Some agents get reward from the environment, and distribute it to other agents as incentive to give precise information.
+The reward is limited so that if an agent distribute $\rho$ reward, the agents' reward subtracted by $\rho$ such as currency.
+For the reason, other agents for an agent itself can be interpreted as another environment which 
+give a reward $-\rho$ instead of an observation $x$.
+We name the another environment as {\em internal environment} and name the original environment as an {\em external environment}.
+
+Our goal is to maximize the discounted cumulative reward which the system will obtain from the external environment.
+ %total discounted cumulative reward from the external environment which all the $N$ agents will obtain.
+\begin{equation}
+%G^\mathrm{ex} = \sum_{i=1}^n \left[ \sum_{k=0}^T \gamma^k R_{i,k+t}^\mathrm{ex} \right],
+G = \sum_{i=1}^n \left[ \sum_{t=0}^T \gamma^k R_{it}^\mathrm{ex} \right],
+\end{equation}
+where $R_{it}^\mathrm{ex}$ is an external reward which $i$-th agent obtains at $t$, and $\gamma \in [0, 1]$ is the discount rate and $T$ is the terminal time.
+
+Similarly to CommNet \citep{sukhbaatar2016learning}, we assume that the communication protocol between the agent is a continuous quantity such as a vector, and the content can be trained by backpropagation.
+Hence, we can interpret the multi-agent communication as a huge neural network.
+Therefore, we can interpret a unit as an agent without loss of generality.
+This framework can single-agent reinforcement learning as well as multi-agent reinforcement learning.
+
+\subsection{The Framework}
 A typical artificial neural network is a directed graph $\neuralnet = (\units, \edges)$ among the units.
 $\units = \{\unitAt{1}, \dots, \unitAt{N}\}$ is a set of the units. $\edges \subset \units^2$ is a set of edges representing connections between two units.
 If $(\unit, \unitAt{j}) \in \edges$, then connection $\unit \rightarrow \unitAt{j}$ holds, indicating that $\unitAt{j}$ observes activation of $\unit$.
@@ -21,12 +45,11 @@ We add the following assumption for characteristics of the $\unit$.
 \begin{enumerate}
 \renewcommand{\labelenumi}{N\arabic{enumi}:}
 \item (Selfishness) 
-	Instead of minimizing the global training error,
-	at each timing $t$, $\unit$ acts to maximize toward maximizing its own return (cumulative discounted reward)
-	$G_{it} = \sum_{k=0}^T \gamma^k \rewardAt{i,t+k}$, where $\gamma \in [0, 1]$ is the discount rate and $T$ is the terminal time.
-\item (Conservation) 
+	The utility which an $\unit$ wants to maximize is its own return (cumulative discounted reward):
+	$G_{it} = \sum_{k=0}^T \gamma^k \rewardAt{i,t+k}$.
+\item (Conservation) 	% Energy Conservation
 	The summation of internal reward over $\units$ equals to 0.
-	Hence, the summation of a reward by which $\units$ will receive both an internal and external environment $\reward$ are equivalent to reward $R_t^{\mathrm{ex}}$, which the entire multi-agent system receives from fhe external environment.
+	Hence, the summation of a reward by which $\units$ will receive both an internal and external environment $\reward$ are equivalent to reward $R_t^{\mathrm{ex}}$, which the entire multi-agent system receives from the external environment.
 \item (Trade) 
 	The $\unit$ receives internal reward $\rho_{jit}$ from $\unitAt{j} \in \units$ in exchange of activation signal $x_i$
 	before transferring the signal to the unit. At the same time, $\rho_{jit}$ is subtracted from the reward of $v_j$.
@@ -40,18 +63,19 @@ N2 and N3 state the distribution of NTF. N4 corresponds to apoptosis.
 NOOP is selected when the expected returns of the other actions are non-positive.
 In the following, we construct the framework of NaaA from the assumptions.
 
-The goal of NaaA is to maximize the social welfare function of all the agents:
+The social welfare function (total utility of the agents) $G^\mathrm{all}$ is equivalent to the objective function $G$. That is,
 \begin{equation}
-	G^\mathrm{all} = \sum_{i=1}^n G_{it} = \sum_{i=1}^n \left[ \sum_{k=0}^T \gamma^k R_{i,k+t} \right] 
-		= \sum_{k=0}^T \left[ \gamma^k \sum_{i=1}^n R_{i,k+t} \right].
+	G^\mathrm{all} = \sum_{i=1}^n G_{it} = \sum_{i=1}^n \left[ \sum_{k=0}^T \gamma^k R_{it} \right] 
+		= \sum_{k=0}^T \left[ \gamma^k \sum_{i=1}^n R_{it} \right].
 \end{equation}
-From N2, the following equation holds.
-\begin{equation}
-	G^\mathrm{all} = \sum_{k=0}^T \gamma^k R_{t+k}^{\mathrm{ex}}
-\end{equation}
-Thus, the objective is equivalent to maximize the whole external return.
+From N2, $\sum_{i=1}^n \gamma^k R_{it} = \sum_{i=1}^n R_{it}^{\mathrm{ex}}$ holds. Hence, $G^\mathrm{all} = G$ holds.
+%\begin{equation}
+%	G^\mathrm{all} = \sum_{k=0}^T \left[ \gamma^k \sum_{i=1}^n R_{it}^{\mathrm{ex}} \right] = G.
+%\end{equation}
 
+%================================================================
 \subsection{Cumulative Discounted Profit Maximization Framework}
+%================================================================
 We denote the external reward by which unit $\unit$ receives at time step $t$ as $R_{it}^\mathrm{ex}$, where $\sum_{i=1}^n R_{it}^\mathrm{ex} = R_t^{\mathrm{ex}}$ holds.
 From N3, reward $R_{it}$, which $\unit$ receives at $t$ can be written as the following.
 \begin{flalign}
@@ -62,7 +86,8 @@ From N3, reward $R_{it}$, which $\unit$ receives at $t$ can be written as the fo
 The equation is divided into positive terms and a negative term, we name the former as revenue, and the latter as cost, and denote them respectively as $r_{it} = R_{it}^\mathrm{ex} + \sum_{j \in N^\mathrm{out}_i} \rho_{jit}, \, c_{it} = \sum_{j \in N^\mathrm{in}_i} \rho_{ijt}$.
 We name $R_{it}$ as profit.
 
-In this case, $\unit$ maximizes the cumulative discounted profit $G_{it}$ represented as
+
+$\unit$ maximizes the cumulative discounted profit $G_{it}$ represented as
 \begin{flalign}
 	G_{it}	= \sum_{k=0}^T \gamma^k R_{i, t+k} 
 			= \sum_{k=0}^T \gamma^k (r_{i,t+k} - c_{i,t+k})
@@ -77,7 +102,7 @@ In this case, the following equation holds.
 \end{flalign}
 Therefore, we need only consider maximization of revenue, the value function, and cost minimization.
 $R_{it} > 0$, i.e., $r_{it} > c_{it}$ indicates that the unit gives the additional value to the obtained data.
-The unit acts NOOP because $V_i^{\pi_i} (s_{it}) \leq 0 < \delta$ if $R_{it} \leq 0$ for all $t$.
+The unit acts NOOP because $V_i^{\pi_i} (s_{it}) \leq 0 < \delta$ if $R_{it} \leq 0$ for all $t$ because of N4.
 
 %TODO: verify equation of V
 
