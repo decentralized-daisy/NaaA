@@ -12,24 +12,47 @@ The goal is maximizing total cummurative reward of agents indirectly observing/a
 In the configuration, agents are trading their observation with own currency, and the cummurative reward is measured by amount of the remaining currency.
 While several literature addressing multi-agent communication \citep{foerster2016learning,sukhbaatar2016learning}, they assumed all the agent receive the same reward from the environment, and hence cannot apply to our setting naively.
 The problem is because of {\em social dilemma} also known as {\em prisoner's dilemma}, which bounds the potential cummurative reward since it encourages agents preferring betrayal than cooperattion against other agents if there are no central administrators.
-The typical betrayal is hidden information. That is, buyer preferes to estimate underestimate value of observation for paying nothing, and the seller prefers to sell noise instead of observation. %TODO 何か処理をすること前提
+The typical betrayal is hidden information. That is, buyer prefers to underevaluate value of observation for paying nothing, and the seller prefers to sell noise instead of observation. %TODO 何か処理をすること前提
 Consequently, the communication will be sea of noise, and the reward from the environment will be minimized.
+Therefore, we address the following question.
 
-This paper brings envy-free auction \citep{guruswami2005profit} in economics to MARL, and makes agents to declare true information without administrator.
-Envy-free auction is a basic mechanism in a digital goods auction, an auction mechanism for copiable goods such as books and music.
+%Are there truthful mecchanism which makes the agents to declare true information in an environment ?
+\begin{center}
+%{\em How to make communicating agents to declare true information in a patially-observed environment without an administrator?}
+%{\em How to make communicating agents to declare true information in a patially-observed environment?}
+%{\em How to make communicating agents to declare true information without an administrator?}
+%{\em How to guarantee communicating agents declare true information without an administrator?}
+%{\em Are there any mechanisms to have communicating agents declare true information without an administrator?}
+%{\em Is there any mechanism to have communicating agents declare true observation?}
+%{\em Is there any mechanism to have communicating agents evaluate value of observation truthfully, without any administration?}
+%{\em Is there any mechanism to have communicating agents emit valuable signal \\ without any administration?}
+{\em Is there any mechanism to have communicating agents truthfully declare valuable observation \\ without any administration?}
+\end{center}
+% 自律的なエージェントに正しい情報を申告させるためにはどうしたらよいか。
+
+To address the question, we first make the agents evaluate value of observation truthfully
+with {\em envy-free auction} \citep{guruswami2005profit} in economics.
+If the value is evaluated precisely, the agents send valuable observation autonomously since the observation is more valuable than noise.
+%to MARL, and makes agents to declare true information without administrator.
+Envy-free auction is a basic mechanism in a digital goods auction, an auction mechanism for copyable goods such as books and music.
 Before buying the data, the buyer bids price to observation of the seller, and the seller determines price which maximizes revenue itself from set of prices from multiple buyers.
 Then, the seller sends its observation to buyers who bids price more than the asked price.
+As a theoretical result, we demonstrate that the agents maximize their {\em counterfactual return} in Nash equilibrium.
+The counterfactual return is that by which we extend counterfactual reward, the criterion proposed for multi-agent reward distribution problem \citep{agogino2006quicr}, along a long time axis.
+% 観測の価値が正しく評価されれば、ノイズよりは価値のある情報を流した方がよいため、エージェントは自律的に価値の高い情報を流すようになる。
+
 %With this mechanism, 
 
 % この辺ちょっと甘い
-Our method optimizes communication among agents with backpropagation similarly to CommNet \citep{sukhbaatar2016learning},
-which regards an agent as a neuron.
+We combine the mechanism of auction into an existing method which optimizes communication with backpropagation \citep{sukhbaatar2016learning}.
+%Our method optimizes communication among agents with backpropagation similarly to CommNet \citep{sukhbaatar2016learning},
+%which regards an agent as a neuron.
 Since the buyer/seller stucture among the agents can be broken down into a single unit ultimately, 
-we can create a model which see a single unit as an agent, and hence we name our method {\em Neuron as an Agent} (NaaA).
-NaaA regards a neural network as a multi-agent system, and determines bidding price with Q-learning.
-This paper shows that in a framework of NaaA, the agents obey to maximize {\em counterfactual return}, which difference of return whether the data is observed or not.
+we create a model which regards a single unit as an agent for simplicity, and name it {\em Neuron as an Agent} (NaaA).
+%NaaA regards a neural network as a multi-agent system, and determines bidding price with Q-learning.
+%This paper shows that in a framework of NaaA, the agents obey to maximize {\em counterfactual return}, which difference of return whether the data is observed or not.
 
-This paper is organizes as following.
+This paper is organized as following.
 First, we show a framework and problem definition of NaaA, and proposed method with auction theory.
 Next, we show two applications: the one is multi-agent setting with VizDoom and the anotehr one is optimization for topology of neural network.
 After confirming the merit of NaaA, we introduce related works, discuss for further application, and conclude the paper.
