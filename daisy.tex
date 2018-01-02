@@ -24,17 +24,23 @@
 \maketitle
 
 \begin{abstract}
-We propose {\em Neuron as an Agent} (NaaA) as a novel framework for deep multi-agent reinforcement learning (MARL),
-which incorporates all neural network units as agents and optimizes the reward distribution. % as a MARL problem.
-NaaA deals with reward distribution among the agents by combining MARL with economics.
-%First, showing optimization of NaaA, this report describes the negative result that the performance decreases if we naively consider the units as agents.
-%To resolve that difficulty, we introduce a mechanism from game theory.
-As a theoretical result, we demonstrate that the agent obeys the system to maximize its {\em counterfactual return} as the Nash equilibrium of the mechanism.
-Subsequently, we show that learning counterfactual returns leads the model to learning optimal topology among units, and improves performance of a single-agent RL task.
-We propose {\em adaptive dropconnect}, a natural extension of dropconnect.
+Communication methods on multi-agent reinforcement learning (MARL) so far relies on a trusted third party (TTP) which distributes incentive to agents, and hence cannot be applied into a peer-to-peer environment.
+We propose {\em Neuron as an Agent} (NaaA) for incentive distribution in MARL without TTP with two key ideas:
+(i) inter-agent reward distribution and (ii) auction theory.
+The reason why we introduce auction theory is inter-agent reward distribution is insufficient for optimization.
+An agent in NaaA maximizes its profit, difference between reward and cost.
+As a theoretical result, we show that the auction mechanism has an agent autonomously evaluates counterfactual return as other agent's value.
+NaaA enables us to trade of representation in peer-to-peer and regard a unit in a neural network as an agent ultimately.
 Finally, we confirm that optimization with the framework of NaaA leads to better performance of RL, with numerical experiments.
 Specifically, we use a single-agent environment from Open AI gym, and a multi-agent environment from ViZDoom.
 \end{abstract}
+
+%We propose {\em Neuron as an Agent} (NaaA) as a novel framework for deep multi-agent reinforcement learning (MARL),
+%which incorporates all neural network units as agents and optimizes the reward distribution. % as a MARL problem.
+%NaaA deals with reward distribution among the agents by combining MARL with economics.
+%As a theoretical result, we demonstrate that the agent obeys the system to maximize its {\em counterfactual return} as the Nash equilibrium of the mechanism.
+%Subsequently, we show that learning counterfactual returns leads the model to learning optimal topology among units, and improves performance of a single-agent RL task.
+%We propose {\em adaptive dropconnect}, a natural extension of dropconnect.
 
 \input{introduction6-en.tex}
 %\input{background-en.tex}
