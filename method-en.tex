@@ -1,4 +1,4 @@
-\section{Neuron as an Agent}
+\section{Inter-agent Reward Distribution}
 %TODO: Show the figure.
 % この章でいうこと
 % ・ニューロンをエージェントとみなす
@@ -27,7 +27,7 @@ Hence, we can interpret the multi-agent communication as a huge neural network.
 Therefore, we can interpret a unit as an agent without loss of generality.
 This framework can single-agent reinforcement learning as well as multi-agent reinforcement learning.
 
-\subsection{The Framework}
+\subsection{Neuron as an Agent}
 A typical artificial neural network is a directed graph $\neuralnet = (\units, \edges)$ among the units.
 $\units = \{\unitAt{1}, \dots, \unitAt{N}\}$ is a set of the units. $\edges \subset \units^2$ is a set of edges representing connections between two units.
 If $(\unit, \unitAt{j}) \in \edges$, then connection $\unit \rightarrow \unitAt{j}$ holds, indicating that $\unitAt{j}$ observes activation of $\unit$.
