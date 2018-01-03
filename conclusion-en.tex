@@ -1,10 +1,45 @@
-\section{Conclusion and Future Works}
-This paper proposed NaaA, a reinforcement learning framework that treats each unit on a neural network as an agent.
-First, we pointed out there are dilemma problems if we naively optimize NaaA. We
-proposed an optimization method with auction.
-Consequently, an action by which units evaluate the counterfactual return of other units is obtained as a Nash equilibrium.
-Furthermore, we proposed $Q$-learning based algorithm, adaptive dropconnect, to optimize the neural network topology dynamically with evaluation of counterfactual return.
-For the evaluation, we performed experiments based on single-agent and multi-agent platforms, demonstrating that our experimentally obtained results improve existing methods.
+%\section{Conclusion and Future Works}
+\section{Concluding Remark and Future Work}
+This paper has proposed NaaA to address communication in MARL without TTP with two key idaes: inter-agent reward distribution and auction theory.
+Existing methods on MARL supposed existence of TTP, and hence it cannot be applied to peer-to-peer environment.
+This paper first proposed inter-agent reward distribution, which make agents redistribute their received reward from internal/external environment.
+By introducing envy-free auction from auction theory, we show that the agents obey to evaluating counterfactual return of other agents.
+In experimental result, we showed that NaaA outperforms a baseline and a method based on CommNet.
 
-As a direction of future research, we use on-policy methods to perform adaptive dropconnect, and
-consider applications combining genetic algorithms.
+Furthermore, we proposed $Q$-learning based algorithm, adaptive dropconnect, to optimize the neural network topology dynamically with evaluation of counterfactual return as an further application.
+For the evaluation, we performed experiments based on single-agent platform, demonstrating that our experimentally obtained results improved existing methods.
+
+One future direction is considering further sophisticated reward design and auction mechanism.
+In current setting, an agent should pay constant cost if the agent cannot receive a reward.
+To address the issue, we can consider revenue-share model that cost is in proportion to its revenue.
+In this situation, we will seek the closed solution such as counterfactual return.
+Although envy-free auction guarantees truthfulness if the buyer prices are sealed,
+in cases where buyers can mutually communicate and share price information, 
+the buyer can fake the price with lower demand in a process of collusion.
+To address the issue, we will consider several solutions such as consensus estimate \citep{goldberg2003competitiveness} and random sample auction \citep{goldberg2006competitive}.
+
+%Besides, there are direction to parameter 
+
+Another research direction is to consider connection between NaaA and neuroscience or neuroevolution.
+Edeleman propounded the concpet of neural darwinism \citep{edelman1987neural} in which group selection occurs in brain.
+Inter-agent reward which we supposed in this paper corresponds to neurotrophic factor,
+and can be used as a fitness function in genetic algorithm for neuroevolution algorithm such as hyperparameter tuning.
+
+As NaaA can be applied into a peer-to-peer environment, 
+we are considering implementation of NaaA on blockchain \citep{swan2015blockchain}.
+By doing this, we can extend the applicable area of deep reinforcement learning.
+We can use bitcoin \citep{nakamoto2008bitcoin} as inter-agent reward distribution, and the mechanism of auction can be realized by smart contract \citep{buterin2014next}.
+With incentive design of NaaA, we are desiring the world becomes the one that people shares their own representation in the worldwide scale.
+
+%We can use bitcoin \cite{nakamoto2008bitcoin} and smart contract \cite{}a 
+
+%Besides, we proposed Adaptive DropConnect as an further application on a single neural network.
+%This paper proposed NaaA, a reinforcement learning framework that treats each unit on a neural network as an agent.
+%First, we pointed out there are dilemma problems if we naively optimize NaaA. 
+%We proposed an optimization method with auction.
+%Consequently, an action by which units evaluate the counterfactual return of other units is obtained as a Nash equilibrium.
+%Furthermore, we proposed $Q$-learning based algorithm, adaptive dropconnect, to optimize the neural network topology dynamically with evaluation of counterfactual return.
+%For the evaluation, we performed experiments based on single-agent and multi-agent platforms, demonstrating that our experimentally obtained results improve existing methods.
+
+%As a direction of future research, we use on-policy methods to perform adaptive dropconnect, and
+%consider applications combining genetic algorithms.

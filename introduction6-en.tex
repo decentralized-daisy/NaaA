@@ -50,8 +50,15 @@ We put two agents in the environment.
 The one is a cameraman who send information, and the another one is a main player to defeat enemies with a gun.
 We confirm that the cameraman learns cooperative action to send information in dead angle, behind of main player, and outperform CommNet in score.
 
+Interestingly, NaaA can apply to a single-agent as well as multi-agent setting since it learns optimal topology between the units. %with respect to supervised learning
+As a further application, we propose {\em Adaptive DropConnect} (ADC), which combines DropConnect \citep{wan2013regularization}, which randomly masks the topology, with an adaptive algorithm, which prunes connections with less counterfactual return with higher probability.
+Experimental result in classification and reinforcement learning task shows ADC outperforms DropConnect.
+%Subsequently, we present that our trading model leads the model to learning optimal topology between the units with respect to supervised learning as well as MARL.
+%It uses $\varepsilon$-greedy as an exploration policy, and is equivalent to DropConnect in the case of $\varepsilon = 1$. It is equivalent to counterfactual return maximization, which constructs the topology deterministically in the case of $\varepsilon = 0$.
+
 % Organization
 The remaining part of this paper is organized as follows. 
 First, we describe the two key ideas: inter-agent reward distribution and auction theory. 
 After introducing related works, we show the experimental result in ViZDoom.
-Next, we show Adapritve DropConnect as a further application. Then we perform discussion and conclude this paper.
+Next, we show ADC and its experimental result as a further application. 
+Then, we conclude this paper.
