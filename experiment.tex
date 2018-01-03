@@ -1,7 +1,9 @@
 \section{Experiment}
-We confirmed that additional agents complement the main player using ViZDoom, an environment for Doom.
-A player in Doom environment should seek the enemy in the map, and then defeat the enemy.
-Because ViZDoom provides several maps, we used ViZDoom.
+% è≠ÇµçÏï∂ÇµÇΩÇŸÇ§Ç™ó«Ç¢
+We confirmed our reward distribution works as expected with a multi-agent setting in ViZDoom \citep{kempka2016vizdoom}, 
+an emulator of Doom which have a map editor.
+In the setting, additional agents complement the main player.
+A player in ViZDoom environment should seek the enemy in the map, and then defeat the enemy.
 
 \subsection{Setup}
 We used a scenario based on Defend the Center (DtC), provided by ViZDoom platform.
@@ -21,13 +23,13 @@ The episode will terminate when the maim player dies, or after 525 steps have el
 \subsection{Model}
 We compared three models: the proposed method and two comparison targets.
 
-{\em Baseline} DQN without communication. The main player learns standard DQN with the perspective that the player is viewing.
+{\em Baseline}: DQN without communication. The main player learns standard DQN with the perspective that the player is viewing.
 Because the cameraman does not learn, the player continues to move randomly.
 
-{\em Comm} DQN with communication. The main player learns DQN with two perspectives: the player's own and the cameraman's.
+{\em Comm}: DQN with communication. The main player learns DQN with two perspectives: the player's own and the cameraman's.
 The communication vector is learned with a feed-forward neural network. The method is inspired by Commnet.
 
-{\em NaaA} The proposed method. The main player learns DQN with two perspectives: the player's own and the cameraman's.
+{\em NaaA}: The proposed method. The main player learns DQN with two perspectives: the player's own and the cameraman's.
 The transmission of reward and communication are performed using the proposed method.
 
 \begin{figure*}[t]

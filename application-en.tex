@@ -4,6 +4,7 @@ Actually, NaaA is useful not only for multi-agent RL, but also for training of t
 Typical training algorithms of a neural network such as those of RMSProp \citep{tieleman2012lecture} and Adam \citep{kingma2014adam} are based on a sequential algorithm such as stochastic gradient descent (SGD).
 Therefore, the problem can be interpreted as a problem to update the state (i.e., weight) to the goal, which is minimization of the expected likelihood.
 
+\subsection{Adaptive DropConnect}
 The learning can be accelerated by application of NaaA to the optimizer.
 We designate the application of NaaA to SGD as {\em Adaptive DropConnect} (ADC), 
 which is eventually a combination of DropConnect \citep{wan2013regularization} and Adaptive DropOut \citep{ba2013adaptive}.
