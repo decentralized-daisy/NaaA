@@ -25,7 +25,7 @@ CommNet is a state-of-the-art of MARL which considers communication among agents
 and the feature is learning among agents with backpropagation.
 
 In the case when we are trying to consider MARL in which different stakeholders make different agents which communicate each other, it needs design of incentive distribution (e.g., monetary payment) and a framework without {\em trusted third party} (TTP).
-TTP is a neutral administrator which assumes distribution of reward for all the participants, supposed implicitly by most of existing literatures with regard to MARL \citep{agogino2006quicr,foerster2016learning,sukhbaatar2016learning}.
+TTP \citep{wu1999game,sandholm2002possibility} is a neutral administrator which assumes distribution of reward for all the participants, supposed implicitly by most of existing literatures with regard to MARL \citep{agogino2006quicr,sukhbaatar2016learning,foerster2016learning,foerster2017counterfactual}.
 While TTP is required to be neutral against all the participants,
 several configuration of peer-to-peer trade such as inter-industry and -country trade cannot prepare TTP.
 If untrusted third party assumes reward distribution, it can undesirably make reward for partial participants higher than necessity.
@@ -53,13 +53,11 @@ NaaA realizes reward distribution which make it pareto improvement more than int
 	\centering
 	\includegraphics[width=\linewidth]{img/TTP.eps}
 	\caption{
-		(a) Centralized reward distribution as genralized model of 
-			QUICR \citep{agogino2006quicr}, R/DIAL \citep{foerster2016learning}, CommNet \citep{sukhbaatar2016learning}, 
-			and COMA \citep{foerster2016learning}. 
-			They suppose a trusted third party to calculate reward.
-		(b) Inter-agent reward distribution (NaaA). Some agents receive reward from the environment directly,  
-			and redistribute to other agents. 
-		(c) Inter-agent reward distribution includes reward backpropagation along the connections. 
+		A schematic illustration of reward disteribution models in MARL.
+		{\bf (a)} Centralized reward distribution model \citep{agogino2006quicr,sukhbaatar2016learning,foerster2016learning,foerster2017counterfactual}
+		{\bf (b)} Inter-agent reward distribution model (our model). Some agents receive reward from the environment directly,  
+			and redistribute to other agents. The agents maximize their profit instead of reward.
+		{\bf (c)} Neuron as an Agent (NaaA). Inter-agent reward distribution includes reward backpropagation along the connections. 
 	}
 	\label{fig:ttp}
 \end{figure*}

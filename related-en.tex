@@ -8,12 +8,6 @@
 % QUICR, COMA
 % Adaptive DropConnect
 
-%Deep multi-agent reinforcement learning (DMARL) is emerging topic of deep learning and reinforcement learning.
-%Several researcher attept to solve the topic in environement such as Starcraft and Soccor game.
-%DMARL works good for inperfect information.
-
-%NaaA belongs to a class of partially observable stochastic game (POSG) \citep{hansen2004dynamic} because it processes multiple units as agents.
-%POSG, a class of reinforcement learning with multiple agents in a POMDP environment, presents several research issues, one of which is communication.
 Communication among agents in MARL is one of topic which gathering attention.
 R/DIAL \citep{foerster2016learning} is a communication method for deep reinforcement learning, which train the optimal communication among the agent with Q-learning.
 CommNet \citep{sukhbaatar2016learning}, which exploits the characteristics of a unit that is agnostic to the topology of other units, employs backpropagation to train multi-agent communication.
@@ -23,7 +17,6 @@ COMA \citep{foerster2017counterfactual} also maximizes counterfactual rewards in
 These method which we mentioned above rely on TTP to calculate reward and distribute, and hence cannot be applied into peer-to-peer setting.
 For example, R/DIAL focused on that paradigm of centralised planning, and CommNet, QUICR and COMA have centralized environment to distribute reward as TTP.
 On the other hand, NaaA does not rely on TTP, and hence each agent calculate reward.
-%In the setting, all actors have common critics, which improves both actors and critics with time difference (TD)-error of a counterfactual reward.
 
 While inter-agent reward distribution is not considered in a context of communication,
 a trading agent is considered in other contexts.
@@ -35,6 +28,39 @@ However, these existing methods cannot apply to our situation.
 Firstly, the agents do not communicate because typical purpose of TAC is to make agents compete in a market in a zero-sum game. 
 Secondly, the traded goods are not digital goods but goods in limited supply such as power and tariff.
 Hence this is the first paper to bring inter-agent reward distribution into communication in MARL.
+
+Auction theory is discussed in mechanism design \citep{myerson1983mechanism} also known as inverse game theory.
+Second-price auction \citep{vickrey1961counterspeculation} is an auction for single product and several buyers. %, and have a lot of application such as 
+We used digital goods auction \citep{guruswami2005profit} for auction for infinite supply.
+
+Our paper also related to DropConnect in terms of controlling connection between units.
+Adaptive DropConnect (ADC), which we propose in a Section  as a further application, extends DropConnect \citep{wan2013regularization}, a regularization technique.
+The idea of ADC (instead of dropping each connection between units in constant probability, using skew probability correlated to the absolute value of weights) is eventually closer to Adaptive DropOut \citep{ba2013adaptive}, although the derivation differs.
+The adjective ``adaptive'' is added with respect to the method.
+Optimizing the neural network with RL was investigated by \cite{andrychowicz2016learning}.
+In contrast to their methods, which use recurrent neural network (RNN) and which therefore have difficult implementation,
+our method is RNN-free and forms as a layer. For those reasons, its implementation is simple and fast. 
+Moreover, it has a wide area of applicability.
+
+% TODO: 調べて書く。他に同様の話を実現するニューラルネットワークがあるかどうか
+%Deep multi-agent reinforcement learning (DMARL) is emerging topic of deep learning and reinforcement learning.
+%Several researcher attept to solve the topic in environement such as Starcraft and Soccor game.
+%DMARL works good for inperfect information.
+
+%NaaA belongs to a class of partially observable stochastic game (POSG) \citep{hansen2004dynamic} because it processes multiple units as agents.
+%POSG, a class of reinforcement learning with multiple agents in a POMDP environment, presents several research issues, one of which is communication.
+%Mechanism design is applied to auctions \citep{vickrey1961counterspeculation} and matching \citep{gale1962college}.
+%NaaA is outcomes from mechanism design.
+%NaaA applies a digital goods auction \citep{guruswami2005profit} to reinforcement learning with a multi-agent neural network, 
+%to obtain a maximized return by units as a Nash equilibrium.
+
+% TODO ここに経済学のゲーム理論が応用できる話を書く
+%Training a neural network with a multi-agent game is an emerging methodology.
+%Generative adversarial nets (GAN) \citep{goodfellow2014generative} have the goal of obtaining true generative distribution as a Nash equilibrium of a competitive game that includes two agents with contradictory rewards: a generator and a discriminator. 
+%In game theory, social welfare. %the outcome maximizing overall reward is named Pareto optimality.
+%converge to Pareto optimality. 
+%Nash equilibrium is not guaranteed to maximizing overall reward, and the difference is designated as a social dilemma.
+%Because the existence of a dilemma depends on the reward design, methods to resolve dilemmas with good reward design are being investigated: mechanism design \citep{myerson1983mechanism} is also known as inverse game theory.
 
 %However, there are no papers to consider in configuration of communication in MARL to the best of our knowledge.%, and it is zero-sum game, 
 %Trading agents are considered in an area of agent-based computational economics (ACE)
@@ -50,30 +76,4 @@ Hence this is the first paper to bring inter-agent reward distribution into comm
 % ・MARL が直面している報酬の配分問題は経済学の問題としてモデリングできる
 % ・エージェント間の取引が最大化することができる
 
-% TODO ここに経済学のゲーム理論が応用できる話を書く
-%Training a neural network with a multi-agent game is an emerging methodology.
-%Generative adversarial nets (GAN) \citep{goodfellow2014generative} have the goal of obtaining true generative distribution as a Nash equilibrium of a competitive game that includes two agents with contradictory rewards: a generator and a discriminator. 
-%In game theory, social welfare. %the outcome maximizing overall reward is named Pareto optimality.
-%converge to Pareto optimality. 
-%Nash equilibrium is not guaranteed to maximizing overall reward, and the difference is designated as a social dilemma.
-%Because the existence of a dilemma depends on the reward design, methods to resolve dilemmas with good reward design are being investigated: mechanism design \citep{myerson1983mechanism} is also known as inverse game theory.
-
-Auction theory is discussed in mechanism design \citep{myerson1983mechanism} also known as inverse game theory.
-Second-price auction \citep{vickrey1961counterspeculation} is an auction for single product and several buyers. %, and have a lot of application such as 
-We used digital goods auction \citep{guruswami2005profit} for auction for infinite supply.
-
-%Mechanism design is applied to auctions \citep{vickrey1961counterspeculation} and matching \citep{gale1962college}.
-%NaaA is outcomes from mechanism design.
-%NaaA applies a digital goods auction \citep{guruswami2005profit} to reinforcement learning with a multi-agent neural network, 
-%to obtain a maximized return by units as a Nash equilibrium.
-
-Our paper also related to DropConnect in terms of controlling connection between units.
-Adaptive DropConnect (ADC), which we propose in a later part of this paper as a further application, extends DropConnect \citep{wan2013regularization}, a regularization technique.
-The idea of ADC (instead of dropping each connection between units in constant probability, using skew probability correlated to the absolute value of weights) is eventually closer to Adaptive DropOut \citep{ba2013adaptive}, although the derivation differs.
-The adjective ``adaptive'' is added with respect to the method.
-Optimizing the neural network with RL was investigated by \cite{andrychowicz2016learning}.
-In contrast to their methods, which use recurrent neural network (RNN) and which therefore have difficult implementation,
-our method is RNN-free and forms as a layer. For those reasons, its implementation is simple and fast. 
-Moreover, it has a wide area of applicability.
-
-% TODO: 調べて書く。他に同様の話を実現するニューラルネットワークがあるかどうか
+%In the setting, all actors have common critics, which improves both actors and critics with time difference (TD)-error of a counterfactual reward.

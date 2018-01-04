@@ -21,10 +21,10 @@ give a reward $-\rho$ instead of an observation $x$.
 We name the another environment as {\em internal environment} and name the original environment as an {\em external environment}.
 
 Our goal is to maximize the discounted cumulative reward which the system will obtain from the external environment.
- %total discounted cumulative reward from the external environment which all the $N$ agents will obtain.
-\begin{equation}
+%total discounted cumulative reward from the external environment which all the $N$ agents will obtain.
 %G^\mathrm{ex} = \sum_{i=1}^n \left[ \sum_{k=0}^T \gamma^k R_{i,k+t}^\mathrm{ex} \right],
-G = \sum_{i=1}^n \left[ \sum_{t=0}^T \gamma^t R_{it}^\mathrm{ex} \right],
+\begin{equation}
+G = \sum_{i=1}^N \left[ \sum_{t=0}^T \gamma^t R_{it}^\mathrm{ex} \right],
 \end{equation}
 where $R_{it}^\mathrm{ex}$ is an external reward which $i$-th agent obtains at $t$, and $\gamma \in [0, 1]$ is the discount rate and $T$ is the terminal time.
 
@@ -47,7 +47,7 @@ An environment for $\unit$ comprises an environment that the multi-agent system 
 set of the unit to which $\unit$ directly connects: $\{v_i \in \units | i \in \friends\}$.
 We distinguish both environments by naming the former as an external environment, and by naming the latter as an internal environment.
 $\unit$ will receive rewards from both environments.
-We add the following assumption for characteristics of the $\unit$.
+We add the following assumption for characterizing $\unit$.
 \begin{enumerate}
 \renewcommand{\labelenumi}{N\arabic{enumi}:}
 \item (Selfishness) 
@@ -63,11 +63,11 @@ We add the following assumption for characteristics of the $\unit$.
 	$\unit$ has NOOP (no operation), for which the return is $\delta > 0$ as an action.
 	With NOOP, the unit inputs nothing and outputs nothing.
 \end{enumerate}
-In terms of neuroscience,
-N1 states that the unit acts as a cell.
-N2 and N3 state the distribution of NTF. N4 corresponds to apoptosis.
-NOOP is selected when the expected returns of the other actions are non-positive.
-In the following, we construct the framework of NaaA from the assumptions.
+%In terms of neuroscience,
+%N1 states that the unit acts as a cell.
+%N2 and N3 state the distribution of NTF. N4 corresponds to apoptosis.
+%NOOP is selected when the expected returns of the other actions are non-positive.
+%In the following, we construct the framework of NaaA from these assumptions.
 
 The social welfare function (total utility of the agents) $G^\mathrm{all}$ is equivalent to the objective function $G$. That is,
 \begin{equation}

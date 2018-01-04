@@ -10,9 +10,8 @@
 %\begin{thm}\label{thm:optimal-bidding-simple}
 %$\pi_i$ is the Nash equilibrium if and only if $\rho_{ijt} = 0$ regardless $\neuralnet$
 %\end{thm}
-
-We introduce mechanism design because, unlike several existing studies \citep{sukhbaatar2016learning}, NaaA assumes that all agents are not cooperative but selfish.
 %(TODO: Bad writing.)
+We introduce mechanism design because, unlike several existing studies \citep{sukhbaatar2016learning}, NaaA assumes that all agents are not cooperative but selfish.
 If we naively optimize the optimization problem of NaaA, then we obtain the trivial solution that the internal rewards will converge to 0, and that all the units except of the output units become NOOP.
 This phenomena occurs regardless the network topology $\neuralnet$ as any nodes have no incentive to send payment $\rho_{ijt}$ to other units.
 Therefore, the multi-agent system should select the action with no information. It is equivalent to taking an action randomly.
@@ -166,7 +165,7 @@ So, as an action, we employ allocation $g_{ijt}$ instead of $\vect{b}_{it}$ and 
 The overall algorithm is shown in Algorithm 1.
 
 \begin{algorithm}[t]
-\caption{Envy-free auction for NaaA}
+\caption{NaaA: inter-agent reward distribution with envy-free auction}
 \begin{algorithmic}[1]
 	\FOR{ $t=1$ \TO $T$ }
 		\STATE Compute a bidding price for every edge: \textbf{for} $(v_j, v_i) \in \edges$ \textbf{do}\
