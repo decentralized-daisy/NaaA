@@ -55,7 +55,7 @@ We add the following assumption for characterizing $\unit$.
 	$G_{it} = \sum_{k=0}^T \gamma^k \rewardAt{i,t+k}$.
 \item (Conservation) 	% Energy Conservation
 	The summation of internal reward over $\units$ equals to 0.
-	Hence, the summation of a reward by which $\units$ will receive both an internal and external environment $\reward$ are equivalent to reward $R_t^{\mathrm{ex}}$, which the entire multi-agent system receives from the external environment.
+	Hence, the summation of a reward by which $\units$ will receive both an internal and external environment $\reward$ are equivalent to reward $R_t^{\mathrm{ex}}$, which the entire multi-agent system receives from the external environment: $\sum_{i=1}^n R_{it} = \sum_{i=1}^n R_{it}^{\mathrm{ex}}$.
 \item (Trade) 
 	The $\unit$ receives internal reward $\rho_{jit}$ from $\unitAt{j} \in \units$ in exchange of activation signal $x_i$
 	before transferring the signal to the unit. At the same time, $\rho_{jit}$ is subtracted from the reward of $v_j$.
@@ -63,18 +63,13 @@ We add the following assumption for characterizing $\unit$.
 	$\unit$ has NOOP (no operation), for which the return is $\delta > 0$ as an action.
 	With NOOP, the unit inputs nothing and outputs nothing.
 \end{enumerate}
-%In terms of neuroscience,
-%N1 states that the unit acts as a cell.
-%N2 and N3 state the distribution of NTF. N4 corresponds to apoptosis.
-%NOOP is selected when the expected returns of the other actions are non-positive.
-%In the following, we construct the framework of NaaA from these assumptions.
 
 The social welfare function (total utility of the agents) $G^\mathrm{all}$ is equivalent to the objective function $G$. That is,
 \begin{equation}
 	G^\mathrm{all} = \sum_{i=1}^n G_{it} = \sum_{i=1}^n \left[ \sum_{k=0}^T \gamma^t R_{it} \right] 
 		= \sum_{k=0}^T \left[ \gamma^t \sum_{i=1}^n R_{it} \right].
 \end{equation}
-From N2, $\sum_{i=1}^n R_{it} = \sum_{i=1}^n R_{it}^{\mathrm{ex}}$ holds. Hence, $G^\mathrm{all} = G$ holds.
+From N2, $G^\mathrm{all} = G$ holds.
 %\begin{equation}
 %	G^\mathrm{all} = \sum_{k=0}^T \left[ \gamma^k \sum_{i=1}^n R_{it}^{\mathrm{ex}} \right] = G.
 %\end{equation}
