@@ -28,3 +28,4 @@ sh.exe.stackdump
 *.stackdump
 .pptx
 ~$daisy.pptx
+*.bak

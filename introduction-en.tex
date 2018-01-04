@@ -7,10 +7,18 @@ After intelligence with reinforcement learning beat humans \citep{tesauro1995tem
 In a world which realized the industrial application in the future, various types of companies will own their agents to improve their revenue.
 The situation can be regarded as one that each agent are independently solving problems of partially observed Markov decision process (POMDP).
 
-Although agents in the companies are closed to maximize their own reward, if the agents exchange their own information each other, 
-entire revenue will be improved more than individuals.
-Using economic metaphor, similarly to a supply chain of diamond from a company which collects raw material, one which processes it to one which sells it, if we can realize representation learning in the each layers as social division, a single company can yield revenue more than one by itself. %in the case the company does it by itself.
+These agents in the companies are designed to maximize their own reward independently of each other. 
+However, if the agents could exchange their own information, the entire revenue of the stakeholders would further increase.
+As each agent has limited visibility of the environment, exchanging information among the agent will be helpful to solve their own tasks.
 Thus, this paper aims to realize a society in which stakeholders which can have a conflict of interest trade their own information.
+%Imagine diamond production with social division by different companies from raw material collection, processing to selling.
+%If we can realize representation learning in the each layers as the social division, a single company can yield revenue more than one by itself. 
+
+%in the case the company does it by itself.
+%If the agents exchange their own information each other, entire revenue will be improved more than individuals.
+%These agents in the companies are closed to maximize their own reward.
+%Using economic metaphor, similarly to a supply chain of diamond from a company which collects raw material, one which processes it to one which sells it.
+%Although agents in the companies are closed to maximize their own reward, if the agents exchange their own information each other, entire revenue will be improved more than individuals.
 
 We regard the situation as communication in multi-agent reinforcement learning (MARL), addressed by several existing methods such as R/DIAL \citep{foerster2016learning} and CommNet \citep{sukhbaatar2016learning}.
 CommNet is a state-of-the-art of MARL which considers communication among agents, 
@@ -41,9 +49,24 @@ As a theoretical result, we show that an agent autonomously evaluates {\em count
 Counterfactual return equals to discounted cumulative sum of counterfactual reward \citep{agogino2006quicr} which QUICR and COMA distribute.
 NaaA realizes reward distribution which make it pareto improvement more than inter-agent reward distribution.
 
+\begin{figure*}[tb]
+	\centering
+	\includegraphics[width=\linewidth]{img/TTP.eps}
+	\caption{
+		(a) Centralized reward distribution as genralized model of 
+			QUICR \citep{agogino2006quicr}, R/DIAL \citep{foerster2016learning}, CommNet \citep{sukhbaatar2016learning}, 
+			and COMA \citep{foerster2016learning}. 
+			They suppose a trusted third party to calculate reward.
+		(b) Inter-agent reward distribution (NaaA). Some agents receive reward from the environment directly,  
+			and redistribute to other agents. 
+		(c) Inter-agent reward distribution includes reward backpropagation along the connections. 
+	}
+	\label{fig:ttp}
+\end{figure*}
+
 NaaA enables us to trade of representation in peer-to-peer and regard a unit in a neural network as an agent ultimately.
 As NaaA can regard a unit as an agent without loss of generality indeed, this paper uses the setting.
-We illustrate the concept proposed method in Fig. 1 (TBD).
+We illustrate the concept proposed method in \figurename~\ref{fig:ttp}.
 
 In the experiment, we use an environment which extends ViZDoom \citep{kempka2016vizdoom}, a POMDP environemnt, to MARL.
 We put two agents in the environment.
