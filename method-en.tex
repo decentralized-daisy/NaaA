@@ -4,8 +4,14 @@
 % ・ニューロンをエージェントとみなす
 % ・いくつかの前提を提案する
 % ・NaaA の social welfare function を最大化することが、外部からのリワード最大化に一致する。
-
 \subsection{Problem Definition}
+%\begin{figure*}[t]
+%	\centering
+%	\includegraphics[width=\linewidth]{img/concept.eps}
+%	\caption{
+%	}
+%	\label{fig:ttp}
+%\end{figure*}
 Suppose there are $N$ agents interacting to an environment. 
 %This paper addresses reward distribution problem at multi-agent communication among the agents.
 Some agents get reward from the environment, and distribute it to other agents as incentive to give precise information.
@@ -18,7 +24,7 @@ Our goal is to maximize the discounted cumulative reward which the system will o
  %total discounted cumulative reward from the external environment which all the $N$ agents will obtain.
 \begin{equation}
 %G^\mathrm{ex} = \sum_{i=1}^n \left[ \sum_{k=0}^T \gamma^k R_{i,k+t}^\mathrm{ex} \right],
-G = \sum_{i=1}^n \left[ \sum_{t=0}^T \gamma^k R_{it}^\mathrm{ex} \right],
+G = \sum_{i=1}^n \left[ \sum_{t=0}^T \gamma^t R_{it}^\mathrm{ex} \right],
 \end{equation}
 where $R_{it}^\mathrm{ex}$ is an external reward which $i$-th agent obtains at $t$, and $\gamma \in [0, 1]$ is the discount rate and $T$ is the terminal time.
 
@@ -65,8 +71,8 @@ In the following, we construct the framework of NaaA from the assumptions.
 
 The social welfare function (total utility of the agents) $G^\mathrm{all}$ is equivalent to the objective function $G$. That is,
 \begin{equation}
-	G^\mathrm{all} = \sum_{i=1}^n G_{it} = \sum_{i=1}^n \left[ \sum_{k=0}^T \gamma^k R_{it} \right] 
-		= \sum_{k=0}^T \left[ \gamma^k \sum_{i=1}^n R_{it} \right].
+	G^\mathrm{all} = \sum_{i=1}^n G_{it} = \sum_{i=1}^n \left[ \sum_{k=0}^T \gamma^t R_{it} \right] 
+		= \sum_{k=0}^T \left[ \gamma^t \sum_{i=1}^n R_{it} \right].
 \end{equation}
 From N2, $\sum_{i=1}^n R_{it} = \sum_{i=1}^n R_{it}^{\mathrm{ex}}$ holds. Hence, $G^\mathrm{all} = G$ holds.
 %\begin{equation}
@@ -79,13 +85,11 @@ From N2, $\sum_{i=1}^n R_{it} = \sum_{i=1}^n R_{it}^{\mathrm{ex}}$ holds. Hence,
 We denote the external reward by which unit $\unit$ receives at time step $t$ as $R_{it}^\mathrm{ex}$, where $\sum_{i=1}^n R_{it}^\mathrm{ex} = R_t^{\mathrm{ex}}$ holds.
 From N3, reward $R_{it}$, which $\unit$ receives at $t$ can be written as the following.
 \begin{flalign}
-	R_{it} = 
-	  R_{it}^\mathrm{ex} + \sum_{j \in N^\mathrm{out}_i} \rho_{jit} 
-	- \sum_{j \in N^\mathrm{in}_i} \rho_{ijt}.
+	R_{it} = R_{it}^\mathrm{ex} + \sum_{j \in N^\mathrm{out}_i} \rho_{jit} 
+				- \sum_{j \in N^\mathrm{in}_i} \rho_{ijt}.
 \end{flalign}
 The equation is divided into positive terms and a negative term, we name the former as revenue, and the latter as cost, and denote them respectively as $r_{it} = R_{it}^\mathrm{ex} + \sum_{j \in N^\mathrm{out}_i} \rho_{jit}, \, c_{it} = \sum_{j \in N^\mathrm{in}_i} \rho_{ijt}$.
 We name $R_{it}$ as profit.
-
 
 $\unit$ maximizes the cumulative discounted profit $G_{it}$ represented as
 \begin{flalign}
