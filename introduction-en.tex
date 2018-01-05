@@ -53,10 +53,10 @@ NaaA realizes reward distribution which make it pareto improvement more than int
 	\centering
 	\includegraphics[width=\linewidth]{img/TTP.eps}
 	\caption{
-		A schematic illustration of reward disteribution models in MARL.
-		{\bf (a)} Centralized reward distribution model \citep{agogino2006quicr,sukhbaatar2016learning,foerster2016learning,foerster2017counterfactual}
-		{\bf (b)} Inter-agent reward distribution model (our model). Some agents receive reward from the environment directly,  
-			and redistribute to other agents. The agents maximize their profit instead of reward.
+		A schematic illustration of reward distribution models in MARL.
+		{\bf (a)} Centralized reward distribution model \citep{agogino2006quicr,sukhbaatar2016learning,foerster2016learning,foerster2017counterfactual}. They should suppose TTP to distribute the optimal reward to the agents. % receives reward from the environment directly, and distribute the agent  The optimal reward is calculated by the TTP.
+		{\bf (b)} Inter-agent reward distribution model (our model). Some agents receive reward from the environment directly, and redistribute to other agents. The idea to determine the optimal reward without TTP is playing auction game among the agents.
+			%The agents maximize their profit instead of reward.
 		%{\bf (c)} Neuron as an Agent (NaaA). Inter-agent reward distribution includes reward backpropagation along the connections. 
 	}
 	\label{fig:ttp}
