@@ -7,45 +7,43 @@
 % ・いくつかの前提を提案する
 % ・NaaA の social welfare function を最大化することが、外部からのリワード最大化に一致する。
 
-Some agents get reward from the environment, and distribute it to other agents as incentive to give precise information.
-The reward is limited so that if an agent distribute $\rho$ reward, the agents' reward subtracted by $\rho$ such as currency.
-For the reason, other agents for an agent itself can be interpreted as another environment which 
-give a reward $-\rho$ instead of an observation $x$.
-We name the another environment as {\em internal environment} and name the original environment as an {\em external environment}.
+Some agents receive rewards from the environment, and they distribute these to other agents as incentives for giving precise information.
+Rewards are limited, so if an agent distributes $\rho$ rewards, the reward of that agents is reduced by $\rho$, as it would be with currency.
+For this reason, agents other than a specified agent of interest can be considered a secondary environment giving 
+rewards of $-\rho$ instead of an observation $x$.
+This secondary environment was termed the {\em internal environment}, whereas the original environment was called the {\em external environment}.
 
-Similarly to CommNet \citep{sukhbaatar2016learning}, we assume that the communication protocol between the agent is a continuous quantity such as a vector, and the content can be trained by backpropagation.
-Hence, we can interpret the multi-agent communication as a huge neural network.
-Therefore, we can interpret a unit as an agent without loss of generality.
-This framework can single-agent reinforcement learning as well as multi-agent reinforcement learning.
+Similarly to CommNet \citep{sukhbaatar2016learning}, the communication protocol between agents was assumed to be a continuous quantity (such as a vector), the content of which could be trained by backpropagation.
+Under these conditions, it is possible to interpret multi-agent communications as a huge neural network.
+This allowed units to be interpreted as agents without losses of generality.
+This framework can be applied to both single- and multi-agent reinforcement learning.
 
-A typical artificial neural network is a directed graph $\neuralnet = (\units, \edges)$ among the units.
-$\units = \{\unitAt{1}, \dots, \unitAt{N}\}$ is a set of the units. $\edges \subset \units^2$ is a set of edges representing connections between two units.
-If $(\unit, \unitAt{j}) \in \edges$, then connection $\unit \rightarrow \unitAt{j}$ holds, indicating that $\unitAt{j}$ observes activation of $\unit$.
-We denote activation of the unit $\unit$ at time $t$ as $x_{it} \in \Real$.
-Additionally, we designate a set of units which unit $i$ connects to as $\followers = \{j | (\unit, \unitAt{j}) \in \edges \}$ and a set of units which unit $i$ is connected from as $\followees = \{j | (\unitAt{j}, \unit) \in \edges \}$.
-We denote $\friends = \followees \cup \followers$.
+A typical artificial neural network can be represented as a directed graph $\neuralnet = (\units, \edges)$ between units, where $\units = \{\unitAt{1}, \dots, \unitAt{N}\}$ is a set of the units and $\edges \subset \units^2$ is a set of edges representing the connections between two units.
+If $(\unit, \unitAt{j}) \in \edges$, then connection $\unit \rightarrow \unitAt{j}$ holds, indicating that $\unitAt{j}$ observes the activation of $\unit$.
+Here, the activation of unit $\unit$ at time $t$ was denoted as $x_{it} \in \Real$.
+Additionally, the set of units that unit $i$ connects to was designated to be $\followers = \{j | (\unit, \unitAt{j}) \in \edges \}$ and the set of units that unit $i$ is connected from was $\followees = \{j | (\unitAt{j}, \unit) \in \edges \}$.
+Furthermore, $\friends = \followees \cup \followers$.
 
-NaaA interprets $\unit$ as an agent.
-Therefore, $\neuralnet$ is a multi-agent system.
-An environment for $\unit$ comprises an environment that the multi-agent system itself touches and a 
-set of the unit to which $\unit$ directly connects: $\{v_i \in \units | i \in \friends\}$.
-We distinguish both environments by naming the former as an external environment, and by naming the latter as an internal environment.
-$\unit$ will receive rewards from both environments.
-We add the following assumption for characterizing $\unit$.
+The proposed NaaA method interprets $\unit$ as an agent, making $\neuralnet$ a multi-agent system.
+A $\unit$ environment was comprised of an environment where the multi-agent system itself touched a 
+set of units to which $\unit$ directly connects: $\{v_i \in \units | i \in \friends\}$.
+The former was defined as the external environment, whereas the latter was termed the internal environment.
+$\unit$ received rewards from both environments.
+The following assumptions were added to the $\unit$ characteristics:
 \begin{enumerate}
 \renewcommand{\labelenumi}{N\arabic{enumi}:}
 \item (Selfishness) 
-	The utility which an $\unit$ wants to maximize is its own return (cumulative discounted reward):
+	The utility each unit $\unit$ wants to maximize is its own return (cumulative discounted reward):
 	$G_{it} = \sum_{k=0}^T \gamma^k \rewardAt{i,t+k}$.
 \item (Conservation) 	% Energy Conservation
-	The summation of internal reward over $\units$ equals to 0.
-	Hence, the summation of a reward by which $\units$ will receive both an internal and external environment $\reward$ are equivalent to reward $R_t^{\mathrm{ex}}$, which the entire multi-agent system receives from the external environment: $\sum_{i=1}^n R_{it} = \sum_{i=1}^n R_{it}^{\mathrm{ex}}$.
+	The summation of internal rewards over all $\units$ equals 0.
+	Hence, the summation of rewards which $\units$ (receive both internal and external environment $\reward$) are equivalent to the reward $R_t^{\mathrm{ex}}$, which the entire multi-agent system receives from the external environment: $\sum_{i=1}^n R_{it} = \sum_{i=1}^n R_{it}^{\mathrm{ex}}$.
 \item (Trade) 
-	The $\unit$ receives internal reward $\rho_{jit}$ from $\unitAt{j} \in \units$ in exchange of activation signal $x_i$
-	before transferring the signal to the unit. At the same time, $\rho_{jit}$ is subtracted from the reward of $v_j$.
+	A unit $\unit$ will receive an internal reward $\rho_{jit}$ from $\unitAt{j} \in \units$ in exchange for an activation signal $x_i$
+	before transferring this signal to the unit. Simultaneously, $\rho_{jit}$ will be subtracted from the reward of $v_j$.
 \item (NOOP) 
-	$\unit$ has NOOP (no operation), for which the return is $\delta > 0$ as an action.
-	With NOOP, the unit inputs nothing and outputs nothing.
+	$\unit$ can select NOOP (no operation), for which the return is $\delta > 0$, as an action.
+	In NOOP, the unit inputs and outputs nothing.
 \end{enumerate}
 
 The social welfare function (total utility of the agents) $G^\mathrm{all}$ is equivalent to the objective function $G$. That is,
@@ -61,31 +59,32 @@ From N2, $G^\mathrm{all} = G$ holds.
 %================================================================
 \subsubsection{Discounted Cumulative Profit Maximization}
 %================================================================
-We denote the external reward by which unit $\unit$ receives at time step $t$ as $R_{it}^\mathrm{ex}$, where $\sum_{i=1}^n R_{it}^\mathrm{ex} = R_t^{\mathrm{ex}}$ holds.
-From N3, reward $R_{it}$, which $\unit$ receives at $t$ can be written as the following.
+The external reward unit $\unit$ received at time step $t$ was denoted as $R_{it}^\mathrm{ex}$, where $\sum_{i=1}^n R_{it}^\mathrm{ex} = R_t^{\mathrm{ex}}$ holds.
+From N3, the reward $R_{it}$ received by $\unit$ at $t$ can be written as:
 \begin{flalign}
 	R_{it} = R_{it}^\mathrm{ex} + \sum_{j \in N^\mathrm{out}_i} \rho_{jit} 
 				- \sum_{j \in N^\mathrm{in}_i} \rho_{ijt}.
 \end{flalign}
-The equation is divided into positive terms and a negative term, we name the former as revenue, and the latter as cost, and denote them respectively as $r_{it} = R_{it}^\mathrm{ex} + \sum_{j \in N^\mathrm{out}_i} \rho_{jit}, \, c_{it} = \sum_{j \in N^\mathrm{in}_i} \rho_{ijt}$.
-We name $R_{it}$ as profit.
+which can be divided into positive and negative terms, where the former is defined as revenue, and the latter as cost. These are respectively denoted as $r_{it} = R_{it}^\mathrm{ex} + \sum_{j \in N^\mathrm{out}_i} \rho_{jit}, \, c_{it} = \sum_{j \in N^\mathrm{in}_i} \rho_{ijt}$.
+Here, $R_{it}$ represents profit.
 
-$\unit$ maximizes the cumulative discounted profit $G_{it}$ represented as
+
+The unit $\unit$ maximized its cumulative discounted profit, $G_{it}$, represented as:
 \begin{flalign}
 	G_{it}	= \sum_{k=0}^T \gamma^k R_{i, t+k} 
 			= \sum_{k=0}^T \gamma^k (r_{i,t+k} - c_{i,t+k})
 			&= r_t - c_t + \gamma G_{i,t+1}.
 \end{flalign}
-$G_{it}$ is unobserved unless the time is reached at the end of the episodes.
-Because prediction based on the current value is needed to select the optimal actions, 
-we approximate $G_{it}$ with value function $V_i^{\pi_i} (s_{it}) = \Expect{\pi_i}{ G_{it} \mid s_{it}}$ where $s_{it} \in \Observations$.
-In this case, the following equation holds.
+$G_{it}$ could not be observed until the end of an episode (the final time).
+Because predictions based on current values were needed to select optimal actions, 
+$G_{it}$ was approximated with the value function $V_i^{\pi_i} (s_{it}) = \Expect{\pi_i}{ G_{it} \mid s_{it}}$ where $s_{it} \in \Observations$.
+Under these conditions, the following equation holds:
 \begin{flalign} 
 		V_i^{\pi_i} (s_{it}) = r_{it} - c_{it} + \gamma V_i^{\pi_i} (s_{i, t+1}),	\label{eq:V}
-\end{flalign}
-Therefore, we need only consider maximization of revenue, the value function, and cost minimization.
-$R_{it} > 0$, i.e., $r_{it} > c_{it}$ indicates that the unit gives the additional value to the obtained data.
-The unit acts NOOP because $V_i^{\pi_i} (s_{it}) \leq 0 < \delta$ if $R_{it} \leq 0$ for all $t$ because of N4.
+\end{flalign}.
+Thus, herein, we only consider maximization of revenue, the value function, and cost minimization.
+The inequality $R_{it} > 0$ (i.e., $r_{it} > c_{it}$) indicates that the unit in question gave additional value to the obtained data.
+The unit selected the NOOP action because $V_i^{\pi_i} (s_{it}) \leq 0 < \delta$ if $R_{it} \leq 0$ for all $t$ (because of N4).
 
 %TODO: verify equation of V
 
@@ -151,7 +150,6 @@ Payment occurs if $b_{ijt}$ exceeds $q_{jt}$.
 In this case, $\rho_{jit} = H(b_{jit} - q_{it}) q_{it}$ holds where $H(\cdot)$ is a step function.
 Besides, we define $g_{jit} = H(b_{jit} - q_{it})$ and name it {\em allocation}.
 After allocation, the buyers perform payment as $\rho_{jit} = g_{jit} \opt{q}_{it}$ (\textbf{3}).
-Eventually, seller earns 
 The seller only sends activation $x_i$ to the allocated buyers (\textbf{4}).
 A buyer which cannot receive the activation approximates $x_i$ with $\Expect{\pi}{x_i}$.
 
@@ -247,7 +245,7 @@ The following theorem holds.
 \end{thm}
 See the Appendix for the proof.
 
-That is, the unit should only consider its counterfactual return (!).
+That is, the unit should only consider its counterfactual return!.
 If $\gamma = 0$, the case is equivalent to a case without auction. Hence, the bidding value raises if each unit consider long-time reward. 
 Consequently, in the mechanism of NaaA, the unit obeys as if performing valuation to the other units, 
 and declares the value truthfully.
