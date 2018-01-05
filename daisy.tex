@@ -24,13 +24,7 @@
 \maketitle
 
 \begin{abstract}
-Existing multi-agent reinforcement learning (MARL) communication methods have relied on a trusted third party (TTP) to distribute incentive to agents, leaving them inapplicable in peer-to-peer environments.
-This paper proposes incentive distribution using {\em Neuron as an Agent} (NaaA) in MARL without a TTP with two key ideas:
-(i) inter-agent reward distribution and (ii) auction theory.
-Auction theory is introduced because inter-agent reward distribution is insufficient for optimization.
-Agents in NaaA maximize their profits (the difference between reward and cost) and, as a theoretical result, the auction mechanism is shown to have agents autonomously evaluate counterfactual returns as the values of other agents.
-NaaA enables representation trades in peer-to-peer environments, ultimately regarding unit in neural networks as agents.
-Finally, numerical experiments (a single--agent environment from OpenAI Gym and a multi-agent environment from ViZDoom) confirm that NaaA framework optimization leads to better performance in RL.
+Existing multi-agent reinforcement learning (MARL) communication methods have relied on a trusted third party (TTP) to distribute incentive to agents, leaving them inapplicable in peer-to-peer environments. This paper proposes incentive distribution using {\em Neuron as an Agent} (NaaA) in MARL without a TTP with two key ideas: (i) inter-agent reward distribution and (ii) auction theory. Auction theory is introduced because inter-agent reward distribution is insufficient for optimization. Agents in NaaA maximize their profits (the difference between reward and cost) and, as a theoretical result, the auction mechanism is shown to have agents autonomously evaluate counterfactual returns as the values of other agents. NaaA enables representation trades in peer-to-peer environments, ultimately regarding unit in neural networks as agents. Finally, numerical experiments (a single--agent environment from OpenAI Gym and a multi-agent environment from ViZDoom) confirm that NaaA framework optimization leads to better performance in reinforcement learning.
 \end{abstract}
 
 \input{introduction-en.tex}

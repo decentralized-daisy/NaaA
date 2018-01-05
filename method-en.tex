@@ -15,38 +15,37 @@ Rewards are limited, so if an agent distributes $\rho$ rewards, the reward of th
 For this reason, agents other than a specified agent of interest can be considered a secondary environment for the agent giving 
 rewards of $-\rho$ instead of an observation $x$.
 This secondary environment was termed the {\em internal environment}, whereas the original environment was called the {\em external environment}.
-
 Similarly to CommNet \citep{sukhbaatar2016learning}, the communication protocol between agents was assumed to be a continuous quantity (such as a vector), the content of which could be trained by backpropagation.
-Under these conditions, it is possible to interpret multi-agent communications as a huge neural network.
-This allowed units to be interpreted as agents without losses of generality.
-This framework can be applied to both single- and multi-agent reinforcement learning.
+%Under these conditions, it is possible to interpret multi-agent communications as a huge neural network.
+%This allowed units to be interpreted as agents without losses of generality.
+%This framework can be applied to both single- and multi-agent reinforcement learning.
 
-A typical artificial neural network can be represented as a directed graph $\neuralnet = (\units, \edges)$ between units, where $\units = \{\unitAt{1}, \dots, \unitAt{N}\}$ is a set of the units and $\edges \subset \units^2$ is a set of edges representing the connections between two units.
-If $(\unit, \unitAt{j}) \in \edges$, then connection $\unit \rightarrow \unitAt{j}$ holds, indicating that $\unitAt{j}$ observes the activation of $\unit$.
-Here, the activation of unit $\unit$ at time $t$ was denoted as $x_{it} \in \Real$.
-Additionally, the set of units that unit $i$ connects to was designated to be $\followers = \{j | (\unit, \unitAt{j}) \in \edges \}$ and the set of units that unit $i$ is connected from was $\followees = \{j | (\unitAt{j}, \unit) \in \edges \}$.
+A communication network among the agents is represented as a directed graph $\neuralnet = (\agents, \edges)$ between agents, where $\agents = \{\agentAt{1}, \dots, \agentAt{N}\}$ is a set of the agents and $\edges \subset \agents^2$ is a set of edges representing the connections between two agents.
+If $(\agent, \agentAt{j}) \in \edges$, then connection $\agent \rightarrow \agentAt{j}$ holds, indicating that $\agentAt{j}$ observes the representation of $\agent$.
+Here, the representation of agent $\agent$ at time $t$ was denoted as $x_{it} \in \Real$.
+Additionally, the set of agents that agent $i$ connects to was designated to be $\followers = \{j | (\agent, \agentAt{j}) \in \edges \}$ and the set of agents that agent $i$ is connected from was $\followees = \{j | (\agentAt{j}, \agent) \in \edges \}$.
 Furthermore, $\friends = \followees \cup \followers$.
 
-The proposed NaaA method interprets $\unit$ as an agent, making $\neuralnet$ a multi-agent system.
-A $\unit$ environment was comprised of an environment where the multi-agent system itself touched a 
-set of units to which $\unit$ directly connects: $\{v_i \in \units | i \in \friends\}$.
+$\neuralnet$ is a multi-agent system.
+A $\agent$ environment was comprised of an environment where the multi-agent system itself touched a 
+set of agents to which $\agent$ directly connects: $\{v_i \in \agents | i \in \friends\}$.
 The former was defined as the external environment, whereas the latter was termed the internal environment.
-$\unit$ received rewards from both environments.
-The following assumptions were added to the $\unit$ characteristics:
+$\agent$ received rewards from both environments.
+The following assumptions were added to the $\agent$ characteristics:
 \begin{enumerate}
 \renewcommand{\labelenumi}{N\arabic{enumi}:}
 \item (Selfishness) 
-	The utility each unit $\unit$ wants to maximize is its own return (cumulative discounted reward):
+	The utility each agent $\agent$ wants to maximize is its own return (cumulative discounted reward):
 	$G_{it} = \sum_{k=0}^T \gamma^k \rewardAt{i,t+k}$.
 \item (Conservation) 	% Energy Conservation
-	The summation of internal rewards over all $\units$ equals 0.
-	Hence, the summation of rewards which $\units$ (receive both internal and external environment $\reward$) are equivalent to the reward $R_t^{\mathrm{ex}}$, which the entire multi-agent system receives from the external environment: $\sum_{i=1}^n R_{it} = \sum_{i=1}^n R_{it}^{\mathrm{ex}}$.
+	The summation of internal rewards over all $\agents$ equals 0.
+	Hence, the summation of rewards which $\agents$ (receive both internal and external environment $\reward$) are equivalent to the reward $R_t^{\mathrm{ex}}$, which the entire multi-agent system receives from the external environment: $\sum_{i=1}^n R_{it} = \sum_{i=1}^n R_{it}^{\mathrm{ex}}$.
 \item (Trade) 
-	A unit $\unit$ will receive an internal reward $\rho_{jit}$ from $\unitAt{j} \in \units$ in exchange for an activation signal $x_i$
-	before transferring this signal to the unit. Simultaneously, $\rho_{jit}$ will be subtracted from the reward of $v_j$.
+	A agent $\agent$ will receive an internal reward $\rho_{jit}$ from $\agentAt{j} \in \agents$ in exchange for an representation signal $x_i$
+	before transferring this signal to the agent. Simultaneously, $\rho_{jit}$ will be subtracted from the reward of $v_j$.
 \item (NOOP) 
-	$\unit$ can select NOOP (no operation), for which the return is $\delta > 0$, as an action.
-	In NOOP, the unit inputs and outputs nothing.
+	$\agent$ can select NOOP (no operation), for which the return is $\delta > 0$, as an action.
+	In NOOP, the agent inputs and outputs nothing.
 \end{enumerate}
 
 The social welfare function (total utility of the agents) $G^\mathrm{all}$ is equivalent to the objective function $G$. That is,
@@ -62,8 +61,8 @@ From N2, $G^\mathrm{all} = G$ holds.
 %================================================================
 \subsubsection{Discounted Cumulative Profit Maximization}
 %================================================================
-The external reward unit $\unit$ received at time step $t$ was denoted as $R_{it}^\mathrm{ex}$, where $\sum_{i=1}^n R_{it}^\mathrm{ex} = R_t^{\mathrm{ex}}$ holds.
-From N3, the reward $R_{it}$ received by $\unit$ at $t$ can be written as:
+The external reward agent $\agent$ received at time step $t$ was denoted as $R_{it}^\mathrm{ex}$, where $\sum_{i=1}^n R_{it}^\mathrm{ex} = R_t^{\mathrm{ex}}$ holds.
+From N3, the reward $R_{it}$ received by $\agent$ at $t$ can be written as:
 \begin{flalign}
 	R_{it} = R_{it}^\mathrm{ex} + \sum_{j \in N^\mathrm{out}_i} \rho_{jit} 
 				- \sum_{j \in N^\mathrm{in}_i} \rho_{ijt}.
@@ -72,7 +71,7 @@ which can be divided into positive and negative terms, where the former is defin
 Here, $R_{it}$ represents profit.
 
 
-The unit $\unit$ maximized its cumulative discounted profit, $G_{it}$, represented as:
+The agent $\agent$ maximized its cumulative discounted profit, $G_{it}$, represented as:
 \begin{flalign}
 	G_{it}	= \sum_{k=0}^T \gamma^k R_{i, t+k} 
 			= \sum_{k=0}^T \gamma^k (r_{i,t+k} - c_{i,t+k})
@@ -86,8 +85,8 @@ Under these conditions, the following equation holds:
 		V_i^{\pi_i} (s_{it}) = r_{it} - c_{it} + \gamma V_i^{\pi_i} (s_{i, t+1}),	\label{eq:V}
 \end{flalign}
 Thus, herein, we only consider maximization of revenue, the value function, and cost minimization.
-The inequality $R_{it} > 0$ (i.e., $r_{it} > c_{it}$) indicates that the unit in question gave additional value to the obtained data.
-The unit selected the NOOP action because $V_i^{\pi_i} (s_{it}) \leq 0 < \delta$ if $R_{it} \leq 0$ for all $t$ (because of N4).
+The inequality $R_{it} > 0$ (i.e., $r_{it} > c_{it}$) indicates that the agent in question gave additional value to the obtained data.
+The agent selected the NOOP action because $V_i^{\pi_i} (s_{it}) \leq 0 < \delta$ if $R_{it} \leq 0$ for all $t$ (because of N4).
 
 %TODO: verify equation of V
 
@@ -103,8 +102,8 @@ The unit selected the NOOP action because $V_i^{\pi_i} (s_{it}) \leq 0 < \delta$
 
 \subsubsection{Social Dilemma}
 If we directly optimize Eq:(\ref{eq:V}),
-a trivial solution is obtained in which the internal rewards converge at 0, and all units (excepting output units) select NOOP as their action.
-This phenomenon occurs regardless of the network topology $\neuralnet$, as no nodes are incentivized to send payments $\rho_{ijt}$ to other units.
+a trivial solution is obtained in which the internal rewards converge at 0, and all agents (excepting agents which directly receive reward from the external environment) select NOOP as their action.
+This phenomenon occurs regardless of the network topology $\neuralnet$, as no nodes are incentivized to send payments $\rho_{ijt}$ to other agents.
 With this in mind, multi-agent systems must select actions with no information, achieving the equivalent of taking random actions.
 For that reason, the external reward $R_t^{\mathrm ex}$ shrinks markedly.
 This phenomenon also known as social dilemma in MARL, which is caused from a problem that each agent does not evaluate other agents' value truthfully to maximize their own profit.
@@ -139,19 +138,19 @@ In NaaA, this can be represented by the following assumption:
 	If $\rho_{j_1,i,t}, \rho_{j_2,i,t} > 0$, then $\rho_{j_1,i,t} = \rho_{j_2,i,t}$.
 \end{enumerate}
 The assumption above indicates that $\rho_{jit}$ takes either 0 or a positive value, depending on $i$ at an equal selected time $t$.
-Therefore, the positive side was named $\unit$'s {\em price}, and denoted as $q_{it}$.
+Therefore, the positive side was named $\agent$'s {\em price}, and denoted as $q_{it}$.
 
 %TODO: Describe for allocation
 
-The envy-free auction process is shown in the left section of Figure \ref{fig:double}, displaying the negotiation process between one unit sending an activation (defined as a seller), and a group of units buying the activation (defined as buyers).
-First, a buyer places a bid with the unit at a bidding price $b_{jit}$ (\textbf{1}).
-Next, the seller selects the optimal price $\opt{q}_{it}$ and allocates the activation (\textbf{2}).
+The envy-free auction process is shown in the left section of Figure \ref{fig:double}, displaying the negotiation process between one agent sending an representation (defined as a seller), and a group of agents buying the representation (defined as buyers).
+First, a buyer places a bid with the agent at a bidding price $b_{jit}$ (\textbf{1}).
+Next, the seller selects the optimal price $\opt{q}_{it}$ and allocates the representation (\textbf{2}).
 Payment occurs if $b_{ijt}$ exceeds $q_{jt}$.
 In this case, $\rho_{jit} = H(b_{jit} - q_{it}) q_{it}$ holds where $H(\cdot)$ is a step function.
 For this transaction, the definition $g_{jit} = H(b_{jit} - q_{it})$ holds, and is named {\em allocation}.
 After allocation, buyers perform payment: $\rho_{jit} = g_{jit} \opt{q}_{it}$ (\textbf{3}).
-The seller sends the activation $x_i$ only to the allocated buyers (\textbf{4}).
-Buyers who do not receive the activation approximate $x_i$ with $\Expect{\pi}{x_i}$.
+The seller sends the representation $x_i$ only to the allocated buyers (\textbf{4}).
+Buyers who do not receive the representation approximate $x_i$ with $\Expect{\pi}{x_i}$.
 This negotiation is performed at each time step in reinforcement learning.
 
 \subsubsection{Theoretical Analysis}
@@ -162,12 +161,12 @@ The sections below discuss the revenue, cost, and value functions based on Eq:(\
 %========================================
 
 \textbf{Revenue}:
-The revenue of a unit is given as
+The revenue of a agent is given as
 \begin{flalign}
 	r_{it}  = \sum_{j \in N^\mathrm{out}_i} g_{jit} q_{it} + R^\mathrm{ex}_i 
 		= q_i d_{it} + R^\mathrm{ex}_i,
 \end{flalign}
-where $d_{it} = \sum_{j \in N^\mathrm{out}_i} g_{jit}$ is some number of units for which the $q_{it}$ bidding price is greater than or equal to $q_{it}$ (designated as the demand).
+where $d_{it} = \sum_{j \in N^\mathrm{out}_i} g_{jit}$ is some number of agents for which the $q_{it}$ bidding price is greater than or equal to $q_{it}$ (designated as the demand).
 The equation maximizing $q_{it}$ is designated as the optimal price, denoted as $ \opt{q}_{it} $.
 Because $R^\mathrm{ex}_i$ is independent of $q_t$, the optimal price $\opt{q}_{it}$ is given as:
 \begin{flalign}
@@ -179,7 +178,7 @@ The $r_{it}$ curve is shown on the right side of Figure \ref{fig:double}.
 % ÉRÉXÉg
 %========================================
 \textbf{Cost}:
-Cost is defined as an internal reward that one unit pays to other units.
+Cost is defined as an internal reward that one agent pays to other agents.
 It is represented as:
 \begin{flalign}
 		c_{it} = \sum_{j \in N^\mathrm{in} } g_{ijt} q_{jt} = \vect{g}_{it}^\mathrm{T} \vect{q}_{t},
@@ -189,8 +188,8 @@ Although $c_{it}$ itself is minimized when $b_{ijt} = 0$,
 this represents a tradeoff with the following value function.
 
 \textbf{Value Function}:
-The activation $x_{it}$ depends on input from the units in $N_i^{\mathrm in}$ affecting the bidding price from units in $N_i^{\mathrm out}$.
-If $b_{ijt}$ is minimized and $b_{ijt} = 0$, the activation purchase fails and the reward obtained by the seller unit from the connected buyer units is lower in the future.
+The representation $x_{it}$ depends on input from the agents in $N_i^{\mathrm in}$ affecting the bidding price from agents in $N_i^{\mathrm out}$.
+If $b_{ijt}$ is minimized and $b_{ijt} = 0$, the representation purchase fails and the reward obtained by the seller agent from the connected buyer agents is lower in the future.
 
 The effects of the value function were considered for both successful and unsuccessful $v_j$ purchasing cases.
 The value function was approximated as a linear function $\vect{g}_{it}$:
@@ -219,7 +218,7 @@ As $\vect{o}_{it}$ is equivalent to the cumulative discount value of the counter
 \includegraphics[width=\linewidth]{img/double.eps}
 \caption{
 \textbf{Left}: Trade process in an envy-free auction.
-\textbf{Right}: Unit price determination curve. Unit revenue is a product of monotonically decreasing demands and prices. The price that maximizes revenue is the optimal price.
+\textbf{Right}: Agent price determination curve. Agent revenue is a product of monotonically decreasing demands and prices. The price that maximizes revenue is the optimal price.
 }
 \label{fig:double}
 \end{figure*}
@@ -246,9 +245,9 @@ the following theorem holds.
 \end{thm}
 This proof is shown in the Appendix.
 
-This implies units should only consider their counterfactual returns!.
-When $\gamma = 0$ it is equivalent to a case without auction. Hence, the bidding value is raised if each unit considers their long-time rewards. 
-Consequently, when the NaaA mechanism is used units behave as if performing valuation for other units, 
+This implies agents should only consider their counterfactual returns!.
+When $\gamma = 0$ it is equivalent to a case without auction. Hence, the bidding value is raised if each agent considers their long-time rewards. 
+Consequently, when the NaaA mechanism is used agents behave as if performing valuation for other agents, 
 and declare values truthfully.
 
 Under these conditions, the following corollary holds:
@@ -274,23 +273,23 @@ The overall algorithm is shown in Algorithm 1.
 	\FOR{ $t=1$ \TO $T$ }
 		\STATE Compute a bidding price for every edge: \textbf{for} $(v_j, v_i) \in \edges$ \textbf{do}\
 		$b_{ijt} \leftarrow Q^{\pi_i}( \vect{s}_{it}, \vect{e}_j) - Q^{\pi_i}( \vect{s}_{it}, \vect{0})$ 
-		\STATE Compute an asking price for every node: \textbf{for} $\unit \in \units$ \textbf{do}\
+		\STATE Compute an asking price for every node: \textbf{for} $\agent \in \agents$ \textbf{do}\
 		$\opt{q}_{it} \leftarrow \argmax_{q \in [0, \infty)} q d_{it}(q).$
 		\FOR{$(v_i, v_j) \in \edges$}
 				\STATE Compute allocation: $g_{jit} \leftarrow H(b_{jit} - \opt{q}_{it})$ 
 				\STATE Compute the price the agent should pay: $\rho_{jit} \leftarrow g_{jit} \opt{q}_{it}$ 
 		\ENDFOR
-		\STATE Make a payment: \textbf{for} $\unit \in \units$ \textbf{do}\
+		\STATE Make a payment: \textbf{for} $\agent \in \agents$ \textbf{do}\
 		$R_{it} \leftarrow \sum_{j \in N^\mathrm{out}_i} \rho_{jit} 
 				- \sum_{j \in N^\mathrm{in}_i} \rho_{ijt},$
-		\STATE Make a shipment: \textbf{for} $\unit \in \units$ \textbf{do}\
+		\STATE Make a shipment: \textbf{for} $\agent \in \agents$ \textbf{do}\
 		$\tilde{x}_{ijt} = g_{ijt} x_{ijt} + ( 1 - g_{ijt} ) \bar{x}_{ijt} $
 
-		\FOR{$\unit \in \units$} 
+		\FOR{$\agent \in \agents$} 
 			\STATE Observe external state $\vect{s}_{it}^{\mathrm ex}$
 			\STATE $\vect{s}_{it} \leftarrow (\vect{s}_{it}^{\mathrm ex}, \vect{\tilde{x}}_{it}, \bs{\theta}_i)$,\
 				where $\vect{\tilde{x}}_{it} = (\tilde{x}_{i1t}, \dots, \tilde{x}_{int})^\mathrm{T}$ and\
-				$\bs{\theta}_i$ is $\unit$'s parameter.
+				$\bs{\theta}_i$ is $\agent$'s parameter.
 			\STATE Sample action $a_{it}^{\mathrm ex} \sim \pi_i^{\mathrm ex}(\vect{s}_{it})$
 			\STATE Receive external reward $R_{it} \leftarrow R_{it} + R_{it}^{\mathrm ex}(a_{it}^{\mathrm ex})$
 			\STATE Update $Q^{\pi_i}$ under the manner of $Q$-learning by calculating the time difference (TD)-error 
@@ -329,7 +328,7 @@ image recognition, sound recognition, and even deep reinforcement learning.
 	\FOR{ $t=1$ \TO $T$ }
 		\STATE Compute a bidding price for every edge: \textbf{for} $(v_j, v_i) \in \edges$ \textbf{do} \
 		$b_{ijt} \leftarrow |w_{ijt}|$ 
-		\STATE Compute an asking price for every node: \textbf{for} $\unit \in \units$ \textbf{do} \
+		\STATE Compute an asking price for every node: \textbf{for} $\agent \in \agents$ \textbf{do} \
 		$\opt{q}_{it} \leftarrow \argmax_{q \in [0, \infty)} q d_{it}(q).$
 		\FOR{$(v_i, v_j) \in \edges$}
 				%\STATE Sample $u$ from a Bernoulli distribution: $u \sim \mathrm{Bernoulli}(\varepsilon)$
