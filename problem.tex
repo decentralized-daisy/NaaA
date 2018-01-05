@@ -1,0 +1,8 @@
+\section{Problem Definition}
+Suppose there are $N$ agents interacting to an environment.  Our goal is to maximize the discounted cumulative reward which the system will obtain from the external environment.
+\begin{equation}
+G = \sum_{i=1}^N \left[ \sum_{t=0}^T \gamma^t R_{it}^\mathrm{ex} \right],
+\end{equation}
+where $R_{it}^\mathrm{ex}$ is an external reward which $i$-th agent obtains at $t$, and $\gamma \in [0, 1]$ is the discount rate and $T$ is the terminal time.
+
+% 金銭のように環境から与えられる報酬の量は限られており、これらをエージェント間で分配するという問題を解いているという話を加える
