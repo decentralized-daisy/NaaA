@@ -1,35 +1,26 @@
 %\section{Conclusion and Future Works}
-\section{Concluding Remark and Future Work}
-This paper has proposed NaaA to address communication in MARL without TTP with two key idaes: inter-agent reward distribution and auction theory.
-Existing methods on MARL supposed existence of TTP, and hence it cannot be applied to peer-to-peer environment.
-This paper first proposed inter-agent reward distribution, which make agents redistribute their received reward from internal/external environment.
-By introducing envy-free auction from auction theory, we show that the agents obey to evaluating counterfactual return of other agents.
-In experimental result, we showed that NaaA outperforms a baseline and a method based on CommNet.
+\section{Concluding Remarks and Future Work}
+This paper proposed a NaaA model to address communication in MARL without a TTP based on two key ideas: inter-agent reward distribution and auction theory.
+Existing MARL communication methods have assumed the existence of a TTP, and hence could not be applied in peer--to--peer environments.
+The inter-agent reward distribution, making agents redistribute the rewards they received from the internal/external environment, was reviewed first.
+When an envy-free auction was introduced using auction theory, it was shown that agents would evaluate the counterfactual returns of other agents.
+The experimental results demonstrated that NaaA outperformed a baseline method and a CommNet-based method.
 
-Furthermore, we proposed $Q$-learning based algorithm, adaptive dropconnect, to optimize the neural network topology dynamically with evaluation of counterfactual return as an further application.
-For the evaluation, we performed experiments based on single-agent platform, demonstrating that our experimentally obtained results improved existing methods.
+Furthermore, a $Q$-learning based algorithm, termed Adaptive DropConnect, was proposed to dynamically optimize neural network topology with counterfactual return evaluation as a further application.
+To evaluate this application, experiments were performed based on a single-agent platform, demonstrating that the proposed method produced improved experimental results relative to existing methods.
 
-One future direction is considering further sophisticated reward design and auction mechanism.
-In current setting, an agent should pay constant cost if the agent cannot receive a reward.
-To address the issue, we can consider revenue-share model that cost is in proportion to its revenue.
-In this situation, we will seek the closed solution such as counterfactual return.
-Although envy-free auction guarantees truthfulness if the buyer prices are sealed,
-in cases where buyers can mutually communicate and share price information, 
-the buyer can fake the price with lower demand in a process of collusion.
-To address the issue, we will consider several solutions such as consensus estimate \citep{goldberg2003competitiveness} and random sample auction \citep{goldberg2006competitive}.
+% TODO: åãëıÇµÇΩèÍçáÇÃëŒçÙÇÕÇ«Ç±Ç©Ç…èëÇ¢ÇΩï˚Ç™Ç¢Ç¢Ç©Ç‡ÇµÇÍÇ»Ç¢
 
-%Besides, there are direction to parameter 
+Future research may also be directed toward considering the connection between NaaA and neuroscience or neuroevolution.
+Edeleman propounded the concept of neural Darwinism \citep{edelman1987neural}, in which group selection occurs in the brain.
+Inter-agent rewards, which were assumed in this paper, correspond to NTFs
+and could be used as a fitness function in genetic algorithms for neuroevolution such as hyperparameter tuning.
 
-Another research direction is to consider connection between NaaA and neuroscience or neuroevolution.
-Edeleman propounded the concpet of neural darwinism \citep{edelman1987neural} in which group selection occurs in brain.
-Inter-agent reward which we supposed in this paper corresponds to neurotrophic factor,
-and can be used as a fitness function in genetic algorithm for neuroevolution algorithm such as hyperparameter tuning.
-
-As NaaA can be applied into a peer-to-peer environment, 
-we are considering implementation of NaaA on blockchain \citep{swan2015blockchain}.
-By doing this, we can extend the applicable area of deep reinforcement learning.
-We can use bitcoin \citep{nakamoto2008bitcoin} as inter-agent reward distribution, and the mechanism of auction can be realized by smart contract \citep{buterin2014next}.
-With incentive design of NaaA, we are desiring the world becomes the one that people shares their own representation in the worldwide scale.
+As NaaA can be applied in peer-to-peer environments, 
+the implementation of NaaA in blockchain \citep{swan2015blockchain} is under consideration.
+This implementation would extend the areas where deep reinforcement learning could be applied.
+Bitcoin \citep{nakamoto2008bitcoin} could be used for inter-agent reward distribution, and the auction mechanism could be implemented by smart contracts \citep{buterin2014next}.
+Using the NaaA incentive design, it is hoped that the world may be united, allowing people to share their own representations on a global scale.
 
 %We can use bitcoin \cite{nakamoto2008bitcoin} and smart contract \cite{}a 
 
