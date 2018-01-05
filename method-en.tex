@@ -99,7 +99,13 @@ The unit selected the NOOP action because $V_i^{\pi_i} (s_{it}) \leq 0 < \delta$
 %The perspective of interpreting a neuron as an independent living object is known as neural Darwinism \citep{edelman1987neural}.
 
 \subsubsection{Social Dilemma}
-STUB
+If we directly optimize Eq:(\ref{eq:V}),
+a trivial solution is obtained in which the internal rewards converge at 0, and all units (excepting output units) select NOOP as their action.
+This phenomenon occurs regardless of the network topology $\neuralnet$, as no nodes are incentivized to send payments $\rho_{ijt}$ to other units.
+With this in mind, multi-agent systems must select actions with no information, achieving the equivalent of taking random actions.
+For that reason, the external reward $R_t^{\mathrm ex}$ shrinks markedly.
+This phenomenon also known as social dilemma in MARL, which is caused from a problem that each agent does not evaluate other agents' value truthfully to maximize their own profit.
+We are trying to solve this problem with auction theory in the next subsection.
 
 \subsection{Auction Theory}
 %To maximize the cumulative discounted profit in a framework of NaaA,
@@ -113,18 +119,13 @@ STUB
 %\begin{thm}\label{thm:optimal-bidding-simple}
 %$\pi_i$ is the Nash equilibrium if and only if $\rho_{ijt} = 0$ regardless $\neuralnet$
 %\end{thm}
-Mechanism design was introduced because, unlike the methods utilized in existing studies \citep{sukhbaatar2016learning}, NaaA assumes that agents are selfish, not cooperative.
+%Mechanism design was introduced because, unlike the methods utilized in existing studies \citep{sukhbaatar2016learning}, NaaA assumes that agents are selfish, not cooperative.
 %(TODO: Bad writing.)
-If the optimization problem of NaaA is itself naively optimized, a trivial solution is obtained in which the internal rewards converge at 0, and all units (excepting output units) select NOOP as their action.
-This phenomenon occurs regardless of the network topology $\neuralnet$, as no nodes are incentivized to send payments $\rho_{ijt}$ to other units.
-With this in mind, multi-agent systems must select actions with no information, achieving the equivalent of taking random actions.
-For that reason, the external reward $R_t^{\mathrm ex}$ shrinks markedly.
-
-\subsubsection{Envy-free Auction}
-To make the agents to evaluate other agents' value truthfully, the proposed objective function borrows its idea from the digital goods auction theory \cite{guruswami2005profit}.
+To make the agents to evaluate other agents' value truthfully, the proposed objective function borrows its idea from the digital goods auction theory \citep{guruswami2005profit}.
 This auction theory is a part of mechanism design intended to unveil the true price of goods.
 Digital goods auctions are one mechanism developed from auction theory, specifically targeting goods that may be copied without cost such as digital books and music.
 
+\subsubsection{Envy-free Auction}
 Although several variations of digital goods auctions exist,
  an envy-free auction \citep{guruswami2005profit} was used here because it required only a simple assumption: equivalent goods have a single simultaneous price.
 In NaaA, this can be represented by the following assumption:
