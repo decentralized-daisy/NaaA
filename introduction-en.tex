@@ -12,12 +12,13 @@ however, if such agents could exchange information, the overall revenue of stake
 As each agent has limited visibility of the environment, information exchanges between agents would be helpful in solving their independent tasks.
 Thus, this paper aimed to actualize a society where stakeholders with conflicting interests willingly trade information.
 
-This paper investigated the communication situation in multi-agent reinforcement learning (MARL) using several existing methods such as R/DIAL \citep{foerster2016learning} and CommNet \citep{sukhbaatar2016learning}.
+We regard the situation as communication in multi-agent reinforcement learning (MARL).
+Multi-agent communication is addressed by several methods such as R/DIAL \citep{foerster2016learning} and CommNet \citep{sukhbaatar2016learning}.
 CommNet is a state-of-the-art MARL method that considers communication between agents 
 and features learning among agents with backpropagation.
 
 When considering conditions in MARL such that different stakeholders have created different agents that communicate with each other, an incentive distribution design (e.g., monetary payment) and a framework without a {\em trusted third party} (TTP) are required.
-TTP is a neutral administrator that performs reward distributions for all participants, and is supposed implicitly by most existing literature regarding MARL \citep{agogino2006quicr,foerster2016learning,sukhbaatar2016learning}.
+TTP \citep{wu1999game,sandholm2002possibility} is a neutral administrator that performs reward distributions for all participants, and is supposed implicitly by most existing literature regarding MARL \citep{agogino2006quicr,foerster2016learning,sukhbaatar2016learning}.
 Although there is a requirement for TTP neutrality towards all participants,
 several peer-to-peer trade configurations, such as inter-industry and -country trades, cannot place TTP.
 If reward distribution is performed by an untrusted third party, the rewards for partial participants may be undesirably altered.
