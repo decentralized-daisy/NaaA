@@ -1,48 +1,45 @@
 \section{Experiment}
-% è≠ÇµçÏï∂ÇµÇΩÇŸÇ§Ç™ó«Ç¢
-We confirmed our reward distribution works as expected with a multi-agent setting in ViZDoom \citep{kempka2016vizdoom}, 
-an emulator of Doom which have a map editor.
-In the setting, additional agents complement the main player.
-A player in ViZDoom environment should seek the enemy in the map, and then defeat the enemy.
+The proposed reward distribution method was confirmed to work as expected by a validation experiment using the multi-agent setting in ViZDoom \citep{kempka2016vizdoom}, 
+an emulator of Doom containing a map editor where additional agents complement the main player.
+A main player in the ViZDoom environment aims to seek the enemy in the map and then defeat the enemy.
 
 \subsection{Setup}
-We used a scenario based on Defend the Center (DtC), provided by ViZDoom platform.
-In DtC, players are placed in the center of a field of circle. They attack enemies that come from the wall.
-The game has two players: a main player and a cameraman.
-Alhough the main player can attack the enemy with bullets, 
-the cameraman has no way to attack, and only scouts for the enemy.
-The action space for the main player is the combination of \{ attack, turn left, turn right \}. Therefore, the total number of actions is $2^3 = 8$.
-The cameraman has two possible actions: \{ turn left, turn right \}.
-Although the players can only change direction, they cannot move on the field.
-The enemy will die if have the attack (bullet) from the main player once, then player receives +1.
-As a default on an episode, the ammunition amount is 26.
-The main player will die if under attack from the enemy to the extent that health becomes 0, then the player receives -1.
-The cameraman will not die if attacked by the enemy.
-The episode will terminate when the maim player dies, or after 525 steps have elapsed.
+A defend the center (DtC)-based scenario, provided by ViZDoom platform, was used for this experiment.
+Two players, a main player and a cameraman, were placed in the DtC, where they started in the center of a circular field and then attacked enemies that came from the surrounding wall.
+Although the main player could attack the enemy with bullets, 
+the cameraman had no way to attack, only scouting for the enemy.
+The action space for the main player was the combination of \{ attack, turn left, turn right \}, giving a total number of actions $2^3 = 8$.
+The cameraman had two possible actions: \{ turn left, turn right \}.
+Although the players could change direction, they could not move on the field.
+Enemies died after receiving one attack (bullet) from the main player, and then player received a score of +1 for each successful attack.
+The main player received 26 bullets by default at the beginning of each episode.
+The main player died if they received attacks from the enemy to the extent that their health dropped to 0, and received a score of -1 for each death.
+The cameraman did not die if attacked by an enemy.
+Episodes terminated either when the maim player died or after 525 steps elapsed.
 
 \subsection{Model}
-We compared three models: the proposed method and two comparison targets.
+Three models, described below, were compared: the proposed method and two comparison targets.
 
-{\em Baseline}: DQN without communication. The main player learns standard DQN with the perspective that the player is viewing.
-Because the cameraman does not learn, the player continues to move randomly.
+{\em Baseline}: DQN without communication. The main player learned standard DQN with the perspective that the player is viewing.
+Because the cameraman did not learn, this player continued to move randomly.
 
-{\em Comm}: DQN with communication. The main player learns DQN with two perspectives: the player's own and the cameraman's.
-The communication vector is learned with a feed-forward neural network. The method is inspired by Commnet.
+{\em Comm}: DQN with communication, inspired by Commnet. The main player learns DQN with two perspectives: theirs and that of the cameraman.
+The communication vector is learned with a feed-forward neural network.
 
-{\em NaaA}: The proposed method. The main player learns DQN with two perspectives: the player's own and the cameraman's.
-The transmission of reward and communication are performed using the proposed method.
+{\em NaaA}: The proposed method. The main player learned DQN with two perspectives: theirs and that of the cameraman.
+Transmissions of rewards and communications were performed using the proposed method.
 
 \begin{figure*}[t]
 \centering
 \includegraphics[width=\linewidth]{img/lc_vis.eps}
 \caption{
 	\textbf{Left:}
-		Learning curve for the multi-agent task of VizDoom. 
-		Our method based on NaaA outperforms the other two methods: baseline and Comm DQN.
+		Learning curve for ViZDoom multi-agent task. 
+		The proposed NaaA--based method outperformed the other two methods (baseline and Comm DQNs).
 	\textbf{Right:} 
 		Visualizing reward from the main player to the cameramann shows us what is important information for the main player:
-		(a) The cameraman sees the pistol.
-		(b) The cameraman sees the point which enemy appear and come closer.
+		(a) The pistol.
+		(b) The point at which the enemy appeared and approached.
 }
 \label{fig:lc_vis}
 \end{figure*}
@@ -51,30 +48,29 @@ The transmission of reward and communication are performed using the proposed me
 \centering
 \includegraphics[width=\linewidth]{img/circleworld.eps}
 \caption{
-NaaA leads the agents to obtain cooperative relationship.
-First, the two agents are facing in different directions,
-and the cameraman sells its information to the main player (\textbf{1}).
-The main player who bought the information starts to turn right to find the enemy.
-The cameraman who sold the information starts to turn left to seek new information by finding the blind area of the main player (\textbf{2} and \textbf{3}).
-With turning, the main player attacks the first enemy which he already saw (\textbf{4} and \textbf{5}).
-After the main player finds out the enemy, he attacks the enemy, and obtain the reward  (\textbf{6} and \textbf{7}).
-Until the next enemy appears, the agents watch their dead area each other (\textbf{8}).
+NaaA leads agents to enter a cooperative relationship.
+First, the two agents face different directions,
+and the cameraman sells their information to the main player (\textbf{1}).
+The main player (information buyer) starts to turn right to find the enemy.
+The cameraman (information seller) starts to turn left to seek new information by finding the blind area of the main player (\textbf{2} and \textbf{3}).
+After turning, the main player attacks the first, having already identified enemy (\textbf{4} and \textbf{5}).
+Once the main player finds the enemy, he attacks and obtains the reward (\textbf{6} and \textbf{7}).
+Both agents then return to watching the dead area of the other until the next enemy appears (\textbf{8}).
 }
 \label{fig:circleworld}
 \end{figure*}
 
 \subsection{Results}
-Training is performed in 10 million steps.
-Figure \ref{fig:lc_vis} Left presents that our model NaaA outperforms two methods.
-Improvement is achieved by Adaptive DropConnect.
-We confirmed that the cameraman sees the enemy through an episode.
-This can be interpreted as the cameraman reporting the enemy position.
-In addition to seeing the enemy, the cameraman sees the area behind of main player several times.
-This action enables the cameraman to observe attacks from the enemy while seizing a better relative position.
+Training was performed over the course of 10 million steps.
+Figure \ref{fig:lc_vis} Left demonstrates the proposed NaaA model outperformed the other two methods.
+Improvement was achieved by Adaptive DropConnect.
+It was confirmed that the cameraman observed the enemy through an episode, which could be interpreted as the cameraman reporting enemy positions.
+In addition to seeing the enemy, the cameraman observed the area behind the main player several times.
+This enabled the cameraman to observe enemy attacks while taking a better relative position.
 
-For further interpretation of the result, 
-we present visualization of the revenue that the agent earned in Figure \ref{fig:lc_vis} Right as a heatmap.
-The background picture is a screen in Doom taken at the moment when the filter in CNN is mostly activated.
+To further interpret this result, 
+a heatmap visualization of revenue earned by the agent is presented in Figure \ref{fig:lc_vis} Right.
+The background picture is a screen from Doom, recorded at the moment when the CNN filter was most activated.
 %The center corresponds to a position with the enemy appearing far away.
 %The top corresponds to a position with the enemy coming closer.
 %(b) shows that the agent sees the pistol.
@@ -93,3 +89,4 @@ Figure \ref{fig:circleworld} shows an example of learnt sequence of actions by o
 
 %The additional feature of NaaA is credit assignment for reward distribution, 
 %meaning that if the neural network is divided into multiple agents, it works by playing the auction game.
+
