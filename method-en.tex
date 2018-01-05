@@ -1,4 +1,7 @@
 \section{Proposed Method}
+The proposed method, {\em Neuron as an Agent} (NaaA), extends CommNet \citep{sukhbaatar2016learning} to actualize incentive distributions in MARL without TTP based on two key ideas: (i) inter-agent reward distribution and (ii) auction theory.
+As we show in Section \ref{sec:naaa}, NaaA actualizes that we can regard even a unit as an agent.
+
 \subsection{Inter-agent Reward Distribution}
 
 %TODO: Show the figure.
@@ -7,8 +10,8 @@
 % ・いくつかの前提を提案する
 % ・NaaA の social welfare function を最大化することが、外部からのリワード最大化に一致する。
 
-Some agents receive rewards from the environment, and they distribute these to other agents as incentives for giving precise information.
-Rewards are limited, so if an agent distributes $\rho$ rewards, the reward of that agents is reduced by $\rho$, as it would be with currency.
+Some agents receive rewards from the environment directly $R_{it}^{\mathrm ex}$, and they distribute these to other agents as incentives for giving precise information.
+Rewards are limited, so if an agent distributes $\rho$ rewards, the reward of that agents is reduced by $\rho$ to satisfy the constraint of Eq:(\ref{eq:reward_const}).
 For this reason, agents other than a specified agent of interest can be considered a secondary environment for the agent giving 
 rewards of $-\rho$ instead of an observation $x$.
 This secondary environment was termed the {\em internal environment}, whereas the original environment was called the {\em external environment}.
@@ -296,7 +299,7 @@ The overall algorithm is shown in Algorithm 1.
 \end{algorithmic}
 \end{algorithm}
 
-\subsection{Neuron as an Agent}
+\subsection{Neuron as an Agent} \label{sec:naaa}
 One benefit of NaaA is that it can be used not only for MARL, but also for network training.
 Typical neural network training algorithms such as RMSProp \citep{tieleman2012lecture} and Adam \citep{kingma2014adam} are based on sequential algorithms such as the stochastic gradient descent (SGD).
 Therefore, the problem they solve can be interpreted as a problem of updating a state (i.e., weight) to a goal (the minimization of the expected likelihood).

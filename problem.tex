@@ -1,12 +1,37 @@
 \section{Problem Definition}
-Suppose there are $N$ agents interacting in an environment. 
+Suppose there are $N$ agents in an environment. 
 The goal of this paper was to maximize the discounted cumulative reward the system obtained from the external environment.
 This was calculated as:
 \begin{equation}
-G = \sum_{i=1}^N \left[ \sum_{t=0}^T \gamma^t R_{it}^\mathrm{ex} \right],
+G = \sum_{t=0}^T \gamma^t R_{t}^\mathrm{ex},
 \end{equation}
-where $R_{it}^\mathrm{ex}$ is an external reward which $i$-th agent obtains at $t$, and $\gamma \in [0, 1]$ is the discount rate and $T$ is the terminal time.
+where $R_{t}^\mathrm{ex}$ is a reward which $i$-th agent obtains at $t$, 
+and $\gamma \in [0, 1]$ is the discount rate and $T$ is the terminal time.
+
+Reward distribution is distributing $R_{t}^\mathrm{ex}$ to all the agents under the following constraints.
+\begin{equation}
+	\sum_{i=1}^N R_{it} = R_{t}^\mathrm{ex},
+	\label{eq:reward_const}
+\end{equation}
+where $R_{it}$ is a reward which is distributed to $i$-th agent at time $t$.
+For instance, in robot soccer, the environment give a reward 1 when an agent shoot a ball to the goal.
+Each agent should receive the reward along to their contribution.
+
+%Trusted third party is required to calculate $R_{it}$.
+In most of MARL communication methods, the policy of reward distribution is determined by a centralized agent.
+For example, QUICR \cite{agogino2006quicr} and COMA \cite{foerster2017counterfactual} distribute $R_{it}$ according to counterfactal reward, difference of reward between an agent made an action and not.
+The value of counterfactual reward is calculated by centralized agent, called {\em trusted third party} (TTP).
+
+In a peer-to-peer environment such as inter-industry and -countery trade, they cannot place a TTP. 
+Hence, another framework required to actualize reward distirbution without TTP.
 
 % FIXME ここではまだ external environment の話はしていない
 
 % 金銭のように環境から与えられる報酬の量は限られており、これらをエージェント間で分配するという問題を解いているという話を加える
+%Suppose there are $N$ agents interacting in an environment. 
+%The goal of this paper was to maximize the discounted cumulative reward the system obtained from the external environment.
+%This was calculated as:
+%\begin{equation}
+%G = \sum_{i=1}^N \left[ \sum_{t=0}^T \gamma^t R_{it}^\mathrm{ex} \right],
+%\end{equation}
+%where $R_{it}^\mathrm{ex}$ is an external reward which $i$-th agent obtains at $t$, and $\gamma \in [0, 1]$ is the discount rate and $T$ is the terminal time.
