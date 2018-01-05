@@ -26,12 +26,29 @@
 %\end{flalign}
 %Therefore, the condition to maximize $\Expect{q}{G(b,q)}$ is $b=v$.
 
-The optimization problem in Eq:\ref{} is made of two terms except of the constant, 
+The optimization problem in Eq:\ref{Eq:optimization-probem} is made of two terms except of the constant, 
 and the only second term is depends on $\vect{b}$.
 Hence, we consider to optimize the second term.
+The optimal bidding prices $\hat{\vect{q}}_t$ is given by the following equation.
 
 \begin{flalign}
-\hat{b}_{ijt} = \argmin_{b} \Expect{q_{jt}}{g_{ijt} ( q_{jt} - \gamma o_{ij,t+1}  )}
+\hat{\vect{b}}_{it} 
+&= \argmin_{\vect{b}} \Expect{\vect{q}_t}{\vect{g}_{it}(\vect{b})^\T( \vect{q}_t - \gamma \vect{o}_{it}  )} 	
+= \argmin_{\vect{b}} \Expect{\vect{q}_t}{H(\vect{b} - \vect{q}_{t})^\T ( \vect{q}_t - \gamma \vect{o}_{it}  )}	\notag \\
+&= \argmin_{\vect{b}} \Expect{\vect{q}_t}{\sum_{j=1}^N H(b_{j} - q_{jt}) ( q_{jt} - \gamma o_{ijt}  )}		
+= \argmin_{\vect{b}} \sum_{j=1}^N \Expect{q_{jt}}{H(b_{j} - q_{jt}) ( q_{jt} - \gamma o_{ijt}  )},
+\end{flalign}
+
+From independence, the equation is solved if we solve the following problem.
+
+\begin{flalign}
+\hat{b}_{ijt} = \argmin_{b} \Expect{q_{jt}}{H(b - q_{jt}) ( q_{jt} - \gamma o_{ijt}  )}, \, \, \, \forall j \in \{1, \dots, N\}
+\end{flalign}
+
+Hence, $\hat{b}_{ijt}$ can be derived as the solution which satisfies the following equation. 
+\begin{flalign}
+	\left. \deriv{b}{}\Expect{q_{jt}}{H(b - q_{jt}) ( q_{jt} - \gamma o_{ijt}  )} \right|_{b=\hat{b}_{ijt}}  = 0,  \, \, \, 
+\left. \derivN{2}{b}{}\Expect{q_{jt}}{H(b - q_{jt}) ( q_{jt} - \gamma o_{ijt}  )}\right|_{b=\hat{b}_{ijt}} > 0 \notag 
 \end{flalign}
 
 For simplicity, we let $q = q_{jt}$ and $o = o_{ij,t+1}$. Then, the following equation holds.
@@ -40,7 +57,18 @@ For simplicity, we let $q = q_{jt}$ and $o = o_{ij,t+1}$. Then, the following eq
 \deriv{b}{}\Expect{q}{H(b - q)( q - \gamma o  )} 
 &= \deriv{b}{}\int_0^\infty H(b - q)(q - \gamma o) p(q) dq \notag \\
 &= \deriv{b}{} \int_0^b (q - \gamma o) p(q) dq \notag \\
-&= (b-\gamma o) p(q=b), \notag 
+	&= (b-\gamma o) p(q=b), \label{eq:deriv1}
+\end{flalign}
+\begin{flalign}
+	\derivN{2}{b}{}\Expect{q}{H(b - q)( q - \gamma o  )} = p(q=b) + (b - \gamma o) \deriv{b}{}p(q=b)  \label{eq:deriv2}
 \end{flalign}
 
-Therefore, $\hat{b}_{ijt} = \gamma o_{ij,t+1}$ holds.
+Then, condition $\deriv{b}{}\Expect{q_{jt}}{H(b - q_{jt}) ( q_{jt} - \gamma o_{ijt}  )} |_{b=\hat{b}_{ijt}}  = 0$ is satisfied only by $\hat{b}_{ijt} = \gamma o_{ijt}$.
+We substitue $\hat{b}_{ijt}$ into Eq:\ref{eq:deriv2},
+\begin{flalign}
+\left. \derivN{2}{b}{}\Expect{q_{jt}}{H(b - q_{jt}) ( q_{jt} - \gamma o_{ijt}  )}\right|_{b=\hat{b}_{ijt}} 
+	&= p(q=\hat{b}_{ijt}) + 0 > 0
+\end{flalign}
+
+Therefore, $\hat{b}_{ijt} = \gamma o_{ijt}$ is a unique solution as the minimum point.
+From generality, $\hat{\vect{b}}_{it} = \gamma \vect{o}_{it}$ holds.
