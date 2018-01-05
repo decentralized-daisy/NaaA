@@ -48,7 +48,7 @@ The proposed reward distribution method was confirmed to work as expected by a v
 an emulator of Doom containing a map editor where additional agents complement the main player.
 A main player in the ViZDoom environment aims to seek the enemy in the map and then defeat the enemy.
 
-\subsection{Setup}
+\subsubsection{Setup}
 A defend the center (DtC)-based scenario, provided by ViZDoom platform, was used for this experiment.
 Two players, a main player and a cameraman, were placed in the DtC, where they started in the center of a circular field and then attacked enemies that came from the surrounding wall.
 Although the main player could attack the enemy with bullets, 
@@ -62,7 +62,7 @@ The main player died if they received attacks from the enemy to the extent that 
 The cameraman did not die if attacked by an enemy.
 Episodes terminated either when the maim player died or after 525 steps elapsed.
 
-\subsection{Model}
+\subsubsection{Model}
 Three models, described below, were compared: the proposed method and two comparison targets.
 
 {\em Baseline}: DQN without communication. The main player learned standard DQN with the perspective that the player is viewing.
@@ -105,7 +105,7 @@ Both agents then return to watching the dead area of the other until the next en
 \label{fig:circleworld}
 \end{figure*}
 
-\subsection{Results}
+\subsubsection{Results}
 Training was performed over the course of 10 million steps.
 Figure \ref{fig:lc_vis} Left demonstrates the proposed NaaA model outperformed the other two methods.
 Improvement was achieved by Adaptive DropConnect.
