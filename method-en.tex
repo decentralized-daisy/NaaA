@@ -33,7 +33,7 @@ The following assumptions were added to the $\agent$ characteristics:
 	$G_{it} = \sum_{k=0}^T \gamma^k \rewardAt{i,t+k}$.
 \item (Conservation) 	% Energy Conservation
 	The summation of internal rewards over all $\agents$ equals 0.
-	Hence, the summation of rewards which $\agents$ (receive both internal and external environment $\reward$) are equivalent to the reward $R_t^{\mathrm{ex}}$, which the entire multi-agent system receives from the external environment: $\sum_{i=1}^n R_{it} = \sum_{i=1}^n R_{it}^{\mathrm{ex}} = R_t^{\mathrm{ex}}$.
+	Hence, the summation of rewards which $\agents$ (receive both internal and external environment $\reward$) are equivalent to the reward $R_t^{\mathrm{ex}}$, which the entire multi-agent system receives from the external environment: $\sum_{i=1}^N R_{it} = \sum_{i=1}^N R_{it}^{\mathrm{ex}} = R_t^{\mathrm{ex}}$.
 \item (Trade) 
 	A agent $\agent$ will receive an internal reward $\rho_{jit}$ from $\agentAt{j} \in \agents$ in exchange for an representation signal $x_i$
 	before transferring this signal to the agent. Simultaneously, $\rho_{jit}$ will be subtracted from the reward of $v_j$.
@@ -44,8 +44,8 @@ The following assumptions were added to the $\agent$ characteristics:
 
 The social welfare function (total utility of the agents) $G^\mathrm{all}$ is equivalent to the objective function $G$. That is,
 \begin{equation}
-	G^\mathrm{all} = \sum_{i=1}^n G_{it} = \sum_{i=1}^n \left[ \sum_{k=0}^T \gamma^t R_{it} \right] 
-		= \sum_{k=0}^T \left[ \gamma^t \sum_{i=1}^n R_{it} \right].
+	G^\mathrm{all} = \sum_{i=1}^N G_{it} = \sum_{i=1}^N \left[ \sum_{k=0}^T \gamma^t R_{it} \right] 
+		= \sum_{k=0}^T \left[ \gamma^t \sum_{i=1}^N R_{it} \right].
 \end{equation}
 From N2, $G^\mathrm{all} = G$ holds.
 %\begin{equation}
@@ -58,7 +58,7 @@ From N2, $G^\mathrm{all} = G$ holds.
 From N3, the reward $R_{it}$ received by $\agent$ at $t$ can be written as:
 \begin{flalign}
 	R_{it} = R_{it}^\mathrm{ex} + \sum_{j \in N^\mathrm{out}_i} \rho_{jit} 
-				- \sum_{j \in N^\mathrm{in}_i} \rho_{ijt}.
+				- \sum_{j \in N^\mathrm{in}_i} \rho_{ijt},
 \end{flalign}
 which can be divided into positive and negative terms, where the former is defined as revenue, and the latter as cost. These are respectively denoted as $r_{it} = R_{it}^\mathrm{ex} + \sum_{j \in N^\mathrm{out}_i} \rho_{jit}, \, c_{it} = \sum_{j \in N^\mathrm{in}_i} \rho_{ijt}$.
 Here, $R_{it}$ represents profit.
@@ -190,7 +190,7 @@ The value function was approximated as a linear function $\vect{g}_{it}$:
 		V_i^{\pi_i}(s_{i,t+1}) \approx \vect{o}_{it}^\mathrm{T} \vect{g}_{it} + V_{i,t+1}^0,
 \end{flalign}
 where %$\vect{o}_{it}$ is an implemented parameter (the difference between two $v_i$ returns) regardless of whether $x_i$ is observed. As
-$\vect{o}_{it}$ is equivalent to the cumulative discount value of the counterfactual reward \citep{agogino2006quicr}, it was named {\em counterfactual return}. As $V_{it}^0$ (a constant independent of $\vect{g}_{it}$) is equal to the value function when $v_i$ takes an action without observing $x_1, \dots, x_N$, it was named {\em blind value function}.
+$\vect{o}_{it}$ is equivalent to the cumulative discount value of the counterfactual reward \citep{agogino2006quicr}, it was named {\em counterfactual return}. As $V_{it}^0$ (a constant independent of $\vect{g}_{it}$) is equal to the value function when $v_i$ takes an action without observing $x_1, \dots, x_N$.%, it was named {\em blind value function}.
 %This means the cost the unit will pay is $\opt{q}_{it}$ when data purchasing is successful and $o_{it}$ otherwise.
 
 %The value function can be written as an equation using the state-value function $Q(s_{i,t+1}, \vect{g}_{i,t+1})$:
@@ -236,26 +236,26 @@ the following theorem holds.
 \begin{thm}\label{thm:optimal-bidding}
 	(Truthfulness) the optimal bidding price for maximizing returns is $\opt{\vect{b}}_{it} = \gamma \vect{o}_{it}$.
 \end{thm}
-This proof is shown in the Appendix.
+This proof is shown in the Appendix A.
 
-This implies agents should only consider their counterfactual returns!.
+This implies agents should only consider their counterfactual returns!
 When $\gamma = 0$ it is equivalent to a case without auction. Hence, the bidding value is raised if each agent considers their long-time rewards. 
 Consequently, when the NaaA mechanism is used agents behave as if performing valuation for other agents, 
 and declare values truthfully.
 
 Under these conditions, the following corollary holds:
 \begin{coro}\label{coro:optimal-bidding}
-	The Nash equilibrium of an envy-free auction is $(\vect{b}_{it}, q_{it})$ is $(\vect{o}_{it}, \argmax_{q} q d_{it}(q))$.
+	The Nash equilibrium of an envy-free auction is $(\vect{b}_{it}, q_{it})$ is $( \gamma \vect{o}_{it}, \argmax_{q} q d_{it}(q))$.
 \end{coro}
 
 The remaining problem is how to predict $\vect{o}_t$.
-Although several methods could be applied to this problem (including other RL such as SARSA and A3C \cite{mnih2016asynchronous}),
-$Q$-learning was used to predict $\vect{o}_t$ in this paper.
+$Q$-learning was used to predict $\vect{o}_t$ in this paper as the same way as QUICR \cite{agogino2006quicr}.
 As $\vect{o}_{it}$ represented the difference between two $Q$s, each $Q$ was approximated.
 The state was parameterized using the vector $\vect{s}_t$, 
 which contained input and weight.
 The $\epsilon$-greedy policy with $Q$-learning typically supposed that discrete actions
 Thus the allocation $g_{ijt}$ was employed as an action rather than $\vect{b}_{it}$ and $q_{it}$.
+%Although several methods could be applied to this problem (including other RL such as SARSA and A3C \cite{mnih2016asynchronous}),
 
 \paragraph{Algorithm}
 The overall algorithm is shown in Algorithm 1.
