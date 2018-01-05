@@ -149,11 +149,10 @@ For this transaction, the definition $g_{jit} = H(b_{jit} - q_{it})$ holds, and 
 After allocation, buyers perform payment: $\rho_{jit} = g_{jit} \opt{q}_{it}$ (\textbf{3}).
 The seller sends the activation $x_i$ only to the allocated buyers (\textbf{4}).
 Buyers who do not receive the activation approximate $x_i$ with $\Expect{\pi}{x_i}$.
-This negotiation is performed at each time step in RL.
+This negotiation is performed at each time step in reinforcement learning.
 
+\subsubsection{Theoretical Analysis}
 The sections below discuss the revenue, cost, and value functions based on Eq:(\ref{eq:V}).
-
-
 
 %========================================
 % é˚âv
@@ -298,7 +297,51 @@ The overall algorithm is shown in Algorithm 1.
 \end{algorithm}
 
 \subsection{Neuron as an Agent}
-Stub
+One benefit of NaaA is that it can be used not only for MARL, but also for network training.
+Typical neural network training algorithms such as RMSProp \citep{tieleman2012lecture} and Adam \citep{kingma2014adam} are based on sequential algorithms such as the stochastic gradient descent (SGD).
+Therefore, the problem they solve can be interpreted as a problem of updating a state (i.e., weight) to a goal (the minimization of the expected likelihood).
+
+\subsubsection{Adaptive DropConnect}
+Learning can be accelerated by applying NaaA to the optimizer.
+In this paper, the application of NaaA to SGD was named {\em Adaptive DropConnect} (ADC), 
+the finalization of which can be interpreted as a combination of DropConnect \citep{wan2013regularization} and Adaptive DropOut \citep{ba2013adaptive}.
+In the subsequent section, ADC is introduced as a potential NaaA application.
+
+ADC uses NaaA for supervised optimization problems with multiple revisions.
+In such problems, the first step is the presentation of an input state (such as an image) by the environment. Agents are expected to update their parameters to maximize the rewards presented by a criterion calculator.
+Criterion calculators gives batch-likelihoods to agents, representing rewards.
+Each agent, a classifier, updates its weights to maximize the reward from the criterion calculator.
+These weights are recorded as an internal state.
+A heuristic utilizing the absolute value of weight $|w_{ijt}|$ (the
+technique used by Adaptive DropOut) was applied as the counterfactual return $o_{ijt}$.
+The absolute value of weights was used because it represented the updated amounts for which the magnitude of error of unit outputs was proportional to $|w_{ijt}|$.
+
+This algorithm is presented as Algorithm 2.
+Because the algorithm is quite simple, it can be easily implemented and, thus, applied to most general deep learning problems such as 
+image recognition, sound recognition, and even deep reinforcement learning.
+
+\begin{algorithm}[t]
+\caption{Adaptive DropConnect}
+\begin{algorithmic}[1]
+	\FOR{ $t=1$ \TO $T$ }
+		\STATE Compute a bidding price for every edge: \textbf{for} $(v_j, v_i) \in \edges$ \textbf{do} \
+		$b_{ijt} \leftarrow |w_{ijt}|$ 
+		\STATE Compute an asking price for every node: \textbf{for} $\unit \in \units$ \textbf{do} \
+		$\opt{q}_{it} \leftarrow \argmax_{q \in [0, \infty)} q d_{it}(q).$
+		\FOR{$(v_i, v_j) \in \edges$}
+				%\STATE Sample $u$ from a Bernoulli distribution: $u \sim \mathrm{Bernoulli}(\varepsilon)$
+				%\STATE Sample $m$ from a Bernoulli distribution: $m \sim \mathrm{Bernoulli}(1/2)$
+				\STATE Compute allocation: $g_{jit} \leftarrow H(b_{jit} - \opt{q}_{it})$ 
+		\ENDFOR
+		\STATE Sample a switching matrix $U_t$ from a Bernoulli distribution: $U_t \sim \mathrm{Bernoulli}(\varepsilon)$
+		\STATE Sample the random mask $M_t$ from a Bernoulli distribution: $M_t \sim \mathrm{Bernoulli}(1/2)$
+		\STATE Generate the adaptive mask: $M_t' \leftarrow U_t \circ M_t + (1 - U_t) \circ G_{ijt}$ 
+		\STATE Compute $\vect{h}_t$ for making a shipment:
+			$\vect{h}_t \leftarrow (M_t' \circ W_t) \vect{x}_t + \vect{b}_t$
+		\STATE Update $W_t$ and $\vect{b}_t$ by backpropagation.
+	\ENDFOR
+\end{algorithmic}
+\end{algorithm}
 
 %========================================================================
 % Åyò_é|Åz
