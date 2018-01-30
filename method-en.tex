@@ -10,7 +10,7 @@ As we show in Section \ref{sec:naaa}, NaaA actualizes that we can regard even a 
 % ・いくつかの前提を提案する
 % ・NaaA の social welfare function を最大化することが、外部からのリワード最大化に一致する。
 
-Some agents receive rewards from the environment directly $R_{it}^{\mathrm ex}$, and they distribute these to other agents as incentives for giving precise information.
+Some agents receive rewards from the environment directly $R_{it}^\mathrm{ex}$, and they distribute these to other agents as incentives for giving precise information.
 Rewards are limited, so if an agent distributes $\rho$ rewards, the reward of that agents is reduced by $\rho$ to satisfy the constraint of Eq:(\ref{eq:reward_const}).
 For this reason, agents other than a specified agent of interest can be considered a secondary environment for the agent giving 
 rewards of $-\rho$ instead of an observation $x$.
@@ -33,9 +33,9 @@ The following assumptions were added to the $\agent$ characteristics:
 	$G_{it} = \sum_{k=0}^T \gamma^k \rewardAt{i,t+k}$.
 \item (Conservation) 	% Energy Conservation
 	The summation of internal rewards over all $\agents$ equals 0.
-	Hence, the summation of rewards which $\agents$ (receive both internal and external environment $\reward$) are equivalent to the reward $R_t^{\mathrm{ex}}$, which the entire multi-agent system receives from the external environment: $\sum_{i=1}^N R_{it} = \sum_{i=1}^N R_{it}^{\mathrm{ex}} = R_t^{\mathrm{ex}}$.
+	Hence, the summation of rewards which $\agents$ (receive both internal and external environment $\reward$) are equivalent to the reward $R_t^\mathrm{ex}$, which the entire multi-agent system receives from the external environment: $\sum_{i=1}^N R_{it} = \sum_{i=1}^N R_{it}^{\mathrm{ex}} = R_t^\mathrm{ex}$.
 \item (Trade) 
-	A agent $\agent$ will receive an internal reward $\rho_{jit}$ from $\agentAt{j} \in \agents$ in exchange for an representation signal $x_i$
+	An agent $\agent$ will receive an internal reward $\rho_{jit}$ from $\agentAt{j} \in \agents$ in exchange for an representation signal $x_i$
 	before transferring this signal to the agent. Simultaneously, $\rho_{jit}$ will be subtracted from the reward of $v_j$.
 \item (NOOP) 
 	$\agent$ can select NOOP (no operation), for which the return is $\delta > 0$, as an action.
@@ -61,10 +61,10 @@ From N3, the reward $R_{it}$ received by $\agent$ at $t$ can be written as:
 				- \sum_{j \in N^\mathrm{in}_i} \rho_{ijt},
 \end{flalign}
 which can be divided into positive and negative terms, where the former is defined as revenue, and the latter as cost. These are respectively denoted as $r_{it} = R_{it}^\mathrm{ex} + \sum_{j \in N^\mathrm{out}_i} \rho_{jit}, \, c_{it} = \sum_{j \in N^\mathrm{in}_i} \rho_{ijt}$.
-Here, $R_{it}$ represents profit.
+Here, $R_{it}$ represents {\em profit}, difference between revenue and cost.
 
 
-The agent $\agent$ maximized its cumulative discounted profit, $G_{it}$, represented as:
+The agent $\agent$ maximizes its cumulative discounted profit, $G_{it}$, represented as:
 \begin{flalign}
 	G_{it}	= \sum_{k=0}^T \gamma^k R_{i, t+k} 
 			= \sum_{k=0}^T \gamma^k (r_{i,t+k} - c_{i,t+k})
@@ -98,7 +98,7 @@ If we directly optimize Eq:(\ref{eq:V}),
 a trivial solution is obtained in which the internal rewards converge at 0, and all agents (excepting agents which directly receive reward from the external environment) select NOOP as their action.
 This phenomenon occurs regardless of the network topology $\neuralnet$, as no nodes are incentivized to send payments $\rho_{ijt}$ to other agents.
 With this in mind, multi-agent systems must select actions with no information, achieving the equivalent of taking random actions.
-For that reason, the external reward $R_t^{\mathrm ex}$ shrinks markedly.
+For that reason, the total external reward $R_t^\mathrm{ex}$ shrinks markedly.
 This phenomenon also known as social dilemma in MARL, which is caused from a problem that each agent does not evaluate other agents' value truthfully to maximize their own profit.
 We are trying to solve this problem with auction theory in Section \ref{sec:auction}.
 
@@ -154,14 +154,13 @@ The sections below discuss the revenue, cost, and value functions based on Eq:(\
 %========================================
 
 \textbf{Revenue}:
-The revenue of a agent is given as
+The revenue of an agent is given as
 \begin{flalign}
-	r_{it}  = \sum_{j \in N^\mathrm{out}_i} g_{jit} q_{it} + R^\mathrm{ex}_i 
-		= q_i d_{it} + R^\mathrm{ex}_i,
+	r_{it}  = \sum_{j \in N^\mathrm{out}_i} g_{jit} q_{it} + R^\mathrm{ex}_{it} 
+	= q_{it} d_{it} + R^\mathrm{ex}_{it},
 \end{flalign}
-where $d_{it} = \sum_{j \in N^\mathrm{out}_i} g_{jit}$ is some number of agents for which the $q_{it}$ bidding price is greater than or equal to $q_{it}$ (designated as the demand).
-The equation maximizing $q_{it}$ is designated as the optimal price, denoted as $ \opt{q}_{it} $.
-Because $R^\mathrm{ex}_i$ is independent of $q_t$, the optimal price $\opt{q}_{it}$ is given as:
+where $d_{it} = \sum_{j \in N^\mathrm{out}_i} g_{jit}$ is the {\em demand}, the number of agents for which the bidding price $b_{jit}$ is greater than or equal to $q_{it}$.
+Because $R^\mathrm{ex}_i$ is independent of $q_{it}$, the optimal price $\opt{q}_{it}$ maximizing $r_{it}$ is given as:
 \begin{flalign}
 	\opt{q}_{it}  = \argmax_{q \in [0, \infty)} q d_{it}(q).
 \end{flalign}
@@ -190,7 +189,7 @@ The value function was approximated as a linear function $\vect{g}_{it}$:
 		V_i^{\pi_i}(s_{i,t+1}) \approx \vect{o}_{it}^\mathrm{T} \vect{g}_{it} + V_{i,t+1}^0,
 \end{flalign}
 where %$\vect{o}_{it}$ is an implemented parameter (the difference between two $v_i$ returns) regardless of whether $x_i$ is observed. As
-$\vect{o}_{it}$ is equivalent to the cumulative discount value of the counterfactual reward \citep{agogino2006quicr}, it was named {\em counterfactual return}. As $V_{it}^0$ (a constant independent of $\vect{g}_{it}$) is equal to the value function when $v_i$ takes an action without observing $x_1, \dots, x_N$.%, it was named {\em blind value function}.
+$\vect{o}_{it}$ is equivalent to the cumulative discount value of the counterfactual reward \citep{agogino2006quicr}, it was named {\em counterfactual return}. As $V_{it}^0$ (a constant independent of $\vect{g}_{it}$) is equal to the value function when $v_i$ takes an action without observing $x_1, \dots, x_N$. %, it was named {\em blind value function}.
 %This means the cost the unit will pay is $\opt{q}_{it}$ when data purchasing is successful and $o_{it}$ otherwise.
 
 %The value function can be written as an equation using the state-value function $Q(s_{i,t+1}, \vect{g}_{i,t+1})$:

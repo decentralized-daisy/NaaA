@@ -1,16 +1,16 @@
 \section{Problem Definition}
-Suppose there are $N$ agents in an environment. 
+Suppose there is an $N$-agent system in an environment. 
 The goal of this paper was to maximize the discounted cumulative reward the system obtained from the environment.
 This was calculated as:
 \begin{equation}
-G = \sum_{t=0}^T \gamma^t R_{t}^\mathrm{ex},
+	G = \sum_{t=0}^T \gamma^t R_t^\mathrm{ex},
 \end{equation}
-where $R_{t}^\mathrm{ex}$ is a reward which $i$-th agent obtains at $t$, 
+where $R_{t}^\mathrm{ex}$ is a reward which the system obtains from the environment at $t$, 
 and $\gamma \in [0, 1]$ is the discount rate and $T$ is the terminal time.
 
-Reward distribution is distributing $R_{t}^\mathrm{ex}$ to all the agents under the following constraint.
+Reward distribution is distributing $R_t$ to all the agents under the following constraint.
 \begin{equation}
-	\sum_{i=1}^N R_{it} = R_{t}^\mathrm{ex},
+	\sum_{i=1}^N R_{it} = R_t^\mathrm{ex},
 	\label{eq:reward_const}
 \end{equation}
 where $R_{it}$ is a reward which is distributed to $i$-th agent at time $t$.
@@ -22,5 +22,5 @@ In most of MARL communication methods, the policy of reward distribution is dete
 For example, QUICR \citep{agogino2006quicr} and COMA \citep{foerster2017counterfactual} distribute $R_{it}$ according to counterfactal reward, difference of reward between an agent made an action and not.
 The value of counterfactual reward is calculated by centralized agent, called {\em trusted third party} (TTP).
 
-In a peer-to-peer environment such as inter-industry and -countery trade, they cannot place a TTP. 
-Hence, another framework required to actualize reward distirbution without TTP.
+In a peer-to-peer environment such as inter-industry and -country trade, they cannot place a TTP. 
+Hence, another framework required to actualize reward distribution without TTP.
